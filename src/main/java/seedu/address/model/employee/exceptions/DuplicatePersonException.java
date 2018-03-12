@@ -1,0 +1,12 @@
+package seedu.address.model.employee.exceptions;
+
+import seedu.address.commons.exceptions.DuplicateDataException;
+
+/**
+ * Signals that the operation will result in duplicate Employee objects.
+ */
+public class DuplicatePersonException extends DuplicateDataException {
+    public DuplicatePersonException() {
+        super("Operation would result in duplicate persons");
+    }
+}
