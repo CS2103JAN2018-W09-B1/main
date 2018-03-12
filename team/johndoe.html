@@ -208,21 +208,21 @@ Format: <code>redo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>delete 1</code><br>
+<p><code>deletee 1</code><br>
 <code>undo</code> (reverses the <code>delete 1</code> command)<br>
 <code>redo</code> (reapplies the <code>delete 1</code> command)<br></p>
 </li>
 <li>
-<p><code>delete 1</code><br>
+<p><code>deletee 1</code><br>
 <code>redo</code><br>
 The <code>redo</code> command fails as there are no <code>undo</code> commands executed previously.</p>
 </li>
 <li>
-<p><code>delete 1</code><br>
+<p><code>deletee 1</code><br>
 <code>clear</code><br>
 <code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete 1</code> command)<br>
+<code>undo</code> (reverses the <code>deletee 1</code> command)<br>
+<code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
 <code>redo</code> (reapplies the <code>clear</code> command)<br></p>
 </li>
 </ul>
@@ -561,7 +561,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-12 10:12:57 UTC
+Last updated 2018-03-12 10:25:48 UTC
 </div>
 </div>
 </body>
