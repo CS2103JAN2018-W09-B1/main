@@ -44,10 +44,11 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
+<li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.1. Import/Export feature <mark>Coming in v2.0</mark></a></li>
+<li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
+<li><a href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.4. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -577,9 +578,24 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.1. Undo/Redo feature</a></h3>
+<h3 id="import-export-feature-mark-coming-in-v2-0-mark"><a class="link" href="#import-export-feature-mark-coming-in-v2-0-mark">3.1. Import/Export feature <mark>Coming in v2.0</mark></a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/blank.png" alt="blank" width="800">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.2. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -732,7 +748,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -869,20 +885,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.3. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.5, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -913,7 +929,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2107,7 +2123,7 @@ for <code>RemarkCommandParser</code>.</p>
 <h2 id="use-cases"><a class="link" href="#use-cases">Appendix D: Use Cases</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>(For all use cases below, the <strong>System</strong> is the <code>CarServicingManager</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+<p>(For all use cases below, the <strong>System</strong> is the <code>CarviciM</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
 <h3 id="use-case-add-remarks-to-an-ongoing-job-entry" class="discrete">Use case: Add remarks to an ongoing job entry</h3>
 <div class="paragraph">
@@ -2119,13 +2135,13 @@ for <code>RemarkCommandParser</code>.</p>
 <p>User selects a job entry.</p>
 </li>
 <li>
-<p>CarServicingManager shows logged remarks in the job.</p>
+<p>CarviciM shows logged remarks in the job.</p>
 </li>
 <li>
 <p>User requests to log a remark.</p>
 </li>
 <li>
-<p>CarServicingManager reflects the added remark at end of log.</p>
+<p>CarviciM reflects the added remark at end of log.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2142,7 +2158,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>2a1. CarServicingManager shows an empty list.</p>
+<p>2a1. CarviciM shows an empty list.</p>
 <div class="paragraph">
 <p>Use case resumes at step 3.</p>
 </div>
@@ -2171,7 +2187,7 @@ for <code>RemarkCommandParser</code>.</p>
 <p>User presses tab key.</p>
 </li>
 <li>
-<p>CarServicingManager completes the command.</p>
+<p>CarviciM completes the command.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2201,7 +2217,7 @@ for <code>RemarkCommandParser</code>.</p>
 <p>User presses a key to change selection.</p>
 </li>
 <li>
-<p>CarServicingManager changes selection.</p>
+<p>CarviciM changes selection.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2214,7 +2230,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>1a. CarServicingManager is not focussed.</p>
+<p>1a. CarviciM is not focussed.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
@@ -2236,7 +2252,7 @@ Use case resumes at step 1.</p>
 <p>User requests to add an employee in the list.</p>
 </li>
 <li>
-<p>CarServicingManager adds the employee and updates the list.</p>
+<p>CarviciM adds the employee and updates the list.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2253,7 +2269,7 @@ Use case resumes at step 1.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>2a1. CarServicingManager shows an error message.</p>
+<p>2a1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case resumes at step 1.</p>
 </div>
@@ -2273,13 +2289,13 @@ Use case resumes at step 1.</p>
 <p>User requests to list employees.</p>
 </li>
 <li>
-<p>CarServicingManager shows a list of employees.</p>
+<p>CarviciM shows a list of employees.</p>
 </li>
 <li>
 <p>User requests to delete a specific employee in the list.</p>
 </li>
 <li>
-<p>CarServicingManager deletes the employee and updates the list.</p>
+<p>CarviciM deletes the employee and updates the list.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2302,7 +2318,7 @@ Use case resumes at step 1.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. CarServicingManager shows an error message.</p>
+<p>3a1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case resumes at step 2.</p>
 </div>
@@ -2322,7 +2338,7 @@ Use case resumes at step 1.</p>
 <p>User requests to find an employee by name.</p>
 </li>
 <li>
-<p>CarServicingManager shows a list of employees whose name contain the provided name.</p>
+<p>CarviciM shows a list of employees whose name contain the provided name.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2352,7 +2368,7 @@ Use case resumes at step 1.</p>
 <p>User specifies color label of a job status.</p>
 </li>
 <li>
-<p>CarServicingManager updates the label colors displayed.</p>
+<p>CarviciM updates the label colors displayed.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2369,7 +2385,7 @@ Use case resumes at step 1.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>1a1. CarServicingManager shows an error message.</p>
+<p>1a1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2386,7 +2402,7 @@ Use case resumes at step 1.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>1b1. CarServicingManager shows an error message.</p>
+<p>1b1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2406,13 +2422,13 @@ Use case resumes at step 1.</p>
 <p>User requests to list the employees.</p>
 </li>
 <li>
-<p>CarServicingManager shows a list of employees.</p>
+<p>CarviciM shows a list of employees.</p>
 </li>
 <li>
 <p>User requests to add a job entry.</p>
 </li>
 <li>
-<p>CarServicingManager adds the job entry.</p>
+<p>CarviciM adds the job entry.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2439,7 +2455,7 @@ Use case resumes at step 1.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. CarServicingManager shows an error message.</p>
+<p>3a1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case resumes at step 3.</p>
 </div>
@@ -2459,7 +2475,7 @@ Use case resumes at step 1.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3b1. CarServicingManager shows an error message.</p>
+<p>3b1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case resumes at step 3.</p>
 </div>
@@ -2482,13 +2498,13 @@ Use case resumes at step 1.</p>
 <p>User requests to list the job entries.</p>
 </li>
 <li>
-<p>CarServicingManager shows a list of job entries.</p>
+<p>CarviciM shows a list of job entries.</p>
 </li>
 <li>
 <p>User requests to close a specific job entry in the list.</p>
 </li>
 <li>
-<p>CarServicingManager close the job entry.</p>
+<p>CarviciM close the job entry.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2511,7 +2527,7 @@ Use case resumes at step 1.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. CarServicingManager shows an error message.</p>
+<p>3a1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case resumes at step 2.</p>
 </div>
@@ -2934,7 +2950,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-12 08:11:06 UTC
+Last updated 2018-03-12 10:12:56 UTC
 </div>
 </div>
 </body>
