@@ -85,7 +85,7 @@ This app will not work with earlier versions of Java 8.
 <p>Download the latest <code>addressbook.jar</code> <a href="https://github.com/CS2103JAN2018-W09-B1/main/releases">here</a>.</p>
 </li>
 <li>
-<p>Copy the file to the folder you want to use as the home folder for your Address Book.</p>
+<p>Copy the file to the folder you want to use as the home folder for your CarviciM.</p>
 </li>
 <li>
 <p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
@@ -107,7 +107,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p><strong><code>liste</code></strong> : lists all employees' contacts</p>
 </li>
 <li>
-<p><strong><code>adde</code></strong><code>n/John Doe p/98765432 e/johnd@example.com</code> : adds an employee named <code>John Doe</code> to the Car Servicing Manager.</p>
+<p><strong><code>adde</code></strong><code>n/John Doe p/98765432 e/johnd@example.com</code> : adds an employee named <code>John Doe</code> to CarviciM.</p>
 </li>
 <li>
 <p><strong><code>deletee</code></strong><code>3</code> : deletes the 3rd employee shown in the current list</p>
@@ -160,7 +160,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="sect2">
 <h3 id="adding-an-job-entry-code-addj-code"><a class="link" href="#adding-an-job-entry-code-addj-code">3.2. Adding an job entry: <code>addj</code></a></h3>
 <div class="paragraph">
-<p>Adds a job entry to the car servicing manager<br>
+<p>Adds a job entry to CarviciM<br>
 Format: <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/EMPLOYEE_INDEX</code></p>
 </div>
 <div class="paragraph">
@@ -180,7 +180,7 @@ Format: <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/EMPLOYEE_IND
 <div class="sect2">
 <h3 id="closing-a-job-entry-code-closej-code"><a class="link" href="#closing-a-job-entry-code-closej-code">3.3. Closing a job entry: <code>closej</code></a></h3>
 <div class="paragraph">
-<p>Closes an ongoing job entry in the car servicing manager based on the specified job number<br>
+<p>Closes an ongoing job entry in CarviciM based on the specified job number<br>
 Format: <code>closej JOB_NUMBER</code></p>
 </div>
 <div class="paragraph">
@@ -200,7 +200,7 @@ Format: <code>closej JOB_NUMBER</code></p>
 <div class="sect2">
 <h3 id="adding-an-employee-code-adde-code"><a class="link" href="#adding-an-employee-code-adde-code">3.4. Adding an employee: <code>adde</code></a></h3>
 <div class="paragraph">
-<p>Adds an employee to the car servicing manager<br>
+<p>Adds an employee to CarviciM<br>
 Format: <code>adde n/NAME p/PHONE_NUMBER e/EMAIL</code></p>
 </div>
 <div class="paragraph">
@@ -220,14 +220,14 @@ Format: <code>adde n/NAME p/PHONE_NUMBER e/EMAIL</code></p>
 <div class="sect2">
 <h3 id="listing-all-employees-code-liste-code"><a class="link" href="#listing-all-employees-code-liste-code">3.5. Listing all employees : <code>liste</code></a></h3>
 <div class="paragraph">
-<p>Shows a list of all employees in the car servicing manager .<br>
+<p>Shows a list of all employees in CarviciM .<br>
 Format: <code>liste</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="editing-a-employee-code-edite-code"><a class="link" href="#editing-a-employee-code-edite-code">3.6. Editing a employee : <code>edite</code></a></h3>
 <div class="paragraph">
-<p>Edits an existing employee in the car servicing manager .<br>
+<p>Edits an existing employee in CarviciM .<br>
 Format: <code>edite INDEX [p/PHONE] [e/EMAIL] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
@@ -307,7 +307,7 @@ Returns any employee having names <code>Betsy</code>, <code>Tim</code>, or <code
 <div class="sect2">
 <h3 id="deleting-an-employee-code-deletee-code"><a class="link" href="#deleting-an-employee-code-deletee-code">3.8. Deleting an employee : <code>deletee</code></a></h3>
 <div class="paragraph">
-<p>Deletes the specified employee from the car servicing manager.<br>
+<p>Deletes the specified employee from CarviciM.<br>
 Format: <code>deletee INDEX</code></p>
 </div>
 <div class="sidebarblock">
@@ -335,7 +335,7 @@ Format: <code>deletee INDEX</code></p>
 <li>
 <p><code>liste</code><br>
 <code>deletee 2</code><br>
-Deletes the 2nd employee in the car servicing manager.</p>
+Deletes the 2nd employee in CarviciM.</p>
 </li>
 <li>
 <p><code>finde Betsy</code><br>
@@ -444,7 +444,7 @@ Format: <code>history</code></p>
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.12. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>Restores the address book to the state before the previous <em>undoable</em> command was executed.<br>
+<p>Restores CarviciM to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -455,7 +455,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify the address book&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
 </div>
 </td>
 </tr>
@@ -521,7 +521,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 <div class="sect2">
 <h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.14. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
-<p>Clears all entries from the address book.<br>
+<p>Clears all entries from CarviciM.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
@@ -535,7 +535,7 @@ Format: <code>exit</code></p>
 <div class="sect2">
 <h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.16. Saving the data</a></h3>
 <div class="paragraph">
-<p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
+<p>CarviciM data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
@@ -581,15 +581,15 @@ e.g. <code>adde n/James Ho p/22224444 e/jamesho@example.com t/mechanic</code></p
 e.g. <code>deletee 3</code></p>
 </li>
 <li>
-<p><strong>Edit</strong> : <code>edite INDEX [p/PHONE_NUMBER] [e/EMAIL] [t/TAG]&#8230;&#8203;</code><br>
+<p><strong>Edit Employee</strong> : <code>edite INDEX [p/PHONE_NUMBER] [e/EMAIL] [t/TAG]&#8230;&#8203;</code><br>
 e.g. <code>edite 2 e/jameslee@example.com</code></p>
 </li>
 <li>
-<p><strong>Find Employee</strong> : <code>finde KEYWORD [MORE_KEYWORDS]</code><br>
+<p><strong>Find Employees</strong> : <code>finde KEYWORD [MORE_KEYWORDS]</code><br>
 e.g. <code>finde James Jake</code></p>
 </li>
 <li>
-<p><strong>List Employee</strong> : <code>liste</code></p>
+<p><strong>List Employees</strong> : <code>liste</code></p>
 </li>
 <li>
 <p><strong>Help</strong> : <code>help</code></p>
@@ -603,6 +603,10 @@ e.g. <code>finde James Jake</code></p>
 <li>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
+<li>
+<p><strong>Theme</strong> : <code>theme INDEX</code><br>
+e.g. <code>theme 1</code></p>
+</li>
 </ul>
 </div>
 </div>
@@ -610,7 +614,7 @@ e.g. <code>finde James Jake</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-13 13:25:46 UTC
+Last updated 2018-03-13 15:52:01 UTC
 </div>
 </div>
 </body>
