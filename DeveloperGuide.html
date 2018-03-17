@@ -1948,6 +1948,36 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="paragraph">
 <p><strong>Value proposition</strong>: A convenient App for car servicing managers to organize servicing jobs and assign specific employees.</p>
 </div>
+<div class="paragraph">
+<p><strong>Feature contributions</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Importing job entries from an excel file (Major)</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>User can specify the file path to an excel file containing the job entries in columns, and header fields to indicate the</p>
+</li>
+<li>
+<p>field contents for each row. User then reviews the changes and generates a feedback document.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Setting custom command keywords (Minor)</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>User can set a custom keyword that is not used on top of the original command word.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2213,41 +2243,6 @@ for <code>RemarkCommandParser</code>.</p>
 <p>2a. Argument has more than one possible auto-complete.</p>
 <div class="paragraph">
 <p>Use case resumes at step 1.</p>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-navigate-using-the-keyboard" class="discrete">Use case: Navigate using the keyboard</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User presses a key to change selection.</p>
-</li>
-<li>
-<p>CarviciM changes selection.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. CarviciM is not focussed.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. User presses global refocus hotkey.
-Use case resumes at step 1.</p>
-</li>
-</ul>
 </div>
 </li>
 </ul>
@@ -2747,6 +2742,23 @@ Use case resumes at step 1.</p>
 </li>
 </ul>
 </div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c. The new command word is a default command word for another command.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 <div class="sect2">
 <h3 id="use-case-set-theme-of-application"><a class="link" href="#use-case-set-theme-of-application">D.1. Use case: Set theme of application</a></h3>
 <div class="paragraph">
@@ -2844,7 +2856,7 @@ Use case resumes at step 1.</p>
 <p>User interface should be intuitive enough for users who are not IT-savvy.</p>
 </li>
 <li>
-<p>View should fit the screen of any computer screen size.</p>
+<p>View should fit the screen of any computer with minimum screen size of 640 by 480 pixels.</p>
 </li>
 </ol>
 </div>
@@ -3016,7 +3028,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-17 16:28:51 UTC
+Last updated 2018-03-17 16:30:13 UTC
 </div>
 </div>
 </body>
