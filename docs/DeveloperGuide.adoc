@@ -803,7 +803,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Feature Contributions*:
 
-* Changing of theme in the application. (minor)
+* Changing of theme in the application. (Minor)
 +
 [none]
 ** The theme changing feature allow users to work on an environment that they are comfortable with.
