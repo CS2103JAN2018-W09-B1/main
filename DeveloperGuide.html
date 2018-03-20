@@ -48,9 +48,10 @@
 <li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.2. Import/Export feature <mark>Coming in v2.0</mark></a></li>
 <li><a href="#theme-setting-feature">3.3. Theme setting feature</a></li>
 <li><a href="#undo-redo-feature">3.4. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.6. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
+<li><a href="#send-email-to-employees-about-job">3.5. Send Email to Employees about Job</a></li>
+<li><a href="#proposed-data-encryption">3.6. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.7. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.8. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1127,20 +1128,127 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></h3>
+<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.5. Send Email to Employees about Job</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.5.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>This feature is implemented using Gmail API.</p>
+</div>
+<div class="paragraph">
+<p>The following dependencies are used:
+<strong> com.google.api-client:google-api-client:1.23.0
+</strong> com.google.oauth-client:google-oauth-client-jetty:1.23.0
+** com.google.apis:google-api-services-gmail:v1-rev82-1.23.0</p>
+</div>
+<div class="paragraph">
+<p>Suppose that the user typed the first email command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p><code>GoogleAuthorizationCodeFlow</code> is used to build the authorization code flow and trigger user authorization request. It then manages and persists user <code>Credential</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>Credential</code> are then saved into a <code>File</code> so that the user need not repeatedly key in his or her authorization information before sending each email.</p>
+</div>
+<div class="paragraph">
+<p>To send an email, firstly, an empty <code>Properties</code> list is created, which is used to create an email <code>Session</code>. Next, a <code>MimeMessage</code>, a class in the <code>javax.mail.internet</code> package is created using that <code>Session</code>. Attributes <code>from</code>, <code>recipient</code>, <code>subject</code> and <code>text</code> of the <code>MimeMessage</code> are then set. The <code>Text</code> set contains information extracted from the particular <code>Job</code>.</p>
+</div>
+<div class="paragraph">
+<p>Next, <code>MimeMessage</code> is encoded using base64url. A <code>Message</code> object is instantiated, and the value of the <code>raw</code> property of the <code>Message</code> is set to the encoded <code>MimeMessage</code>.</p>
+</div>
+<div class="paragraph">
+<p>Lastly, make a call to <code>messages.send</code> to send the email.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-email-content"><a class="link" href="#aspect-email-content">Aspect: Email content</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Email content contains job information extracted from the particular Job object only</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easier to implement, and the email will be sent out very quickly, immediately after typing one line of command, making it more convenient for the user.</p>
+</li>
+<li>
+<p>Cons: User has no ability to change or add to the contents of the email if the user wishes to.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> User gets to edit or add to the email content</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Provides flexibility as the user is allowed to change and add details to the email content.</p>
+</li>
+<li>
+<p>Cons: Need to direct user to an editor, thus more difficult to implement. User would also have to go through more steps than necessary if the user does not wish to change or add details to the email content.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-authorization-information"><a class="link" href="#aspect-authorization-information">Aspect: Authorization information</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Stored in file system so subsequent executions will not prompt for authorization</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More convenient for user as the user only needs to key in his or her authorization information once</p>
+</li>
+<li>
+<p>Cons: Unsafe</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Prompt for authorization for every subsequent executions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Safe</p>
+</li>
+<li>
+<p>Cons: Inconvenient for user as user needs to always key in authorization information before sending each email</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.6. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.7. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.8, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1171,7 +1279,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.8. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -3405,7 +3513,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-20 17:25:34 UTC
+Last updated 2018-03-20 18:29:57 UTC
 </div>
 </div>
 </body>
