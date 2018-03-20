@@ -146,6 +146,9 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[t/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/mechanic</code>, <code>t/technician</code> etc.</p>
 </li>
 <li>
+<p>Items with <code>+</code> after them can be used multiple times but has to be used <strong>at least once</strong> e.g. <code>w/ASSIGNED_EMPLOYEE_INDEX+</code> can be used as <code>w/4</code>, <code>w/5</code> etc.</p>
+</li>
+<li>
 <p>Parameters can be in any order e.g. if the command specifies <code>n/NAME p/PHONE_NUMBER</code>, <code>p/PHONE_NUMBER n/NAME</code> is also acceptable.</p>
 </li>
 </ul>
@@ -162,7 +165,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <h3 id="adding-an-job-entry-code-addj-code"><a class="link" href="#adding-an-job-entry-code-addj-code">3.2. Adding an job entry: <code>addj</code></a></h3>
 <div class="paragraph">
 <p>Adds a job entry to CarviciM<br>
-Format: <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/EMPLOYEE_INDEX</code></p>
+Format: <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+</code></p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -170,10 +173,10 @@ Format: <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/EMPLOYEE_IND
 <div class="ulist">
 <ul>
 <li>
-<p><code>addj n/John Doe p/98765432 e/johnd@example.com v/bhj123 w/33</code></p>
+<p><code>addj n/John Doe p/98765432 e/johnd@example.com v/bhj123 w/3</code></p>
 </li>
 <li>
-<p><code>addj n/Betsy Crowe p/93939393 e/betsycrowe@example.com v/ss888 w/2</code></p>
+<p><code>addj n/Betsy Crowe p/93939393 e/betsycrowe@example.com v/ss888 w/2 w/3 w/5</code></p>
 </li>
 </ul>
 </div>
@@ -622,7 +625,7 @@ e.g. <code>theme 1</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-20 14:59:11 UTC
+Last updated 2018-03-20 16:53:13 UTC
 </div>
 </div>
 </body>

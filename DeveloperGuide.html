@@ -45,10 +45,11 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.1. Import/Export feature <mark>Coming in v2.0</mark></a></li>
-<li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.4. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
+<li><a href="#theme-setting-feature">3.2. Theme setting feature</a></li>
+<li><a href="#undo-redo-feature">3.3. Undo/Redo feature</a></li>
+<li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.5. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -593,9 +594,115 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.2. Undo/Redo feature</a></h3>
+<h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">3.2. Theme setting feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The theme setting mechanism is facilitated by a <code>ThemeCommand</code>. <code>ThemeCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>INDEX</code> input of <code>1</code> to <code>2</code>, and creates the <code>ThemeCommand</code> object which selects the application&#8217;s theme.
+The <code>UserPref</code> stores and retrieves the theme preference of the application.</p>
+</div>
+<div class="paragraph">
+<p><code>ThemeCommand</code> relies on <code>SetThemeRequestEvent</code> which is handled by <code>MainWindow</code> to call the appropriate method for setting of theme.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If there is no <code>INDEX</code> present, <code>theme</code> command will return an invalid message, which shows the usage information to the user.
+(e.g. theme "").
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>ThemeCommand</code> code snippet to check for valid <code>INDEX</code> input and raises the <code>SetThemeRequestEvent</code> handler for setting of the desired theme, based on the <code>INDEX</code> input:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult execute() <span class="directive">throws</span> CommandException {
+        <span class="keyword">if</span> (selectedIndex.getZeroBased() &gt;= NUMBER_OF_THEMES) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_THEME_INDEX);
+        }
+        EventsCenter.getInstance().post(<span class="keyword">new</span> SetThemeRequestEvent(selectedIndex));
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_THEME_CHANGE_SUCCESS, selectedIndex.getOneBased()));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ThemeCommandParser</code> code snippet to validate <code>INDEX</code> input, which returns <code>ThemeCommand</code> object if valid, and invalid message otherwise:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> ThemeCommand parse(<span class="predefined-type">String</span> args) <span class="directive">throws</span> <span class="exception">ParseException</span> {
+        <span class="keyword">try</span> {
+            Index index = ParserUtil.parseIndex(args);
+            <span class="keyword">return</span> <span class="keyword">new</span> ThemeCommand(index);
+        } <span class="keyword">catch</span> (IllegalValueException ive) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(
+                    <span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>MainWindow</code> code snippet that handles <code>SetThemeRequestEvent</code> to set the theme of the application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> handleSetThemeRequestEvent(SetThemeRequestEvent event) <span class="directive">throws</span> CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setTheme(event.getSelectedIndex());
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>setTheme</code> method code snippet in <code>MainWindow</code> that checks for file existence before removing current theme and applying the selected theme. Selected theme is then updated in the <code>UserPref</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> setTheme(Index selectedIndex) <span class="directive">throws</span> CommandException {
+        <span class="predefined-type">String</span> themeName = themes[selectedIndex.getZeroBased()];
+        <span class="keyword">if</span> (MainApp.class.getResource(FXML_FILE_FOLDER + themeName + <span class="string"><span class="delimiter">&quot;</span><span class="content">Theme.css</span><span class="delimiter">&quot;</span></span>) == <span class="predefined-constant">null</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_FILE_PATH);
+        }
+
+        getRoot().getScene().getStylesheets().clear();
+        getRoot().getScene().getStylesheets().add(FXML_FILE_FOLDER + themeName + <span class="string"><span class="delimiter">&quot;</span><span class="content">Theme.css</span><span class="delimiter">&quot;</span></span>);
+        getRoot().getScene().getStylesheets().add(FXML_FILE_FOLDER + <span class="string"><span class="delimiter">&quot;</span><span class="content">Extensions</span><span class="delimiter">&quot;</span></span> + themeName + <span class="string"><span class="delimiter">&quot;</span><span class="content">.css</span><span class="delimiter">&quot;</span></span>);
+        prefs.setExtensionName(<span class="string"><span class="delimiter">&quot;</span><span class="content">Extensions</span><span class="delimiter">&quot;</span></span> + themeName);
+        prefs.setThemeName(themeName + <span class="string"><span class="delimiter">&quot;</span><span class="content">Theme</span><span class="delimiter">&quot;</span></span>);
+
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>setTheme</code> method code snippet in <code>MainApp</code> that initializes the application&#8217;s last selected theme:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> setTheme(Stage primaryStage) {
+        primaryStage.getScene().getStylesheets().clear();
+        primaryStage.getScene().getStylesheets().add(<span class="string"><span class="delimiter">&quot;</span><span class="content">/view/</span><span class="delimiter">&quot;</span></span> + userPrefs.getThemeName() + <span class="string"><span class="delimiter">&quot;</span><span class="content">.css</span><span class="delimiter">&quot;</span></span>);
+        primaryStage.getScene().getStylesheets().add(<span class="string"><span class="delimiter">&quot;</span><span class="content">/view/</span><span class="delimiter">&quot;</span></span> + userPrefs.getExtensionName() + <span class="string"><span class="delimiter">&quot;</span><span class="content">.css</span><span class="delimiter">&quot;</span></span>);
+    }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of ThemeCommand<br>
+<strong>Alternative 1 (Current choice):</strong> Utilizing <code>SetThemRequestEvent</code> and allow <code>MainWindow</code> to handle the raised event to set the theme of the application. Ensuring persistent theme setting by updating <code>UserPref</code> to store and retrieve relevant stylesheet used.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.3. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -748,7 +855,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -885,20 +992,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.5, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -929,7 +1036,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -3125,7 +3232,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-20 14:59:11 UTC
+Last updated 2018-03-20 16:53:13 UTC
 </div>
 </div>
 </body>
