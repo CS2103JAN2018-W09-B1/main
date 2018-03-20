@@ -44,12 +44,13 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.1. Import/Export feature <mark>Coming in v2.0</mark></a></li>
-<li><a href="#theme-setting-feature">3.2. Theme setting feature</a></li>
-<li><a href="#undo-redo-feature">3.3. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
+<li><a href="#set-command-feature">3.1. Set command feature</a></li>
+<li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.2. Import/Export feature <mark>Coming in v2.0</mark></a></li>
+<li><a href="#theme-setting-feature">3.3. Theme setting feature</a></li>
+<li><a href="#undo-redo-feature">3.4. Undo/Redo feature</a></li>
+<li><a href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.6. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -579,9 +580,139 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="import-export-feature-mark-coming-in-v2-0-mark"><a class="link" href="#import-export-feature-mark-coming-in-v2-0-mark">3.1. Import/Export feature <mark>Coming in v2.0</mark></a></h3>
+<h3 id="set-command-feature"><a class="link" href="#set-command-feature">3.1. Set command feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>Set command keeps 2 lists of command words, the default command words and the custom user command words, which are both managed by the class <code>CommandWords</code>.</p>
+</div>
+<div class="paragraph">
+<p>The default command words are stored as a class level reference <code>COMMANDS</code>, while the custom command words are stored as a field <code>commands</code> in the object.</p>
+</div>
+<div class="paragraph">
+<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>, as it is required to parse commands in <code>AddressBookParser</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
+</div>
+<div class="paragraph">
+<p>image::SetCommandLogicDiagram.png[width="800"]+
+image::SetCommandModelDiagram.png[width="800"]+</p>
+</div>
+<div class="paragraph">
+<p>As you can see from the diagram, AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component.</p>
+</div>
+<div class="paragraph">
+<p>This is to facilitate the saving of data.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-where-to-put-commandwords-for-storage"><a class="link" href="#aspect-where-to-put-commandwords-for-storage">Aspect: Where to put CommandWords for storage</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1:</strong> Place <code>CommandWords</code> in <code>UserPrefs</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Single Responsibility Principle is maintained as custom command words in <code>CommandWords</code> is a user preference.</p>
+</li>
+<li>
+<p>Cons: More coupling is required for the AddressBook to retrieve the custom command words.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Place <code>CommandWords</code> in <code>AddressBook</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Direct access to custom words in commands.</p>
+</li>
+<li>
+<p>Cons: Single Responsibility Principle will be violated.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-access-to-commandwords"><a class="link" href="#aspect-access-to-commandwords">Aspect: Access to CommandWords</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1:</strong> <code>ModelManager</code> and member variables gets access and provides API to access <code>CommandWords</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Write protection.</p>
+</li>
+<li>
+<p>Cons: <code>CommandWords</code> is frequently accessed, many more APIs are required.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 (current choice):</strong> Provide direct access to <code>CommandWords</code> when more details are needed and keep minimal API on <code>ModelManager</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement, neat.</p>
+</li>
+<li>
+<p>Cons: Accidental modification can lead to bugs, so need to be careful.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-storing-the-list-of-default-command-words"><a class="link" href="#aspect-storing-the-list-of-default-command-words">Aspect: Storing the list of default command words</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Store the default list in <code>CommandWords</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easier to maintain the Open-Closed Principle, also follows the Single Responsibility Principle.</p>
+</li>
+<li>
+<p>Cons: Increased coupling.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Store the default list in <code>Commands</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Reduced coupling.</p>
+</li>
+<li>
+<p>Cons: <code>Commands</code> is an abstract class, it is not appropriate to reference class variables.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="import-export-feature-mark-coming-in-v2-0-mark"><a class="link" href="#import-export-feature-mark-coming-in-v2-0-mark">3.2. Import/Export feature <mark>Coming in v2.0</mark></a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/blank.png" alt="blank" width="800">
@@ -589,14 +720,14 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">3.2. Theme setting feature</a></h3>
+<h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">3.3. Theme setting feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The theme setting mechanism is facilitated by a <code>ThemeCommand</code>. <code>ThemeCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>INDEX</code> input of <code>1</code> to <code>2</code>, and creates the <code>ThemeCommand</code> object which selects the application&#8217;s theme.
 The <code>UserPref</code> stores and retrieves the theme preference of the application.</p>
@@ -692,7 +823,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of ThemeCommand<br>
 <strong>Alternative 1 (Current choice):</strong> Utilizing <code>SetThemRequestEvent</code> and allow <code>MainWindow</code> to handle the raised event to set the theme of the application. Ensuring persistent theme setting by updating <code>UserPref</code> to store and retrieve relevant stylesheet used.</p>
@@ -700,9 +831,9 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.3. Undo/Redo feature</a></h3>
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.4. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.4.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -855,7 +986,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -992,20 +1123,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1036,7 +1167,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2138,6 +2269,24 @@ for <code>RemarkCommandParser</code>.</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p><strong>Feature contribution</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Importing job entries from an excel file (major enhancement)
+Done by: yuhongherald
+User can specify the file path to an excel file containing the job entries in columns, and header fields to indicate the
+field contents for each row. User then reviews the changes and generates a feedback document.</p>
+</li>
+<li>
+<p>Setting custom command keywords (minor enhancement)
+Done by: yuhongherald
+User can set a custom keyword that is not used on top of the original command word.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -3232,7 +3381,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-20 16:53:13 UTC
+Last updated 2018-03-20 17:18:38 UTC
 </div>
 </div>
 </body>

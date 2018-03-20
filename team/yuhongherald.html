@@ -68,7 +68,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Managed releases <code>v1.3</code> - <code>v1.5rc</code> (3 releases) on GitHub</p>
+<p>Helped to edit PRs for merging for v1.2- (Pull requests <a href="https://github.com">#40</a>, <a href="https://github.com">#48</a>)</p>
 </li>
 </ul>
 </div>
@@ -78,55 +78,19 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Updated the GUI color scheme (Pull requests <a href="https://github.com">#33</a>, <a href="https://github.com">#34</a>)</p>
-</li>
-<li>
-<p>Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests <a href="https://github.com">#36</a>, <a href="https://github.com">#38</a>)</p>
+<p>Added JobListPanel to support displaying jobs (Pull requests <a href="https://github.com">#53</a>)</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
 <p>Documentation:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com">#14</a></p>
-</li>
-</ul>
-</div>
 </li>
 <li>
 <p>Community:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>PRs reviewed (with non-trivial review comments): <a href="https://github.com">#12</a>, <a href="https://github.com">#32</a>, <a href="https://github.com">#19</a>, <a href="https://github.com">#42</a></p>
-</li>
-<li>
-<p>Contributed to forum discussions (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>, <a href="https://github.com">4</a>)</p>
-</li>
-<li>
-<p>Reported bugs and suggestions for other teams in the class (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>)</p>
-</li>
-<li>
-<p>Some parts of the history feature I added was adopted by several other class mates (<a href="https://github.com">1</a>, <a href="https://github.com">2</a>)</p>
-</li>
-</ul>
-</div>
 </li>
 <li>
 <p>Tools:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Integrated a third party library (Natty) to the project (<a href="https://github.com">#42</a>)</p>
-</li>
-<li>
-<p>Integrated a new Github plugin (CircleCI) to the team repo</p>
-</li>
-</ul>
-</div>
 </li>
 </ul>
 </div>
@@ -152,10 +116,10 @@
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">Undoing previous command : <code>undo</code></a></h3>
+<h3 id="changing-a-command-word-code-set-code"><a class="link" href="#changing-a-command-word-code-set-code">Changing a command word : <code>set</code></a></h3>
 <div class="paragraph">
-<p>Restores CarviciM to the state before the previous <em>undoable</em> command was executed.<br>
-Format: <code>undo</code></p>
+<p>You can set an easy to use word in place of a default command word.<br>
+Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -164,8 +128,18 @@ Format: <code>undo</code></p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The OLD_COMMAND_WORD can be either a default command word or one which user has set previously.</p>
+</li>
+<li>
+<p>The NEW_COMMAND_WORD must be 1 word, with no spacing.</p>
+</li>
+<li>
+<p>Any default words or words currently set by users are not allowed.</p>
+</li>
+</ul>
 </div>
 </td>
 </tr>
@@ -177,30 +151,67 @@ Format: <code>undo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>delete 1</code><br>
-<code>list</code><br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
+<p><code>set add a</code><br>
+Sets <code>add</code> command word to <code>a</code> using default</p>
 </li>
 <li>
-<p><code>select 1</code><br>
-<code>list</code><br>
-<code>undo</code><br>
-The <code>undo</code> command fails as there are no undoable commands executed previously.</p>
+<p><code>set add s</code><br>
+Sets <code>add</code> command word to <code>s</code> using default</p>
 </li>
 <li>
-<p><code>delete 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
+<p><code>set set a</code><br>
+Sets <code>set</code> command word to <code>a</code> using default</p>
+</li>
+<li>
+<p><code>set a s</code><br>
+Invalid command as s is already used by user.</p>
+</li>
+<li>
+<p><code>set a add</code><br>
+Invalid command as add is a default command.</p>
+</li>
+<li>
+<p><code>set a set</code><br>
+Sets <code>a</code> command word back to <code>set</code>, its default mapping.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">Redoing the previously undone command : <code>redo</code></a></h3>
+<h3 id="importing-jobs-from-an-excel-file-mark-coming-in-v2-0-mark"><a class="link" href="#importing-jobs-from-an-excel-file-mark-coming-in-v2-0-mark">Importing jobs from an excel file <mark>Coming in v2.0</mark></a></h3>
+<div class="sect3">
+<h4 id="importing-a-new-excel-file-import"><a class="link" href="#importing-a-new-excel-file-import">Importing a new excel file: import</a></h4>
 <div class="paragraph">
-<p>Reverses the most recent <code>undo</code> command.<br>
-Format: <code>redo</code></p>
+<p>You can load your excel file by filename or filepath.
+Format: <code>import PATH_TO_FILE</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Filepath: A text representation of the location of the file used by the computer.</p>
+</li>
+<li>
+<p>CarviciM tries to read the file by rows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The first row specifies the type of detail in the column.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -208,30 +219,192 @@ Format: <code>redo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>deletee 1</code><br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete 1</code> command)<br></p>
-</li>
-<li>
-<p><code>deletee 1</code><br>
-<code>redo</code><br>
-The <code>redo</code> command fails as there are no <code>undo</code> commands executed previously.</p>
-</li>
-<li>
-<p><code>deletee 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>deletee 1</code> command)<br>
-<code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
-<code>redo</code> (reapplies the <code>clear</code> command)<br></p>
+<p><code>import excel.xls</code><br>
+Imports file excel.xls.</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<div class="sect3">
+<h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">Accepting and rejecting changes</a></h4>
 <div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
+<p>You can use 4 commands when reviewing changes:
+* accept INDEX
+* reject INDEX
+* acceptAll
+* rejectAll</p>
+</div>
+<div class="sect4">
+<h5 id="accepting-1-job-accept"><a class="link" href="#accepting-1-job-accept">Accepting 1 job: accept</a></h5>
+<div class="paragraph">
+<p>Accepts a job specified at position INDEX in imported list.
+Format: <code>accept INDEX</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>accept 1</code><br>
+Accepts the first job entry and removes it from imported list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="accepting-all-remaining-imported-jobs-acceptall"><a class="link" href="#accepting-all-remaining-imported-jobs-acceptall">Accepting all remaining imported jobs: acceptAll</a></h5>
+<div class="paragraph">
+<p>Accepts all remaining jobs.
+Format: <code>acceptAll</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>acceptAll</code><br>
+Accepts all remaining job entries and clears the imported list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="rejecting-1-job-reject"><a class="link" href="#rejecting-1-job-reject">Rejecting 1 job: reject</a></h5>
+<div class="paragraph">
+<p>Rejects a job specified at position INDEX in imported list.
+Format: <code>reject INDEX</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>reject 1</code><br>
+Rejects the first job entry and removes it from imported list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="rejecting-all-remaining-imported-jobs-rejectall"><a class="link" href="#rejecting-all-remaining-imported-jobs-rejectall">Rejecting all remaining imported jobs: rejectAll</a></h5>
+<div class="paragraph">
+<p>Rejects all remaining jobs.
+Format: <code>rejectAll</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>rejectAll</code><br>
+Rejects all remaining job entries and clears the imported list.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="writing-comments-to-your-reviews"><a class="link" href="#writing-comments-to-your-reviews">Writing comments to your reviews</a></h4>
+<div class="paragraph">
+<p>While accepting or rejecting changes, you can enter your comments behind the command</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can type any alphanumeric sentence as a comment, as long as it is after the command.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>accept 1</code> good job`<br>
+Accepts first job and attaches "good job" as a comment to the first job.</p>
+</li>
+<li>
+<p><code>acceptAll well done</code><br>
+Accepts all remaining imported jobs and attaches "well done" as a comment to all the remaining imported jobs.</p>
+</li>
+<li>
+<p><code>reject 1 Speak to you during tomorrow&#8217;s meeting.</code><br>
+Rejects first job and attaches "Speak to you during tomorrow&#8217;s meeting." as a comment to the first job.</p>
+</li>
+<li>
+<p><code>rejectAll Please check the customer details.</code><br>
+Rejects all remaining imported jobs and attaches "Please check the customer details." as a comment to all the remaining imported jobs.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sharing-your-feedback-with-your-employees"><a class="link" href="#sharing-your-feedback-with-your-employees">Sharing your feedback with your employees</a></h4>
+<div class="paragraph">
+<p>If you want to share your feedback, you can export it as an excel file, reflecting accept/reject with comments.
+Format: <code>export PATH_TO_FILE</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>You can type any filename supported by your computer&#8217;s storage format</p>
+</li>
+<li>
+<p>If you forgot to export your feedback, you can find it under C:\User\Documents\CarviciM\feedback.xls</p>
+</li>
+<li>
+<p>The feedback file&#8217;s format is support for future imports.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Filepath: A text representation of the location of the file used by the computer.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>export summary report</code>
+Exports the feedback to "summary report.xls"</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -250,221 +423,60 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">Undo/Redo feature</a></h3>
+<h3 id="set-command-feature"><a class="link" href="#set-command-feature">Set command feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
 <div class="paragraph">
-<p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
+<p>Set command keeps 2 lists of command words, the default command words and the custom user command words, which are both managed by the class <code>CommandWords</code>.</p>
 </div>
 <div class="paragraph">
-<p><code>UndoRedoStack</code> only deals with <code>UndoableCommands</code>. Commands that cannot be undone will inherit from <code>Command</code> instead. The following diagram shows the inheritance diagram for commands:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
-</div>
+<p>The default command words are stored as a class level reference <code>COMMANDS</code>, while the custom command words are stored as a field <code>commands</code> in the object.</p>
 </div>
 <div class="paragraph">
-<p>As you can see from the diagram, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
+<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>, as it is required to parse commands in <code>AddressBookParser</code>.</p>
 </div>
 <div class="paragraph">
-<p>Commands that are not undoable are implemented this way:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ListCommand</span> <span class="directive">extends</span> Command {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> CommandResult execute() {
-        <span class="comment">// ... list logic ...</span>
-    }
-}</code></pre>
-</div>
+<p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
 </div>
 <div class="paragraph">
-<p>With the extra layer, the commands that are undoable are implemented this way:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">UndoableCommand</span> <span class="directive">extends</span> Command {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> CommandResult execute() {
-        <span class="comment">// ... undo logic ...</span>
-
-        executeUndoableCommand();
-    }
-}
-
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DeleteCommand</span> <span class="directive">extends</span> UndoableCommand {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> CommandResult executeUndoableCommand() {
-        <span class="comment">// ... delete logic ...</span>
-    }
-}</code></pre>
-</div>
+<p>image::SetCommandLogicDiagram.png[width="800"]+
+image::SetCommandModelDiagram.png[width="800"]+</p>
 </div>
 <div class="paragraph">
-<p>Suppose that the user has just launched the application. The <code>UndoRedoStack</code> will be empty at the beginning.</p>
+<p>As you can see from the diagram, AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component.</p>
 </div>
 <div class="paragraph">
-<p>The user executes a new <code>UndoableCommand</code>, <code>delete 5</code>, to delete the 5th employee in the address book. The current state of the address book is saved before the <code>delete 5</code> command executes. The <code>delete 5</code> command will then be pushed onto the <code>undoStack</code> (the current state is saved together with the command).</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new employee.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If a command fails its execution, it will not be pushed to the <code>UndoRedoStack</code> at all.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The user now decides that adding the employee was a mistake, and decides to undo that action using <code>undo</code>.</p>
-</div>
-<div class="paragraph">
-<p>We will pop the most recent command out of the <code>undoStack</code> and push it back to the <code>redoStack</code>. We will restore the address book to the state before the <code>add</code> command executed.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If the <code>undoStack</code> is empty, then there are no other commands left to be undone, and an <code>Exception</code> will be thrown when popping the <code>undoStack</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following sequence diagram shows how the undo operation works:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>The redo does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If the <code>redoStack</code> is empty, then there are no other commands left to be redone, and an <code>Exception</code> will be thrown when popping the <code>redoStack</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The user now decides to execute a new command, <code>clear</code>. As before, <code>clear</code> will be pushed into the <code>undoStack</code>. This time the <code>redoStack</code> is no longer empty. It will be purged as it no longer make sense to redo the <code>add n/David</code> command (this is the behavior that most modern desktop applications follow).</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
-</div>
+<p>This is to facilitate the saving of data.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
+<h5 id="aspect-where-to-put-commandwords-for-storage"><a class="link" href="#aspect-where-to-put-commandwords-for-storage">Aspect: Where to put CommandWords for storage</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Add a new abstract method <code>executeUndoableCommand()</code></p>
+<p><strong>Alternative 1:</strong> Place <code>CommandWords</code> in <code>UserPrefs</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with <code>Command</code> do not have to know that <code>executeUndoableCommand()</code> exist.</p>
+<p>Pros: Single Responsibility Principle is maintained as custom command words in <code>CommandWords</code> is a user preference.</p>
 </li>
 <li>
-<p>Cons: Hard for new developers to understand the template pattern.</p>
+<p>Cons: More coupling is required for the AddressBook to retrieve the custom command words.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Just override <code>execute()</code></p>
+<p><strong>Alternative 2:</strong> Place <code>CommandWords</code> in <code>AddressBook</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Does not involve the template pattern, easier for new developers to understand.</p>
+<p>Pros: Direct access to custom words in commands.</p>
 </li>
 <li>
-<p>Cons: Classes that inherit from <code>UndoableCommand</code> must remember to call <code>super.execute()</code>, or lose the ability to undo/redo.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire address book.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Easy to implement.</p>
-</li>
-<li>
-<p>Cons: May have performance issues in terms of memory usage.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Alternative 2:</strong> Individual command knows how to undo/redo by itself.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the employee being deleted).</p>
-</li>
-<li>
-<p>Cons: We must ensure that the implementation of each individual command are correct.</p>
+<p>Cons: Single Responsibility Principle will be violated.</p>
 </li>
 </ul>
 </div>
@@ -473,32 +485,31 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-type-of-commands-that-can-be-undone-redone"><a class="link" href="#aspect-type-of-commands-that-can-be-undone-redone">Aspect: Type of commands that can be undone/redone</a></h5>
+<h5 id="aspect-access-to-commandwords"><a class="link" href="#aspect-access-to-commandwords">Aspect: Access to CommandWords</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Only include commands that modifies the address book (<code>add</code>, <code>clear</code>, <code>edit</code>).</p>
+<p><strong>Alternative 1:</strong> <code>ModelManager</code> and member variables gets access and provides API to access <code>CommandWords</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).</p>
+<p>Pros: Write protection.</p>
 </li>
 <li>
-<p>Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing <code>undo</code>.</p>
+<p>Cons: <code>CommandWords</code> is frequently accessed, many more APIs are required.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Include all commands.</p>
+<p><strong>Alternative 2 (current choice):</strong> Provide direct access to <code>CommandWords</code> when more details are needed and keep minimal API on <code>ModelManager</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Might be more intuitive for the user.</p>
+<p>Pros: Easy to implement, neat.</p>
 </li>
 <li>
-<p>Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
-<strong>Additional Info:</strong> See our discussion  <a href="https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672">here</a>.</p>
+<p>Cons: Accidental modification can lead to bugs, so need to be careful.</p>
 </li>
 </ul>
 </div>
@@ -507,31 +518,31 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-data-structure-to-support-the-undo-redo-commands"><a class="link" href="#aspect-data-structure-to-support-the-undo-redo-commands">Aspect: Data structure to support the undo/redo commands</a></h5>
+<h5 id="aspect-storing-the-list-of-default-command-words"><a class="link" href="#aspect-storing-the-list-of-default-command-words">Aspect: Storing the list of default command words</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use separate stack for undo and redo</p>
+<p><strong>Alternative 1 (current choice):</strong> Store the default list in <code>CommandWords</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.</p>
+<p>Pros: Easier to maintain the Open-Closed Principle, also follows the Single Responsibility Principle.</p>
 </li>
 <li>
-<p>Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both <code>HistoryManager</code> and <code>UndoRedoStack</code>.</p>
+<p>Cons: Increased coupling.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Use <code>HistoryManager</code> for undo/redo</p>
+<p><strong>Alternative 2:</strong> Store the default list in <code>Commands</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.</p>
+<p>Pros: Reduced coupling.</p>
 </li>
 <li>
-<p>Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as <code>HistoryManager</code> now needs to do two * different things.</p>
+<p>Cons: <code>Commands</code> is an abstract class, it is not appropriate to reference class variables.</p>
 </li>
 </ul>
 </div>
@@ -542,9 +553,18 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">[Proposed] Data Encryption</a></h3>
-<div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+<h3 id="import-export-feature-mark-coming-in-v2-0-mark"><a class="link" href="#import-export-feature-mark-coming-in-v2-0-mark">Import/Export feature <mark>Coming in v2.0</mark></a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">Current Implementation</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/blank.png" alt="blank" width="800">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+
 </div>
 </div>
 </div>
@@ -552,7 +572,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-20 16:53:13 UTC
+Last updated 2018-03-20 17:18:38 UTC
 </div>
 </div>
 </body>
