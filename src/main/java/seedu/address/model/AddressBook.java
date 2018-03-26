@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -113,8 +114,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Archives job entries in CarviciM.
      */
     public void archiveJob(DateRange dateRange) {
-        while (jobs.iterator().hasNext()) {
-            Job job = jobs.iterator().next();
+        Iterator<Job> iterator = jobs.iterator();
+        while (iterator.hasNext()) {
+            Job job = iterator.next();
             Date date = job.getDate();
             Date startDate = dateRange.getStartDate();
             Date endDate = dateRange.getEndDate();
