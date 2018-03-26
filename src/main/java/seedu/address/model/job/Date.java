@@ -15,22 +15,31 @@ public class Date {
     public static final String MESSAGE_DATE_CONSTRAINTS = "Date should be of the format MMM D YYYY";
     public static final String DATE_VALIDATION_REGEX = "\\w\\w\\w\\s(0[1-9]|[12][0-9]|3[01])\\s(19|20)\\d\\d";
 
-    private static final String DATE_FORMATTER_PATTERN = "MMM d yyy";
+    private static final String DATE_FORMATTER_PATTERN = "d MM yyyy";
+
+    private static final String DATE_SPLIT_REGEX = ",";
+    private static final int DATE_DATA_INDEX_DAY = 0;
+    private static final int DATE_DATA_INDEX_MONTH = 1;
+    private static final int DATE_DATA_INDEX_YEAR = 2;
 
     public final String value;
+    private int day;
+    private int month;
+    private int year;
 
     public Date() {
         value = generateDate();
     }
-
-    public Date(String date) {
-        value = date;
-    }
-
+    
     public Date(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_DATE_CONSTRAINTS);
-        this.date = date;
+        String trimmedDate = date.trim();
+        String[] splitAddress = trimmedDate.split(DATE_SPLIT_REGEX);
+        this.day = Integer.parseInt(splitAddress[DATE_DATA_INDEX_DAY]);
+        this.month = Integer.parseInt(splitAddress[DATE_DATA_INDEX_MONTH]);
+        this.year = Integer.parseInt(splitAddress[DATE_DATA_INDEX_YEAR]);
+        this.value = date;
     }
 
     /**
@@ -48,6 +57,12 @@ public class Date {
     public static boolean isValidDate(String test) {
         return test.matches(DATE_VALIDATION_REGEX);
     }
+
+    public int getDay() { return day; }
+
+    public int getMonth() { return month; }
+
+    public int getYear() { return year; }
 
     @Override
     public String toString() {

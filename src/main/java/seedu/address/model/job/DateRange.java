@@ -2,6 +2,7 @@ package seedu.address.model.job;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 //@@author richardson0694
@@ -22,6 +23,17 @@ public class DateRange {
     public Date getStartDate() { return startDate; }
 
     public Date getEndDate() { return endDate; }
+
+    /**
+     * Compare the startDate with endDate
+     */
+    public int compareTo(Date startDate, Date endDate) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.set(startDate.getYear(), startDate.getMonth(), startDate.getDay());
+        cal2.set(endDate.getYear(), endDate.getMonth(), endDate.getDay());
+        return cal1.compareTo(cal2);
+    }
 
     @Override
     public boolean equals(Object other) {
