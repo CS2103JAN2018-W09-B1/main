@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.job.Date;
+import seedu.address.model.job.DateRange;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobList;
 import seedu.address.model.job.JobNumber;
@@ -36,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueEmployeeList employees;
     private final UniqueTagList tags;
     private final JobList jobs;
+    private final JobList archiveJobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +50,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         employees = new UniqueEmployeeList();
         tags = new UniqueTagList();
         jobs = new JobList();
+        archiveJobs = new JobList();
     }
 
     public AddressBook() {}
@@ -103,6 +106,22 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addJob(Job job) {
         jobs.add(job);
+    }
+
+    //@@author richardson0694
+    /**
+     * Archives job entries in CarviciM.
+     */
+    public void archiveJob(DateRange dateRange) {
+        while (jobs.iterator().hasNext()) {
+            Job job = jobs.iterator().next();
+            Date date = job.getDate();
+            Date startDate = dateRange.getStartDate();
+            Date endDate = dateRange.getEndDate();
+            if (dateRange.compareTo(date, startDate) >= 0 && dateRange.compareTo(date, endDate) <= 0) {
+                archiveJobs.add(job);
+            }
+        }
     }
 
     //// employee-level operations

@@ -1,7 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 
 import java.util.stream.Stream;
 
@@ -23,16 +24,16 @@ public class ArchiveCommandParser implements Parser<ArchiveCommand> {
      */
     public ArchiveCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_DATE);
+                ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_END_DATE);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_DATE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_START_DATE, PREFIX_END_DATE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ArchiveCommand.MESSAGE_USAGE));
         }
 
         try {
-            Date startDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
-            Date endDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            Date startDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_START_DATE)).get();
+            Date endDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_END_DATE)).get();
 
             DateRange dateRange = new DateRange(startDate, endDate);
             return new ArchiveCommand(dateRange);

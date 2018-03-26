@@ -13,11 +13,11 @@ import java.time.format.DateTimeFormatter;
 public class Date {
 
     public static final String MESSAGE_DATE_CONSTRAINTS = "Date should be of the format MMM D YYYY";
-    public static final String DATE_VALIDATION_REGEX = "\\w\\w\\w\\s(0[1-9]|[12][0-9]|3[01])\\s(19|20)\\d\\d";
+    public static final String DATE_VALIDATION_REGEX = "\\d\\d\\/(0[1-9]|[12][0-9]|3[01])\\/(19|20)\\d\\d";
 
-    private static final String DATE_FORMATTER_PATTERN = "d MM yyyy";
+    private static final String DATE_FORMATTER_PATTERN = "d/MM/yyyy";
 
-    private static final String DATE_SPLIT_REGEX = ",";
+    private static final String DATE_SPLIT_REGEX = "/";
     private static final int DATE_DATA_INDEX_DAY = 0;
     private static final int DATE_DATA_INDEX_MONTH = 1;
     private static final int DATE_DATA_INDEX_YEAR = 2;

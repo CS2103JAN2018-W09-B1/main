@@ -1,28 +1,27 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.DateRange;
 
 //@@author richardson0694
 /**
  * Archives job entries within selected date range.
  */
-public class ArchiveCommand extends UndoableCommand {
+public class ArchiveCommand extends Command {
     public static final String COMMAND_WORD = "archive";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Archives job entries within selected date range. "
             + "Parameters: "
-            + PREFIX_DATE + "DATE "
-            + PREFIX_DATE + "DATE "
+            + PREFIX_START_DATE + "DATE "
+            + PREFIX_END_DATE + "DATE "
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_DATE + "Mar 01 2018 "
-            + PREFIX_DATE + "Mar 25 2018 ";
+            + PREFIX_START_DATE + "01/03/2018 "
+            + PREFIX_END_DATE + "25/03/2018 ";
 
     public static final String MESSAGE_SUCCESS = "Archived successfully";
-    public static final String MESSAGE_DUPLICATE_FILE = "This archive already exists in the address book";
 
     private final DateRange toArchive;
 
@@ -35,14 +34,10 @@ public class ArchiveCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() {
         requireNonNull(model);
-        try {
-            model.archiveJob(toArchive);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toArchive));
-        } catch (DuplicateFileException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_FILE);
-        }
+        model.archiveJob(toArchive);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
