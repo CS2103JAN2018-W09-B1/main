@@ -17,10 +17,14 @@ public class Date {
 
     private static final String DATE_FORMATTER_PATTERN = "MMM d yyy";
 
-    public final String date;
+    public final String value;
 
     public Date() {
-        date = generateDate();
+        value = generateDate();
+    }
+
+    public Date(String date) {
+        value = date;
     }
 
     public Date(String date) {
@@ -47,19 +51,19 @@ public class Date {
 
     @Override
     public String toString() {
-        return date;
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Date // instanceof handles nulls
-                && this.date.equals(((Date) other).date)); // state check
+                && this.value.equals(((Date) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return date.hashCode();
+        return value.hashCode();
     }
 
 }
