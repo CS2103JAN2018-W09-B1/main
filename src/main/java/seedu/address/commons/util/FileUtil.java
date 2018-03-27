@@ -36,8 +36,7 @@ public class FileUtil {
         if (isFileExists(file)) {
             file.delete();
             createFile(file);
-        }
-        else {
+        } else {
             createFile(file);
         }
     }

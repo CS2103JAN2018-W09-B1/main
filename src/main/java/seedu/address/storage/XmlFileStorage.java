@@ -24,18 +24,6 @@ public class XmlFileStorage {
         }
     }
 
-    /**
-     * Returns address book in the file or an empty address book
-     */
-    public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
-                                                                            FileNotFoundException {
-        try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
-        } catch (JAXBException e) {
-            throw new DataConversionException(e);
-        }
-    }
-
     //@@author richardson0694
     /**
      * Saves the given archivejob data to the specified file.
@@ -49,6 +37,20 @@ public class XmlFileStorage {
         }
     }
 
+    //@@author
+    /**
+     * Returns address book in the file or an empty address book
+     */
+    public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
+                                                                            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+
+    //@@author richardson0694
     /**
      * Returns archive job in the file or an empty address book
      */

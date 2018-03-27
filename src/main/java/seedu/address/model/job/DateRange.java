@@ -20,9 +20,13 @@ public class DateRange {
         this.endDate = endDate;
     }
 
-    public Date getStartDate() { return startDate; }
+    public Date getStartDate() {
+        return startDate;
+    }
 
-    public Date getEndDate() { return endDate; }
+    public Date getEndDate() {
+        return endDate;
+    }
 
     /**
      * Compare the startDate with endDate

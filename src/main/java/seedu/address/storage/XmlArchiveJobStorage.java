@@ -53,7 +53,7 @@ public class XmlArchiveJobStorage implements ArchiveJobStorage {
             return Optional.empty();
         }
 
-        XmlSerializableArchiveJob xmlArchiveJob= XmlFileStorage.loadDataFromArchiveFile(new File(filePath));
+        XmlSerializableArchiveJob xmlArchiveJob = XmlFileStorage.loadDataFromArchiveFile(new File(filePath));
         try {
             return Optional.of(xmlArchiveJob.toModelType());
         } catch (IllegalValueException ive) {
