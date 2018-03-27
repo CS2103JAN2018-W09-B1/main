@@ -412,9 +412,10 @@ Format: <code>redo</code></p>
 <div class="content">
 <img src="../images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
+<div class="title">Figure 1. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
-<p>As you can see from the diagram, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
+<p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are implemented this way:</p>
@@ -452,24 +453,39 @@ Format: <code>redo</code></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Suppose that the user has just launched the application. The <code>UndoRedoStack</code> will be empty at the beginning.</p>
+<p>Suppose that the user has just launched the application. The steps below show the changes to the state of the stack for the <code>undo</code> command:</p>
 </div>
-<div class="paragraph">
-<p>The user executes a new <code>UndoableCommand</code>, <code>delete 5</code>, to delete the 5th employee in the address book. The current state of the address book is saved before the <code>delete 5</code> command executes. The <code>delete 5</code> command will then be pushed onto the <code>undoStack</code> (the current state is saved together with the command).</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The <code>UndoRedoStack</code> will be empty at the beginning.</p>
+</li>
+<li>
+<p>The user executes a new <code>UndoableCommand</code>, <code>delete 5</code>, to delete the 5th employee in the address book. The current state of the address book is saved before the <code>delete 5</code> command executes. The <code>delete 5</code> command will then be pushed onto the <code>undoStack</code> (the current state is saved together with the command), as shown in the figure below.</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="../images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
+<div class="title">Figure 2. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
-<div class="paragraph">
-<p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new employee.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, as shown in the figure below, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new employee.</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="../images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
+<div class="title">Figure 3. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -482,17 +498,26 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 </tr>
 </table>
 </div>
-<div class="paragraph">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
 <p>The user now decides that adding the employee was a mistake, and decides to undo that action using <code>undo</code>.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>We will pop the most recent command out of the <code>undoStack</code> and push it back to the <code>redoStack</code>. We will restore the address book to the state before the <code>add</code> command executed.</p>
+<p>As shown in the diagram below, we will pop the most recent command out of the <code>undoStack</code> and push it back to the <code>redoStack</code>. We will restore the address book to the state before the <code>add</code> command executed.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="../images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
+<div class="title">Figure 4. Step 3: <code>undo</code> action</div>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -505,6 +530,8 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 </tr>
 </table>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the undo operation works:</p>
 </div>
@@ -512,10 +539,13 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
+<div class="title">Figure 5. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
-<p>The redo does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
+<p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -528,6 +558,8 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </tr>
 </table>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p>The user now decides to execute a new command, <code>clear</code>. As before, <code>clear</code> will be pushed into the <code>undoStack</code>. This time the <code>redoStack</code> is no longer empty. It will be purged as it no longer make sense to redo the <code>add n/David</code> command (this is the behavior that most modern desktop applications follow).</p>
 </div>
@@ -535,6 +567,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
+<div class="title">Figure 6. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -543,6 +576,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
+<div class="title">Figure 7. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -551,6 +585,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
+<div class="title">Figure 8. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
@@ -560,7 +595,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Add a new abstract method <code>executeUndoableCommand()</code></p>
+<p><strong>Current choice:</strong> Add a new abstract method <code>executeUndoableCommand()</code></p>
 <div class="ulist">
 <ul>
 <li>
@@ -573,7 +608,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Just override <code>execute()</code></p>
+<p><em>Alternative:</em> Just override <code>execute()</code></p>
 <div class="ulist">
 <ul>
 <li>
@@ -593,7 +628,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire address book.</p>
+<p><strong>Current choice:</strong> Saves the entire address book.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -606,7 +641,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Individual command knows how to undo/redo by itself.</p>
+<p><em>Alternative:</em> Individual command knows how to undo/redo by itself.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -626,7 +661,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Only include commands that modifies the address book (<code>add</code>, <code>clear</code>, <code>edit</code>).</p>
+<p><strong>Current choice:</strong> Only include commands that modifies the address book (<code>add</code>, <code>clear</code>, <code>edit</code>).</p>
 <div class="ulist">
 <ul>
 <li>
@@ -639,7 +674,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Include all commands.</p>
+<p><em>Alternative:</em> Include all commands.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -660,7 +695,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use separate stack for undo and redo</p>
+<p>Current choice:** Use separate stack for undo and redo</p>
 <div class="ulist">
 <ul>
 <li>
@@ -673,7 +708,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Use <code>HistoryManager</code> for undo/redo</p>
+<p><em>Alternative:</em> Use <code>HistoryManager</code> for undo/redo</p>
 <div class="ulist">
 <ul>
 <li>
@@ -710,7 +745,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-27 04:17:53 UTC
+Last updated 2018-03-27 04:18:57 UTC
 </div>
 </div>
 </body>
