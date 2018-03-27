@@ -205,7 +205,7 @@ public class ParserUtil {
 
     //@@author richardson0694
     /**
-     * Parses a {@code String date into a {@code Date}.
+     * Parses a {@code String date} into a {@code Date}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code date} is invalid.
@@ -221,7 +221,7 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> date} into an {@code Optional<Date>}
-     * if {@code date is present.
+     * if {@code date} is present.
      *
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
