@@ -110,7 +110,9 @@ public class AddJobCommandTest {
         }
 
         @Override
-        public void archiveJob(DateRange dateRange) { fail("This method should not be called"); }
+        public void archiveJob(DateRange dateRange) {
+            fail("This method should not be called");
+        }
 
         @Override
         public void deletePerson(Employee target) throws EmployeeNotFoundException {

@@ -162,7 +162,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void archiveJob(DateRange dateRange) { fail("This method should not be called"); }
+        public void archiveJob(DateRange dateRange) {
+            fail("This method should not be called");
+        }
 
         @Override
         public void updatePerson(Employee target, Employee editedEmployee)

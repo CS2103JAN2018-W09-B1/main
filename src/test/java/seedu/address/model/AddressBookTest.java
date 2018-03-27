@@ -81,7 +81,7 @@ public class AddressBookTest {
         private final ObservableList<Job> archiveJobs = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Employee> employees, Collection<Job> jobs, Collection<? extends Tag> tags,
-                        Collection<Job> archiveJobs ) {
+                        Collection<Job> archiveJobs) {
             this.employees.setAll(employees);
             this.jobs.setAll(jobs);
             this.tags.setAll(tags);
@@ -104,7 +104,9 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Job> getArchiveJobList() { return archiveJobs; }
+        public ObservableList<Job> getArchiveJobList() {
+            return archiveJobs;
+        }
     }
 
 }
