@@ -30,7 +30,7 @@ public class Date {
     public Date() {
         value = generateDate();
     }
-    
+
     public Date(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_DATE_CONSTRAINTS);

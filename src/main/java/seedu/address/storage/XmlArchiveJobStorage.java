@@ -76,7 +76,7 @@ public class XmlArchiveJobStorage implements ArchiveJobStorage {
         requireNonNull(filePath);
 
         File file = new File(filePath);
-        FileUtil.createIfMissing(file);
+        FileUtil.createEvenIfExist(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableArchiveJob(addressBook));
     }
 

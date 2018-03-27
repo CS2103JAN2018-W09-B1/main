@@ -38,7 +38,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueEmployeeList employees;
     private final UniqueTagList tags;
     private final JobList jobs;
-    private final JobList archiveJobs;
+    private JobList archiveJobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -114,6 +114,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Archives job entries in CarviciM.
      */
     public void archiveJob(DateRange dateRange) {
+        archiveJobs = new JobList();
         Iterator<Job> iterator = jobs.iterator();
         while (iterator.hasNext()) {
             Job job = iterator.next();
