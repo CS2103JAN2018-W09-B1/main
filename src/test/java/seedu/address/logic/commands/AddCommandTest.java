@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.job.DateRange;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Employee;
@@ -159,6 +160,9 @@ public class AddCommandTest {
         public void sortPersonList() {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void archiveJob(DateRange dateRange) { fail("This method should not be called"); }
 
         @Override
         public void updatePerson(Employee target, Employee editedEmployee)

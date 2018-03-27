@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.job.DateRange;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobNumber;
 import seedu.address.model.job.VehicleNumber;
@@ -107,6 +108,9 @@ public class AddJobCommandTest {
         public void closeJob(Job target) throws JobNotFoundException {
             fail("This method should not be called.");
         }
+        
+        @Override
+        public void archiveJob(DateRange dateRange) { fail("This method should not be called"); }
 
         @Override
         public void deletePerson(Employee target) throws EmployeeNotFoundException {
