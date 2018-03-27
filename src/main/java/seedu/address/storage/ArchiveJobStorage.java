@@ -26,7 +26,7 @@ public interface ArchiveJobStorage {
     Optional<ReadOnlyAddressBook> readArchiveJob() throws DataConversionException, IOException;
 
     /**
-     * @see #getArchiveJobFilePath() 
+     * @see #getArchiveJobFilePath()
      */
     Optional<ReadOnlyAddressBook> readArchiveJob(String filePath) throws DataConversionException, IOException;
 
@@ -38,7 +38,7 @@ public interface ArchiveJobStorage {
     void saveArchiveJob(ReadOnlyAddressBook addressBook) throws IOException;
 
     /**
-     * @see #saveArchiveJob(ReadOnlyAddressBook) 
+     * @see #saveArchiveJob(ReadOnlyAddressBook)
      */
     void saveArchiveJob(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
