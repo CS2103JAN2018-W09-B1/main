@@ -154,7 +154,7 @@
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>Restores CarviciM to the state before the previous <em>undoable</em> command was executed.<br>
+<p>You can use this command to restore CarviciM to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -165,7 +165,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj, `closej</code>, <code>adde</code>, <code>deletee</code>, <code>edit</code> and <code>cleare</code>).</p>
 </div>
 </td>
 </tr>
@@ -177,21 +177,84 @@ Format: <code>undo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>delete 1</code><br>
-<code>list</code><br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>deletee 1</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the first employee in CarviciM.+</p>
 </li>
 <li>
-<p><code>select 1</code><br>
-<code>list</code><br>
-<code>undo</code><br>
-The <code>undo</code> command fails as there are no undoable commands executed previously.</p>
+<p>You will see that the first employee is no longer displayed in the <a href="#employees-ui-panel">employees UI panel</a>.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p><code>delete 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
+<p><code>liste</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Shows all employees in CarviciM.<br></p>
+</li>
+<li>
+<p>You will not see the deleted employee of index 1 in employees UI panel.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see the deleted employee present in the employees UI panel again.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Example 2:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>closej 1</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that job number 1 is removed from the <a href="#jobs-ui-panel">jobs UI panel</a>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>undo</code> (reverses the <code>closej 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that job number 1 is added back into the jobs UI panel.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>undo</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>undo</code> command fails as there are no undoable commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
@@ -199,7 +262,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 <div class="sect2">
 <h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
-<p>Reverses the most recent <code>undo</code> command.<br>
+<p>You can use this command to reverse the most recent <code>undo</code> command.<br>
 Format: <code>redo</code></p>
 </div>
 <div class="paragraph">
@@ -208,22 +271,108 @@ Format: <code>redo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>deletee 1</code><br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete 1</code> command)<br></p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>deletee 1</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the first employee is removed from the <a href="#employees-ui-panel">employees UI panel</a>.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p><code>deletee 1</code><br>
-<code>redo</code><br>
-The <code>redo</code> command fails as there are no <code>undo</code> commands executed previously.</p>
+<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the deleted employee is added back into the employees UI panel.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p><code>deletee 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>deletee 1</code> command)<br>
-<code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
-<code>redo</code> (reapplies the <code>clear</code> command)<br></p>
+<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the same employee is removed from the employees UI panel again.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Example 2:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>closej 1</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the job number 1 is removed from the <a href="#jobs-ui-panel">jobs UI panel</a>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>deletee 1</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the first employee is removed from the employees UI panel.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the deleted employee is added back into the employees UI panel.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>undo</code> (reverses the <code>closej 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the closed job number 1 is added back into the jobs UI panel.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>redo</code> (reapplies the <code>closej 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the job number 1 is removed from the jobs UI panel again.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see that the same employee is removed from the employees UI panel.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
@@ -561,7 +710,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-26 08:13:26 UTC
+Last updated 2018-03-27 04:04:48 UTC
 </div>
 </div>
 </body>

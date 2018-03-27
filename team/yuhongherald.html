@@ -116,9 +116,9 @@
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="changing-a-command-word-code-set-code"><a class="link" href="#changing-a-command-word-code-set-code">Changing a command word : <code>set</code></a></h3>
+<h3 id="changing-a-a-href-command-word-command-word-a-code-set-code"><a class="link" href="#changing-a-a-href-command-word-command-word-a-code-set-code">Changing a <a href="#command-word">command word</a> : <code>set</code></a></h3>
 <div class="paragraph">
-<p>You can set an easy to use word in place of a default command word.<br>
+<p>You can use this command to set an easy to use word in place of a default command word.<br>
 Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 </div>
 <div class="admonitionblock note">
@@ -151,39 +151,55 @@ Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>set add a</code><br>
-Sets <code>add</code> command word to <code>a</code> using default</p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>set add a</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Sets <code>add</code> command word to <code>a</code> using default.<br></p>
 </li>
 <li>
-<p><code>set add s</code><br>
-Sets <code>add</code> command word to <code>s</code> using default</p>
+<p>You will see "add has been replaced with a!" in the <a href="#result-display">result display</a>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
-<p><code>set set a</code><br>
-Sets <code>set</code> command word to <code>a</code> using default</p>
+<p>Example 2:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>set delete d</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Sets <code>delete</code> command word to <code>d</code> using default.<br></p>
 </li>
 <li>
-<p><code>set a s</code><br>
-Invalid command as s is already used by user.</p>
+<p>You will see "delete has been replaced with d!" in the result display.</p>
 </li>
-<li>
-<p><code>set a add</code><br>
-Invalid command as add is a default command.</p>
+</ul>
+</div>
 </li>
-<li>
-<p><code>set a set</code><br>
-Sets <code>a</code> command word back to <code>set</code>, its default mapping.</p>
+</ol>
+</div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-jobs-from-an-excel-file-mark-coming-in-v2-0-mark"><a class="link" href="#importing-jobs-from-an-excel-file-mark-coming-in-v2-0-mark">Importing jobs from an excel file <mark>Coming in v2.0</mark></a></h3>
+<h3 id="importing-jobs-from-an-excel-file"><a class="link" href="#importing-jobs-from-an-excel-file">Importing jobs from an excel file</a></h3>
 <div class="sect3">
-<h4 id="importing-a-new-excel-file-import"><a class="link" href="#importing-a-new-excel-file-import">Importing a new excel file: import</a></h4>
+<h4 id="importing-a-new-excel-file-code-import-code"><a class="link" href="#importing-a-new-excel-file-code-import-code">Importing a new excel file: <code>import</code></a></h4>
 <div class="paragraph">
-<p>You can load your excel file by filename or filepath.
-Format: <code>import PATH_TO_FILE</code></p>
+<p>You can use this command to load your excel file by filename or filepath.<br>
+Format: <code>import FILE_PATH</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -219,8 +235,21 @@ Format: <code>import PATH_TO_FILE</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>import excel.xls</code><br>
-Imports file excel.xls.</p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>import excel.xls</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Imports file excel.xls.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
@@ -229,13 +258,13 @@ Imports file excel.xls.</p>
 <h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">Accepting and rejecting changes</a></h4>
 <div class="paragraph">
 <p>You can use 4 commands when reviewing changes:
-* accept INDEX
-* reject INDEX
-* acceptAll
-* rejectAll</p>
+* <code>accept INDEX</code>
+* <code>reject INDEX</code>
+* <code>acceptAll</code>
+* <code>rejectAll</code></p>
 </div>
 <div class="sect4">
-<h5 id="accepting-1-job-accept"><a class="link" href="#accepting-1-job-accept">Accepting 1 job: accept</a></h5>
+<h5 id="accepting-1-job-code-accept-code"><a class="link" href="#accepting-1-job-code-accept-code">Accepting 1 job: <code>accept</code></a></h5>
 <div class="paragraph">
 <p>Accepts a job specified at position INDEX in imported list.
 Format: <code>accept INDEX</code></p>
@@ -246,14 +275,27 @@ Format: <code>accept INDEX</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>accept 1</code><br>
-Accepts the first job entry and removes it from imported list.</p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>accept 1</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Accepts the first job entry and removes it from imported list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="accepting-all-remaining-imported-jobs-acceptall"><a class="link" href="#accepting-all-remaining-imported-jobs-acceptall">Accepting all remaining imported jobs: acceptAll</a></h5>
+<h5 id="accepting-all-remaining-imported-jobs-code-acceptall-code"><a class="link" href="#accepting-all-remaining-imported-jobs-code-acceptall-code">Accepting all remaining imported jobs: <code>acceptAll</code></a></h5>
 <div class="paragraph">
 <p>Accepts all remaining jobs.
 Format: <code>acceptAll</code></p>
@@ -264,14 +306,27 @@ Format: <code>acceptAll</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>acceptAll</code><br>
-Accepts all remaining job entries and clears the imported list.</p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>acceptAll</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Accepts all remaining job entries and clears the imported list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="rejecting-1-job-reject"><a class="link" href="#rejecting-1-job-reject">Rejecting 1 job: reject</a></h5>
+<h5 id="rejecting-1-job-code-reject-code"><a class="link" href="#rejecting-1-job-code-reject-code">Rejecting 1 job: <code>reject</code></a></h5>
 <div class="paragraph">
 <p>Rejects a job specified at position INDEX in imported list.
 Format: <code>reject INDEX</code></p>
@@ -282,14 +337,27 @@ Format: <code>reject INDEX</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>reject 1</code><br>
-Rejects the first job entry and removes it from imported list.</p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>reject 1</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rejects the first job entry and removes it from imported list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="rejecting-all-remaining-imported-jobs-rejectall"><a class="link" href="#rejecting-all-remaining-imported-jobs-rejectall">Rejecting all remaining imported jobs: rejectAll</a></h5>
+<h5 id="rejecting-all-remaining-imported-jobs-code-rejectall-code"><a class="link" href="#rejecting-all-remaining-imported-jobs-code-rejectall-code">Rejecting all remaining imported jobs: <code>rejectAll</code></a></h5>
 <div class="paragraph">
 <p>Rejects all remaining jobs.
 Format: <code>rejectAll</code></p>
@@ -300,8 +368,21 @@ Format: <code>rejectAll</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>rejectAll</code><br>
-Rejects all remaining job entries and clears the imported list.</p>
+<p>Example 1:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>rejectAll</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rejects all remaining job entries and clears the imported list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
@@ -310,7 +391,7 @@ Rejects all remaining job entries and clears the imported list.</p>
 <div class="sect3">
 <h4 id="writing-comments-to-your-reviews"><a class="link" href="#writing-comments-to-your-reviews">Writing comments to your reviews</a></h4>
 <div class="paragraph">
-<p>While accepting or rejecting changes, you can enter your comments behind the command</p>
+<p>While accepting or rejecting changes, you can enter your comments behind the command.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -332,20 +413,72 @@ Rejects all remaining job entries and clears the imported list.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>accept 1</code> good job`<br>
-Accepts first job and attaches "good job" as a comment to the first job.</p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>accept 1</code> good job`<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Accepts first job and attaches "good job" as a comment to the first job.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
-<p><code>acceptAll well done</code><br>
-Accepts all remaining imported jobs and attaches "well done" as a comment to all the remaining imported jobs.</p>
+<p>Example 2:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>acceptAll well done</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Accepts all remaining imported jobs and attaches "well done" as a comment to all the remaining imported jobs.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
-<p><code>reject 1 Speak to you during tomorrow&#8217;s meeting.</code><br>
-Rejects first job and attaches "Speak to you during tomorrow&#8217;s meeting." as a comment to the first job.</p>
+<p>Example 3:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>reject 1 Speak to you during tomorrow&#8217;s meeting.</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rejects first job and attaches "Speak to you during tomorrow&#8217;s meeting." as a comment to the first job.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
-<p><code>rejectAll Please check the customer details.</code><br>
-Rejects all remaining imported jobs and attaches "Please check the customer details." as a comment to all the remaining imported jobs.</p>
+<p>Example 4:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>rejectAll Please check the customer details.</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rejects all remaining imported jobs and attaches "Please check the customer details." as a comment to all the remaining imported jobs.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
@@ -354,7 +487,7 @@ Rejects all remaining imported jobs and attaches "Please check the customer deta
 <h4 id="sharing-your-feedback-with-your-employees"><a class="link" href="#sharing-your-feedback-with-your-employees">Sharing your feedback with your employees</a></h4>
 <div class="paragraph">
 <p>If you want to share your feedback, you can export it as an excel file, reflecting accept/reject with comments.
-Format: <code>export PATH_TO_FILE</code></p>
+Format: <code>export FILE_PATH</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -366,10 +499,10 @@ Format: <code>export PATH_TO_FILE</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>You can type any filename supported by your computer&#8217;s storage format</p>
+<p>You can type any filename supported by your computer&#8217;s storage format.</p>
 </li>
 <li>
-<p>If you forgot to export your feedback, you can find it under C:\User\Documents\CarviciM\feedback.xls</p>
+<p>If you forgot to export your feedback, you can find it under C:\User\Documents\CarviciM\feedback.xls.</p>
 </li>
 <li>
 <p>The feedback file&#8217;s format is support for future imports.</p>
@@ -388,7 +521,7 @@ Format: <code>export PATH_TO_FILE</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Filepath: A text representation of the location of the file used by the computer.</p>
+<p>Filepath: A text representation of the file location in the computer.</p>
 </div>
 </td>
 </tr>
@@ -400,8 +533,21 @@ Format: <code>export PATH_TO_FILE</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>export summary report</code>
-Exports the feedback to "summary report.xls"</p>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>export summary report</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Exports the feedback to "summary report.xls"</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
 </div>
@@ -572,7 +718,7 @@ image::SetCommandModelDiagram.png[width="800"]+</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-26 08:13:26 UTC
+Last updated 2018-03-27 04:04:48 UTC
 </div>
 </div>
 </body>
