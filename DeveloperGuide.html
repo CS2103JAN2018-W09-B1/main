@@ -18,7 +18,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>W09-GroupB1</code>      Since: <code>May 2018</code>      Licence: <code>MIT</code></p>
+<p>By: <code>W09-GroupB1</code>      Since: <code>FEB 2018</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -44,14 +44,15 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#set-command-feature">3.1. Set command feature</a></li>
-<li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.2. Import/Export feature <mark>Coming in v2.0</mark></a></li>
-<li><a href="#theme-setting-feature">3.3. Theme setting feature</a></li>
-<li><a href="#undo-redo-feature">3.4. Undo/Redo feature</a></li>
-<li><a href="#send-email-to-employees-about-job">3.5. Send Email to Employees about Job</a></li>
-<li><a href="#proposed-data-encryption">3.6. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.7. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.8. Configuration</a></li>
+<li><a href="#add-job-feature">3.1. Add job feature</a></li>
+<li><a href="#set-command-feature">3.2. Set command feature</a></li>
+<li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.3. Import/Export feature <mark>Coming in v2.0</mark></a></li>
+<li><a href="#theme-setting-feature">3.4. Theme setting feature</a></li>
+<li><a href="#undo-redo-feature">3.5. Undo/Redo feature</a></li>
+<li><a href="#send-email-to-employees-about-job">3.6. Send Email to Employees about Job</a></li>
+<li><a href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.8. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -651,14 +652,185 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="set-command-feature"><a class="link" href="#set-command-feature">3.1. Set command feature</a></h3>
+<h3 id="add-job-feature"><a class="link" href="#add-job-feature">3.1. Add job feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p><code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> (refer to figure).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ModelClassDiagram.png" alt="ModelClassDiagram" width="800">
+</div>
+<div class="title">Figure 11. Class Diagram of Model component</div>
+</div>
+<div class="paragraph">
+<p><code>Person</code> represents the client of a job. <code>JobNumber</code> represents the number of a job and is responsible for generating a running number for each job. <code>Status</code> represents the status of a job which holds value of either <code>ongoing</code> or <code>closed</code> that is used for categorizing jobs. <code>Date</code> represents the date of creation for the job. <code>RemarkList</code> holds all <code>Remark</code> belonging to the job. <code>UniqueEmployeeList</code> of the job represents the employees assigned.</p>
+</div>
+<div class="paragraph">
+<p>The job adding mechanism is facilitated by a <code>AddJobCommand</code> which is an <code>UndoableCommand</code>. <code>AddJobCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>NAME</code>, <code>PHONE</code>, <code>EMAIL</code>, <code>VEHICLE_NUMBER</code> and <code>ASSIGNED_EMPLOYEE_INDEX</code> and creates <code>AddJobCommand</code> object which prepares the <code>Job</code> object.</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the parameters are invalid, <code>addj</code> command will return an invalid message, which shows the usage information to the user.
+(e.g. <code>addj n/John Doe p/9999999 e/john@example.com v/SHG123 w/-1</code>).
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><code>AddJobCommandParser</code> code snippet to validate the parameters, <code>NAME</code>, <code>PHONE</code>, <code>EMAIL</code>, <code>VEHICLE_NUMBER</code>, <code>ASSIGNED_EMPLOYEE_INDEX+</code>, which returns <code>AddJobCommand</code> object if valid, and invalid message otherwise:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> AddJobCommand parse(<span class="predefined-type">String</span> args) <span class="directive">throws</span> <span class="exception">ParseException</span> {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE,
+                        PREFIX_EMAIL, PREFIX_VEHICLE_NUMBER, PREFIX_ASSIGNED_EMPLOYEE);
+
+        <span class="keyword">if</span> (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE,
+                PREFIX_EMAIL, PREFIX_VEHICLE_NUMBER, PREFIX_ASSIGNED_EMPLOYEE)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(<span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, AddJobCommand.MESSAGE_USAGE));
+        }
+
+        <span class="keyword">try</span> {
+            <span class="predefined-type">Name</span> name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+            VehicleNumber vehicleNumber =
+                    ParserUtil.parseVehicleNumber(argMultimap.getValue(PREFIX_VEHICLE_NUMBER)).get();
+            <span class="predefined-type">ArrayList</span>&lt;Index&gt; assignedEmployeeIndices =
+                    ParserUtil.parseIndices(argMultimap.getAllValues(PREFIX_ASSIGNED_EMPLOYEE));
+
+            Person client = <span class="keyword">new</span> Person(name, phone, email);
+            <span class="keyword">return</span> <span class="keyword">new</span> AddJobCommand(client, vehicleNumber, assignedEmployeeIndices);
+
+        } <span class="keyword">catch</span> (IllegalValueException ive) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(<span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, AddJobCommand.MESSAGE_USAGE));
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>preprocessUndoableCommand</code> method code snippet in <code>AddJobCommand</code> that checks if assigned employee exists for the indices given. It creates <code>Job</code> object only if valid, and throws an invalid message otherwise:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">protected</span> <span class="type">void</span> preprocessUndoableCommand() <span class="directive">throws</span> CommandException {
+        <span class="predefined-type">List</span>&lt;Employee&gt; lastShownList = model.getFilteredPersonList();
+
+        <span class="comment">//Check for valid employee indices</span>
+        <span class="keyword">for</span> (Index targetIndex : targetIndices) {
+            <span class="keyword">if</span> (targetIndex.getZeroBased() &gt;= lastShownList.size()) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
+            }
+        }
+
+        <span class="keyword">try</span> {
+            <span class="keyword">for</span> (Index targetIndex : targetIndices) {
+                assignedEmployees.add(lastShownList.get(targetIndex.getZeroBased()));
+            }
+            toAdd = <span class="keyword">new</span> Job(client, vehicleNumber, <span class="keyword">new</span> JobNumber(), <span class="keyword">new</span> <span class="predefined-type">Date</span>(), assignedEmployees,
+                    <span class="keyword">new</span> Status(Status.STATUS_ONGOING), <span class="keyword">new</span> RemarkList());
+        } <span class="keyword">catch</span> (DuplicateEmployeeException e) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(<span class="string"><span class="delimiter">&quot;</span><span class="content">Duplicate employee index</span><span class="delimiter">&quot;</span></span>);
+        }
+
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The successful execution of <code>AddJobCommand</code> adds the <code>Job</code> to CarviciM.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-modelling-jobs-in-carvicim"><a class="link" href="#aspect-modelling-jobs-in-carvicim">Aspect: Modelling jobs in CarviciM</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Adding a list to keep track of all jobs in CarviciM, and adding an attribute for keeping a list of assigned employees in <code>Job</code> class.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Finding assigned employees of a job, requires only going through the assigned employee list of the job. Removal of a job is done easily by removing it from the list of jobs.</p>
+</li>
+<li>
+<p>Cons: Additional list to maintain, other than the list of employees. Changes to an employee needs to be updated for all jobs that contains the respective employee.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Add a new attribute in <code>Employee</code> class to keep a list of jobs.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Only need to maintain a single list of employees. Finding jobs that are assigned to an <code>Employee</code> object only requires going through the job list.</p>
+</li>
+<li>
+<p>Cons: Finding all employees belonging to a job, requires going through the job list of all employees. The removal of a job, requires going through all employees, as a job can be assigned to multiple employees.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-checking-if-given-employee-indices-point-to-valid-employees-in-carvicim"><a class="link" href="#aspect-checking-if-given-employee-indices-point-to-valid-employees-in-carvicim">Aspect: Checking if given employee indices point to valid employees in CarviciM</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Perform check in the <code>preprocessUndoableCommand</code> method of <code>AddJobCommand</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Does not introduce more coupling.</p>
+</li>
+<li>
+<p>Cons: <code>AddJobCommand</code> will need to store more attributes, as a <code>Job</code> object is only created when <code>preprocessUndoableCommand</code> method is executed successfully.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Allow <code>ParserUtil</code> to hold employee list.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: <code>AddJobCommandParser</code> determines if the employee indices point to valid employees, and creates the <code>Job</code> object.</p>
+</li>
+<li>
+<p>Cons: Allowing <code>ParserUtil</code> to hold the list of employees introduce more coupling among the classes.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="set-command-feature"><a class="link" href="#set-command-feature">3.2. Set command feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/SetCommandObjectDiagram.png" alt="SetCommandObjectDiagram" width="800">
 </div>
-<div class="title">Figure 11. ClassDiagram of CommandWords at runtime</div>
+<div class="title">Figure 12. ClassDiagram of CommandWords at runtime</div>
 </div>
 <div class="paragraph">
 <p><code>SetCommand</code> keeps 2 lists of command words:
@@ -675,11 +847,11 @@ Both are managed by the class <code>CommandWords</code>.</p>
 <p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
 </div>
 <div class="paragraph">
-<p>As you can see from figure 11, AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component. This is to facilitate the saving of data. CommandWords also has a method checkIntegrity, which ensures that object command words are 1 to 1 with class command words. This allows forward compatibility, as well as protects against data corruption to some extent.</p>
+<p>As you can see from figure 12, AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component. This is to facilitate the saving of data. CommandWords also has a method checkIntegrity, which ensures that object command words are 1 to 1 with class command words. This allows forward compatibility, as well as protects against data corruption to some extent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-where-to-put-commandwords-for-storage"><a class="link" href="#aspect-where-to-put-commandwords-for-storage">Aspect: Where to put CommandWords for storage</a></h5>
 <div class="ulist">
@@ -782,9 +954,9 @@ Both are managed by the class <code>CommandWords</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="import-export-feature-mark-coming-in-v2-0-mark"><a class="link" href="#import-export-feature-mark-coming-in-v2-0-mark">3.2. Import/Export feature <mark>Coming in v2.0</mark></a></h3>
+<h3 id="import-export-feature-mark-coming-in-v2-0-mark"><a class="link" href="#import-export-feature-mark-coming-in-v2-0-mark">3.3. Import/Export feature <mark>Coming in v2.0</mark></a></h3>
 <div class="sect3">
-<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/blank.png" alt="blank" width="800">
@@ -792,14 +964,14 @@ Both are managed by the class <code>CommandWords</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">3.3. Theme setting feature</a></h3>
+<h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">3.4. Theme setting feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.4.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The theme setting mechanism is facilitated by a <code>ThemeCommand</code>. <code>ThemeCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>INDEX</code> input of <code>1</code> to <code>2</code>, and creates the <code>ThemeCommand</code> object which selects the application&#8217;s theme.
 The <code>UserPref</code> stores and retrieves the theme preference of the application.</p>
@@ -899,13 +1071,36 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-implementation-of-themecommand-br"><a class="link" href="#aspect-implementation-of-themecommand-br">Aspect: Implementation of ThemeCommand<br></a></h5>
+<h5 id="aspect-implementation-of-code-themecommand-code-br"><a class="link" href="#aspect-implementation-of-code-themecommand-code-br">Aspect: Implementation of <code>ThemeCommand</code><br></a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Utilizing <code>SetThemRequestEvent</code> and allow <code>MainWindow</code> to handle the raised event to set the theme of the application. Ensuring persistent theme setting by updating <code>UserPref</code> to store and retrieve relevant stylesheet used.</p>
+<p><strong>Current choice:</strong> Utilizing <code>SetThemRequestEvent</code> and allow <code>MainWindow</code> to handle the raised event to set the theme of the application.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Lesser responsibility for <code>ThemeCommand</code>.</p>
+</li>
+<li>
+<p>Cons: Harder for new developer to understand the behavior of theme setting, as it utilizes event handling.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Instantiate <code>ThemeCommand</code> in <code>MainWindow</code> that passes <code>Stage</code> as a parameter. Then, perform theme setting in <code>ThemeCommand</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: Violates Law of Demeter as <code>ThemeCommand</code> has knowledge and access to <code>Stage</code>.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -913,9 +1108,9 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.4. Undo/Redo feature</a></h3>
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.5. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.4.1. Current Implementation</a></h4>
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.5.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -926,7 +1121,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
-<div class="title">Figure 12. Inheritance diagram for commands</div>
+<div class="title">Figure 13. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -983,10 +1178,10 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
-<div class="title">Figure 13. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
+<div class="title">Figure 14. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="olist none">
+<ol class="none">
 <li>
 <p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, as shown in the figure below, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new employee.</p>
 </li>
@@ -996,7 +1191,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
-<div class="title">Figure 14. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
+<div class="title">Figure 15. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1028,7 +1223,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <div class="content">
 <img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
-<div class="title">Figure 15. Step 3: <code>undo</code> action</div>
+<div class="title">Figure 16. Step 3: <code>undo</code> action</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1053,7 +1248,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 16. <code>undo</code> sequence diagram</div>
+<div class="title">Figure 17. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -1081,7 +1276,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
-<div class="title">Figure 17. <code>clear</code> pushed into <code>undoStack</code></div>
+<div class="title">Figure 18. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -1090,7 +1285,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
-<div class="title">Figure 18. <code>list</code> not added into <code>undoStack</code></div>
+<div class="title">Figure 19. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -1099,11 +1294,11 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
-<div class="title">Figure 19. Stack activity diagram summary</div>
+<div class="title">Figure 20. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -1240,9 +1435,9 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.5. Send Email to Employees about Job</a></h3>
+<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.6. Send Email to Employees about Job</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.5.1. Current Implementation</a></h4>
+<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.6.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>This feature is implemented using Gmail <a href="#api">API</a>.</p>
 </div>
@@ -1271,7 +1466,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
 </div>
-<div class="title">Figure 20. Email authorization sequence diagram</div>
+<div class="title">Figure 21. Email authorization sequence diagram</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1314,7 +1509,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-email-content"><a class="link" href="#aspect-email-content">Aspect: Email content</a></h5>
 <div class="ulist">
@@ -1384,20 +1579,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.6. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.7. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.8, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1428,7 +1623,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.8. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1507,7 +1702,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 21. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 22. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -3979,7 +4174,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-28 03:19:31 UTC
+Last updated 2018-03-30 12:43:23 UTC
 </div>
 </div>
 </body>
