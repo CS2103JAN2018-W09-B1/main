@@ -30,11 +30,11 @@
 <li><a href="#Features">4. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">4.1. Viewing help : <code>help</code></a></li>
-<li><a href="#adding-an-job-entry-code-addj-code">4.2. Adding an job entry: <code>addj</code></a></li>
+<li><a href="#adding-a-job-entry-code-addj-code">4.2. Adding a job entry: <code>addj</code></a></li>
 <li><a href="#closing-a-job-entry-code-closej-code">4.3. Closing a job entry: <code>closej</code></a></li>
-<li><a href="#adding-an-employee-code-adde-code">4.4. Adding an employee: <code>adde</code></a></li>
-<li><a href="#listing-all-employees-code-liste-code">4.5. Listing all employees : <code>liste</code></a></li>
-<li><a href="#editing-a-employee-code-edite-code">4.6. Editing a employee : <code>edite</code></a></li>
+<li><a href="#adding-remark-to-a-job-code-remark-code">4.4. Adding remark to a job: <code>remark</code></a></li>
+<li><a href="#adding-an-employee-code-adde-code">4.5. Adding an employee: <code>adde</code></a></li>
+<li><a href="#listing-all-employees-code-liste-code">4.6. Listing all employees : <code>liste</code></a></li>
 <li><a href="#locating-employees-by-name-code-finde-code">4.7. Locating employees by name: <code>finde</code></a></li>
 <li><a href="#deleting-an-employee-code-deletee-code">4.8. Deleting an employee : <code>deletee</code></a></li>
 <li><a href="#changing-a-command-word-code-set-code">4.9. Changing a command word : <code>set</code></a></li>
@@ -43,11 +43,10 @@
 <li><a href="#listing-entered-commands-code-history-code">4.12. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">4.13. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">4.14. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#clearing-all-employees-code-cleare-code">4.15. Clearing all employees : <code>cleare</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">4.16. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">4.17. Saving the data</a></li>
-<li><a href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.18. Email assigned employees belonging to a job : <code>email</code></a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">4.19. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">4.15. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">4.16. Saving the data</a></li>
+<li><a href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.17. Email assigned employees belonging to a job : <code>email</code></a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">4.18. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">5. FAQ</a></li>
@@ -232,7 +231,7 @@ Format: <code>help</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-an-job-entry-code-addj-code"><a class="link" href="#adding-an-job-entry-code-addj-code">4.2. Adding an job entry: <code>addj</code></a></h3>
+<h3 id="adding-a-job-entry-code-addj-code"><a class="link" href="#adding-a-job-entry-code-addj-code">4.2. Adding a job entry: <code>addj</code></a></h3>
 <div class="paragraph">
 <p>You can use this command to add a job to CarviciM.<br>
 Format: <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+</code></p>
@@ -320,7 +319,41 @@ Format: <code>closej JOB_NUMBER</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-an-employee-code-adde-code"><a class="link" href="#adding-an-employee-code-adde-code">4.4. Adding an employee: <code>adde</code></a></h3>
+<h3 id="adding-remark-to-a-job-code-remark-code"><a class="link" href="#adding-remark-to-a-job-code-remark-code">4.4. Adding remark to a job: <code>remark</code></a></h3>
+<div class="paragraph">
+<p>You can use this command to add a remark to a specified job.<br>
+Format: <code>remark j/JOB_NUMBER r/REMARK</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Example 1:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>remark j/3 r/Take note of the headlights</code><br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>You will see "Remark added: &#8230;&#8203;" followed by the details of the remark in the result display.<br></p>
+</li>
+<li>
+<p>You will see the newly added remark in the <a href="#job-display-panel">job display panel</a>, when the job is selected.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-an-employee-code-adde-code"><a class="link" href="#adding-an-employee-code-adde-code">4.5. Adding an employee: <code>adde</code></a></h3>
 <div class="paragraph">
 <p>You can use this command to add an employee to CarviciM.<br>
 Format: <code>adde n/NAME p/PHONE_NUMBER e/EMAIL</code></p>
@@ -357,64 +390,10 @@ Format: <code>adde n/NAME p/PHONE_NUMBER e/EMAIL</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-employees-code-liste-code"><a class="link" href="#listing-all-employees-code-liste-code">4.5. Listing all employees : <code>liste</code></a></h3>
+<h3 id="listing-all-employees-code-liste-code"><a class="link" href="#listing-all-employees-code-liste-code">4.6. Listing all employees : <code>liste</code></a></h3>
 <div class="paragraph">
 <p>You can use this command to view a list of all employees in CarviciM.<br>
 Format: <code>liste</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="editing-a-employee-code-edite-code"><a class="link" href="#editing-a-employee-code-edite-code">4.6. Editing a employee : <code>edite</code></a></h3>
-<div class="paragraph">
-<p>You can use this command to edit an existing employee in CarviciM.<br>
-Format: <code>edite INDEX [p/PHONE] [e/EMAIL] [t/TAG]&#8230;&#8203;</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Edits the employee at the specified <code>INDEX</code>. The index refers to the index number shown in the last employee listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
-</li>
-<li>
-<p>At least one of the optional fields must be provided.</p>
-</li>
-<li>
-<p>Existing values will be updated to the input values.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>edite 1 p/91234567 e/johndoe@example.com</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Edits the phone number and email address of the 1st employee to be <code>91234567</code> and <code>johndoe@example.com</code> respectively.<br></p>
-</li>
-<li>
-<p>You will see "Edited Employee: &#8230;&#8203; " followed by the new updated details of the employee in the <a href="#result-display">result display</a>.<br></p>
-</li>
-<li>
-<p>You will see the edited employee details in the <a href="#employees-ui-panel">employee UI panel</a>.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect2">
@@ -1105,7 +1084,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj, `closej</code>, <code>adde</code>, <code>deletee</code>, <code>edit</code> and <code>cleare</code>).</p>
+<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj, `closej</code>, <code>adde</code>, <code>deletee</code> and <code>remark</code>).</p>
 </div>
 </td>
 </tr>
@@ -1318,35 +1297,28 @@ Format: <code>redo</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-employees-code-cleare-code"><a class="link" href="#clearing-all-employees-code-cleare-code">4.15. Clearing all employees : <code>cleare</code></a></h3>
-<div class="paragraph">
-<p>You can use this command to clear all employees from CarviciM.<br>
-Format: <code>cleare</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.16. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.15. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>You can use this command to exit the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">4.17. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">4.16. Saving the data</a></h3>
 <div class="paragraph">
 <p>CarviciM data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="email-assigned-employees-belonging-to-a-job-code-email-code"><a class="link" href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.18. Email assigned employees belonging to a job : <code>email</code></a></h3>
+<h3 id="email-assigned-employees-belonging-to-a-job-code-email-code"><a class="link" href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.17. Email assigned employees belonging to a job : <code>email</code></a></h3>
 <div class="paragraph">
 <p>You can use this command to send a notice email to all assigned employees of a job.<br>
 Format: <code>email JOB_NUMBER</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">4.19. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">4.18. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
@@ -1368,7 +1340,7 @@ Format: <code>email JOB_NUMBER</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add Job</strong> <code>adde n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+</code><br>
+<p><strong>Add Job</strong> <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+</code><br>
 e.g. <code>addj n/James Ho p/22224444 e/jamesho@example.com v/saa213 w/22</code></p>
 </li>
 <li>
@@ -1376,19 +1348,16 @@ e.g. <code>addj n/James Ho p/22224444 e/jamesho@example.com v/saa213 w/22</code>
 e.g. <code>closej 1232</code></p>
 </li>
 <li>
+<p><strong>Add Remark</strong> <code>remark j/JOB_NUMBER r/REMARK</code><br>
+e.g. <code>remark j/12 r/Urgent</code></p>
+</li>
+<li>
 <p><strong>Add Employee</strong> <code>adde n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG]&#8230;&#8203;</code><br>
 e.g. <code>adde n/James Ho p/22224444 e/jamesho@example.com t/mechanic</code></p>
 </li>
 <li>
-<p><strong>Clear Employees</strong> : <code>cleare</code></p>
-</li>
-<li>
 <p><strong>Delete Employee</strong> : <code>deletee INDEX</code><br>
 e.g. <code>deletee 3</code></p>
-</li>
-<li>
-<p><strong>Edit Employee</strong> : <code>edite INDEX [p/PHONE_NUMBER] [e/EMAIL] [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>edite 2 e/jameslee@example.com</code></p>
 </li>
 <li>
 <p><strong>Find Employees</strong> : <code>finde KEYWORD [MORE_KEYWORDS]</code><br>
@@ -1414,7 +1383,7 @@ e.g. <code>import excel.xls</code></p>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
 <li>
-<p><strong>Email Assigned Employees Of A Job</strong> : <code>email</code><br>
+<p><strong>Email Assigned Employees Of A Job</strong> : <code>email JOB_NUMBER</code><br>
 e.g. <code>email 123</code></p>
 </li>
 <li>
@@ -1446,6 +1415,10 @@ e.g. <code>theme 1</code></p>
 <dd>
 <p>A region on the User Interface which displays the list of employees.</p>
 </dd>
+<dt class="hdlist1"><a id="job-display-panel"></a> Job Display Panel</dt>
+<dd>
+<p>A region on the User Interface which display the details of a job.</p>
+</dd>
 <dt class="hdlist1"><a id="result-display"></a> Result Display</dt>
 <dd>
 <p>A region on the User Interface which displays the result of executed commands.</p>
@@ -1461,7 +1434,7 @@ e.g. <code>theme 1</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-02 07:47:38 UTC
+Last updated 2018-04-02 20:16:27 UTC
 </div>
 </div>
 </body>
