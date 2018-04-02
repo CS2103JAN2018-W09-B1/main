@@ -46,7 +46,7 @@
 <ul class="sectlevel2">
 <li><a href="#add-job-feature">3.1. Add job feature</a></li>
 <li><a href="#set-command-feature">3.2. Set command feature</a></li>
-<li><a href="#import-export-feature-mark-coming-in-v2-0-mark">3.3. Import/Export feature <mark>Coming in v2.0</mark></a></li>
+<li><a href="#import-save-feature">3.3. Import/Save feature</a></li>
 <li><a href="#theme-setting-feature">3.4. Theme setting feature</a></li>
 <li><a href="#undo-redo-feature">3.5. Undo/Redo feature</a></li>
 <li><a href="#send-email-to-employees-about-job">3.6. Send Email to Employees about Job</a></li>
@@ -830,7 +830,7 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <div class="content">
 <img src="images/SetCommandObjectDiagram.png" alt="SetCommandObjectDiagram" width="800">
 </div>
-<div class="title">Figure 12. ClassDiagram of CommandWords at runtime</div>
+<div class="title">Figure 12. Object Diagram of CommandWords at runtime</div>
 </div>
 <div class="paragraph">
 <p><code>SetCommand</code> keeps 2 lists of command words:
@@ -954,18 +954,221 @@ Both are managed by the class <code>CommandWords</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="import-export-feature-mark-coming-in-v2-0-mark"><a class="link" href="#import-export-feature-mark-coming-in-v2-0-mark">3.3. Import/Export feature <mark>Coming in v2.0</mark></a></h3>
+<h3 id="import-save-feature"><a class="link" href="#import-save-feature">3.3. Import/Save feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
-<img src="images/blank.png" alt="blank" width="800">
+<img src="images/SessionComponentClassDiagram.png" alt="SessionComponentClassDiagram" width="800">
+</div>
+<div class="title">Figure 13. Object Diagram of <code>session</code> component</div>
+</div>
+<div class="paragraph">
+<p><code>ImportSession</code> uses a Singleton design pattern. It is responsible for initializing and closing the session.
+<code>ImportSession</code> has 4 methods:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>static getInstance()</code>: Used to retrieve the single instance of <code>ImportSession</code>.</p>
+</li>
+<li>
+<p><code>setData(sessionData)</code>: Used to set <code>sessionData</code> for <code>ImportSession</code>.</p>
+</li>
+<li>
+<p><code>initialize(fileName)</code>: Initializes <code>sessionData</code> with and excel file located at <code>fileName</code>.</p>
+</li>
+<li>
+<p><code>closeSession()</code>: Writes the comments as a save file to same directory of import file,
+with a timestamp added to the back of the filename.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>ImportSession</code> is designed to be stateless on its own, with all data stored in <code>SessionData</code>. This helps to
+support <code>UndoableCommand</code></p>
+</div>
+<div class="paragraph">
+<p>The flow of using <code>ImportSession</code> is as follows:</p>
+</div>
+<div class="sect4">
+<h5 id="loading-a-file-into-code-importsession-code"><a class="link" href="#loading-a-file-into-code-importsession-code">Loading a file into <code>ImportSession</code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Figure 14 below shows the process of initializing ImportSession. On the <code>import</code> command,
+<code>getInstance</code> is used to retrieve the <code>importSession</code> instance, before it calls
+<code>initialize(fileName)</code>. A new <code>SheetParser</code> is created to populate <code>sessionData</code> with excel sheet data
+as shown in Figure 11, which comes as:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>SheetWithHeaderField</code>: augmented <code>Sheet</code> that provides API to indicate approval status and
+write comments.</p>
+</li>
+<li>
+<p><code>JobEntry</code>: Augmented <code>Job</code> stores the sheet number and row number for writing into the excel file.
+<code>JobEntry</code> also contains the <code>Job</code> data which will be imported upon approval.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/SessionInitializationSequenceDiagram.png" alt="SessionInitializationSequenceDiagram" width="800">
+</div>
+<div class="title">Figure 14. Sequence Diagram of <code>ImportSession</code> initialization</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="reviewing-job-entries"><a class="link" href="#reviewing-job-entries">Reviewing job entries</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Figure 15 below shows the process of reviewing job entries in an import session. On the <code>review</code>
+command, <code>sessionData</code> updates the relevant <code>jobEntry</code> and retrieves the sheet and row number,
+which is used to update <code>sheetWithHeaderFields</code>. Upon reviewing a job, CarviciM will add the job and
+any employees not present in the application.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/SessionReviewSequenceDiagram.png" alt="SessionReviewSequenceDiagram" width="800">
+</div>
+<div class="title">Figure 15. Sequence Digram of <code>ImportSession</code> during the reviewing of a job</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="saving-feedback-from-an-code-importsession-code"><a class="link" href="#saving-feedback-from-an-code-importsession-code">Saving feedback from an <code>ImportSession</code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Figure 16 below shows the process of saving a session. On the <code>save</code> command, <code>importSession</code> writes the
+modified excel sheets from <code>sheetWithHeaderFields</code> to the same path as the imported excel file, with
+a timestamp added to the back of the filename.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SessionCloseSequenceDiagram.png" alt="SessionCloseSequenceDiagram" width="800">
+</div>
+<div class="title">Figure 16. Sequence Digram of <code>ImportSession</code> when saving feedback to a file</div>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
-
+<div class="sect4">
+<h5 id="aspect-supporting-undoablecommand"><a class="link" href="#aspect-supporting-undoablecommand">Aspect: Supporting UndoableCommand</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Add the previous instance of <code>sessionData</code> when setting data for <code>Command</code>, with a
+<code>SaveFileStack</code> as shown in Figure 11. Load this <code>sessionData</code> on <code>undo</code> or <code>redo</code> command.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: <code>sessionData</code> stores data for <code>importSession</code>, making it appropriate to be used as data in <code>undo</code>
+and <code>redo</code>. Modification is only limited to <code>UndoableCommand</code>. Single Responsibility Principle is maintained,
+as the storage of save file locations is limited to <code>SaveFileStack</code>.</p>
+</li>
+<li>
+<p>Cons: <code>sessionData</code> will have to store the boolean <code>initialized</code> in <code>sessionData</code> so that it will
+stay up-to-date with the <code>UndoRedoStack</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> <code>importSession</code> provides API to <code>undo</code> and <code>redo</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Open Closed Principle is respected, there is no need to modify <code>UndoableCommand</code>.</p>
+</li>
+<li>
+<p>Cons: Commands that modify <code>sessionData</code> have to be written differently from other commands to support
+<code>undo</code> and <code>redo</code>. The delimiter rule is also violated as <code>importSession</code> is unnecessarily involved.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-supporting-mass-add-methods-addjobs-addmissingemployees"><a class="link" href="#aspect-supporting-mass-add-methods-addjobs-addmissingemployees">Aspect: Supporting mass add methods addJobs/addMissingEmployees</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Add the methods to <code>Model</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Cohesion is maximized, these methods can also be reused by other classes.</p>
+</li>
+<li>
+<p>Cons: Open Closed Principle is violated and adding these methods may result in confusion on the
+behavior of <code>Model</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Add the methods to <code>ImportSession</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: The behavior of these methods can be tailored specifically to <code>ImportSession</code>.</p>
+</li>
+<li>
+<p>Cons: Unnecessary coupling between <code>Model</code> and <code>ImportSession</code> when <code>Command</code> is already coupled to <code>Model</code>.
+The Single Responsibility Principle is also violated.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-persistent-data"><a class="link" href="#aspect-persistent-data">Aspect: Persistent Data</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Keep all data from <code>ImportSession</code> on <code>sessionData</code> and use it to initialize on startup.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: <code>ImportSession</code> gets to stay as a <code>Singleton</code>, preventing confusion.</p>
+</li>
+<li>
+<p>Cons: There will be increased coupling between <code>Session</code> and <code>Storage</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Combine <code>ImportSession</code> and <code>SessionData</code> into 1 single class and store
+it directly.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: <code>ImportSession</code> can be directly initialized on startup and coupling is reduced.</p>
+</li>
+<li>
+<p>Cons: Confusion may occur due to allowing more than one <code>ImportSession</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1121,7 +1324,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
-<div class="title">Figure 13. Inheritance diagram for commands</div>
+<div class="title">Figure 17. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -1178,7 +1381,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
-<div class="title">Figure 14. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
+<div class="title">Figure 18. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
 <div class="olist none">
 <ol class="none">
@@ -1191,7 +1394,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
-<div class="title">Figure 15. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
+<div class="title">Figure 19. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1223,7 +1426,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <div class="content">
 <img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
-<div class="title">Figure 16. Step 3: <code>undo</code> action</div>
+<div class="title">Figure 20. Step 3: <code>undo</code> action</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1248,7 +1451,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 17. <code>undo</code> sequence diagram</div>
+<div class="title">Figure 21. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -1276,7 +1479,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
-<div class="title">Figure 18. <code>clear</code> pushed into <code>undoStack</code></div>
+<div class="title">Figure 22. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -1285,7 +1488,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
-<div class="title">Figure 19. <code>list</code> not added into <code>undoStack</code></div>
+<div class="title">Figure 23. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -1294,7 +1497,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
-<div class="title">Figure 20. Stack activity diagram summary</div>
+<div class="title">Figure 24. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
@@ -1466,7 +1669,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
 </div>
-<div class="title">Figure 21. Email authorization sequence diagram</div>
+<div class="title">Figure 25. Email authorization sequence diagram</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1702,7 +1905,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 22. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 26. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -4174,7 +4377,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-02 06:04:14 UTC
+Last updated 2018-04-02 07:47:38 UTC
 </div>
 </div>
 </body>
