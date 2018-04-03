@@ -5,12 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_ASSIGNED_EMPLOYEE;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_VEHICLE_NUMBER;
-import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_START_DATE;
-import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_END_DATE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,8 +68,8 @@ public class CommandTestUtil {
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_DATERANGE_DESC = " " + PREFIX_START_DATE + "01/03/2018" + " " +
-            PREFIX_END_DATE + "25/03/2018"; // invalid date format
+    public static final String INVALID_DATERANGE_DESC = " " + PREFIX_START_DATE + "01/03/2018" + " "
+            + PREFIX_END_DATE + "25/03/2018"; // invalid date format
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "mechanic*"; // '*' not allowed in tags
     public static final String INVALID_VEHICLE_NUM_DESC = " " + PREFIX_VEHICLE_NUMBER; //empty string allowed
     public static final String INVALID_ASSIGNED_EMPLOYEE_INDEX_DESC = " " + PREFIX_ASSIGNED_EMPLOYEE + "-1";

@@ -1,12 +1,5 @@
 package seedu.carvicim.logic.parser;
 
-import org.junit.Test;
-
-import seedu.carvicim.logic.commands.ArchiveCommand;
-import seedu.carvicim.model.job.Date;
-import seedu.carvicim.model.job.DateRange;
-import seedu.carvicim.testutil.DateRangeBuilder;
-
 import static seedu.carvicim.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.carvicim.logic.commands.CommandTestUtil.DATERANGE_DESC_ONE;
 import static seedu.carvicim.logic.commands.CommandTestUtil.DATERANGE_DESC_TWO;
@@ -15,6 +8,13 @@ import static seedu.carvicim.logic.commands.CommandTestUtil.VALID_END_DATE;
 import static seedu.carvicim.logic.commands.CommandTestUtil.VALID_START_DATE;
 import static seedu.carvicim.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.carvicim.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.carvicim.logic.commands.ArchiveCommand;
+import seedu.carvicim.model.job.Date;
+import seedu.carvicim.model.job.DateRange;
+import seedu.carvicim.testutil.DateRangeBuilder;
 
 //@@author richardson0694
 public class ArchiveCommandParserTest {
