@@ -122,6 +122,13 @@ public class Carvicim implements ReadOnlyCarvicim {
         }
     }
 
+    /**
+     * Analyses job entries in Carvicim for this month.
+     */
+    public JobList analyseJob(JobList jobList) {
+        return jobList.analyseList(jobs);
+    }
+
     //// employee-level operations
 
     /**
