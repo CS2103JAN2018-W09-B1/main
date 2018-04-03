@@ -602,6 +602,48 @@ If there is no `INDEX` present, `theme` command will return an invalid message, 
 ** Cons: Violates Law of Demeter as `ThemeCommand` has knowledge and access to `Stage`.
 // end::theme[]
 
+// tag::sort[]
+=== Sort feature
+==== Current Implementation
+
+The sort mechanism is facilitated by a `Comparator`. It supports the comparison of employee’s name and arranges the employee list alphabetically. 
+
+====
+[NOTE]
+If there is no `INDEX` present, `theme` command will return an invalid message, which shows the usage information to the user.
+(e.g. theme "").
+====
+
+The `Comparator` is implemented this way:
+[source,java]
+----
+    public UniqueEmployeeList sortList() {
+        employees.sortName(new Comparator<Employee>() {
+            @Override
+            public int compare(Employee employee1, Employee employee2) {
+                return employee1.getName().toString().compareToIgnoreCase(employee2.getName().toString());
+            }
+        });
+        return employees;
+    }
+----
+
+The following sequence diagram shows how the sort operation works:
+
+.`SortCommand` sequence diagram
+image::SortSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortCommand` +
+* **Current choice:** Sorts the employee list after typing in the sort command.
+** Pros: Easy to implement, Able to locate the newly added employee easily at the end of the Employee UI Panel.
+** Cons: May be a hassle to type the sort command word whenever we want to sort the employee list.
+* _Alternative:_ Sorts the employee list automatically after adding new employee.
+** Pros: We do not need to type in the sort command word.
+** Cons: We must look through the entire employee list to locate the newly added employee.
+// end::sort[]
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
@@ -1589,6 +1631,16 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Sort employee list
+
+*MSS*
+
+1.  User request to sort employee list.
+2.  CarviciM sorts employee list alphabetically according to their names.
++
+Use case ends.
+
+[discrete]
 === Use case: Customize the colour label of job status
 
 *MSS*
@@ -1805,16 +1857,6 @@ Use case ends.
 * 1b. The given theme index is invalid.
 [none]
 ** 1b1. CarviciM shows an error message.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Sort employee list
-
-*MSS*
-
-1.  User request to sort employee list.
-2.  CarviciM sorts employee list alphabetically according to their names.
 +
 Use case ends.
 

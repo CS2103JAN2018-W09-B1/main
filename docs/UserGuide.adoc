@@ -147,6 +147,11 @@ Examples:
 You can use this command to view a list of all employees in CarviciM. +
 Format: `liste`
 
+=== Sorting all employees : `sort`
+
+You can use this command to sort the list of employees alphabetically in CarviciM. +
+Format: `sort`
+
 === Listing all jobs : `listj`
 
 You can use this command to view a list of all employees in CarviciM. +
@@ -534,6 +539,7 @@ e.g. `deletee 3`
 * *Find Employees* : `finde KEYWORD [MORE_KEYWORDS]` +
 e.g. `finde James Jake`
 * *List Employee* : `liste`
+* *Sort Employee* : `sort`
 * *Import excel file* : `import` +
 e.g. `import excel.xls`
 * *Accept imported job* : `accept NUMBER` +
