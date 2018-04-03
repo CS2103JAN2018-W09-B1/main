@@ -48,11 +48,13 @@
 <li><a href="#set-command-feature">3.2. Set command feature</a></li>
 <li><a href="#import-save-feature">3.3. Import/Save feature</a></li>
 <li><a href="#theme-setting-feature">3.4. Theme setting feature</a></li>
-<li><a href="#undo-redo-feature">3.5. Undo/Redo feature</a></li>
-<li><a href="#send-email-to-employees-about-job">3.6. Send Email to Employees about Job</a></li>
-<li><a href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.8. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
+<li><a href="#sort-feature">3.5. Sort feature</a></li>
+<li><a href="#archive-feature">3.6. Archive feature</a></li>
+<li><a href="#undo-redo-feature">3.7. Undo/Redo feature</a></li>
+<li><a href="#send-email-to-employees-about-job">3.8. Send Email to Employees about Job</a></li>
+<li><a href="#proposed-data-encryption">3.9. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.10. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.11. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1311,9 +1313,207 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.5. Undo/Redo feature</a></h3>
+<h3 id="sort-feature"><a class="link" href="#sort-feature">3.5. Sort feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.5.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The sort mechanism is facilitated by a <code>Comparator</code>. It supports the comparison of employee’s name and arranges the employee list alphabetically.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Comparator</code> is implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> UniqueEmployeeList sortList() {
+        employees.sortName(<span class="keyword">new</span> <span class="predefined-type">Comparator</span>&lt;Employee&gt;() {
+            <span class="annotation">@Override</span>
+            <span class="directive">public</span> <span class="type">int</span> compare(Employee employee1, Employee employee2) {
+                <span class="keyword">return</span> employee1.getName().toString().compareToIgnoreCase(employee2.getName().toString());
+            }
+        });
+        <span class="keyword">return</span> employees;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the sort operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SortSequenceDiagram.png" alt="SortSequenceDiagram" width="800">
+</div>
+<div class="title">Figure 17. <code>SortCommand</code> sequence diagram</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-code-sortcommand-code-executes-br"><a class="link" href="#aspect-how-code-sortcommand-code-executes-br">Aspect: How <code>SortCommand</code> executes<br></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Sorts the employee list after typing in the sort command.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement, Able to locate the newly added employee easily at the end of the Employee UI Panel.</p>
+</li>
+<li>
+<p>Cons: May be a hassle to type the sort command word whenever we want to sort the employee list.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Sorts the employee list automatically after adding new employee.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: We do not need to type in the sort command word.</p>
+</li>
+<li>
+<p>Cons: We must look through the entire employee list to locate the newly added employee.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="archive-feature"><a class="link" href="#archive-feature">3.6. Archive feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.6.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>The <code>ArchiveCommand</code> is implemented this way to ensure that the specified starting date is earlier than the ending date:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> CommandResult executeUndoableCommand() <span class="directive">throws</span> CommandException {
+    <span class="keyword">if</span> (toArchive.compareTo(toArchive.getStartDate(), toArchive.getEndDate()) &gt; <span class="integer">0</span>) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_INVALID_DATERANGE);
+    }
+    requireNonNull(model);
+    model.archiveJob(toArchive);
+    <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_SUCCESS);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Carvicim</code> code snippet that extracts the job entries within the selected date range:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> archiveJob(DateRange dateRange) {
+    archiveJobs = <span class="keyword">new</span> JobList();
+    <span class="predefined-type">Iterator</span>&lt;Job&gt; iterator = jobs.iterator();
+    <span class="keyword">while</span> (iterator.hasNext()) {
+        Job job = iterator.next();
+        <span class="predefined-type">Date</span> date = job.getDate();
+        <span class="predefined-type">Date</span> startDate = dateRange.getStartDate();
+        <span class="predefined-type">Date</span> endDate = dateRange.getEndDate();
+        <span class="keyword">if</span> (dateRange.compareTo(date, startDate) &gt;= <span class="integer">0</span> &amp;&amp; dateRange.compareTo(date, endDate) &lt;= <span class="integer">0</span>) {
+            archiveJobs.add(job);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>StorageManager</code> code snippet that handles CarvicimChangedEvent to archive the job entries:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> handleArchiveEvent(CarvicimChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event, <span class="string"><span class="delimiter">&quot;</span><span class="content">Archiving data, saving to file</span><span class="delimiter">&quot;</span></span>));
+    <span class="keyword">try</span> {
+        saveArchiveJob(event.data);
+    } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
+        raise(<span class="keyword">new</span> DataSavingExceptionEvent(e));
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-code-archivecommand-code-executes-br"><a class="link" href="#aspect-how-code-archivecommand-code-executes-br">Aspect: How <code>ArchiveCommand</code> executes<br></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Archive job entries within a selected date range.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: We get to select the range of job entries that we will like to archive.</p>
+</li>
+<li>
+<p>Cons: Harder to implement.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Archives all job entries.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: We cannot select the range of job entries that we will like to archive.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-how-code-archivecommand-code-saves-data-br"><a class="link" href="#aspect-how-code-archivecommand-code-saves-data-br">Aspect: How <code>ArchiveCommand</code> saves data<br></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Overwrites the existing archive file.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Will use less memory.</p>
+</li>
+<li>
+<p>Cons: We cannot archive multiple files.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Creates a new archive file.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: We get to archive multiple files with different selected date range.</p>
+</li>
+<li>
+<p>Cons: May have performance issues in terms of memory usage.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.7. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-7"><a class="link" href="#current-implementation-7">3.7.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -1324,7 +1524,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
-<div class="title">Figure 17. Inheritance diagram for commands</div>
+<div class="title">Figure 18. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -1381,7 +1581,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
-<div class="title">Figure 18. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
+<div class="title">Figure 19. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
 <div class="olist none">
 <ol class="none">
@@ -1394,7 +1594,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
-<div class="title">Figure 19. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
+<div class="title">Figure 20. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1426,7 +1626,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <div class="content">
 <img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
-<div class="title">Figure 20. Step 3: <code>undo</code> action</div>
+<div class="title">Figure 21. Step 3: <code>undo</code> action</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1451,7 +1651,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 21. <code>undo</code> sequence diagram</div>
+<div class="title">Figure 22. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -1479,7 +1679,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
-<div class="title">Figure 22. <code>clear</code> pushed into <code>undoStack</code></div>
+<div class="title">Figure 23. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -1488,7 +1688,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
-<div class="title">Figure 23. <code>list</code> not added into <code>undoStack</code></div>
+<div class="title">Figure 24. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -1497,11 +1697,11 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
-<div class="title">Figure 24. Stack activity diagram summary</div>
+<div class="title">Figure 25. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">3.7.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -1638,9 +1838,9 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.6. Send Email to Employees about Job</a></h3>
+<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.8. Send Email to Employees about Job</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.6.1. Current Implementation</a></h4>
+<h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">3.8.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>This feature is implemented using Gmail <a href="#api">API</a>.</p>
 </div>
@@ -1669,7 +1869,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
 </div>
-<div class="title">Figure 25. Email authorization sequence diagram</div>
+<div class="title">Figure 26. Email authorization sequence diagram</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1712,7 +1912,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">3.8.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-email-content"><a class="link" href="#aspect-email-content">Aspect: Email content</a></h5>
 <div class="ulist">
@@ -1782,20 +1982,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.9. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.10. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.11, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1826,7 +2026,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.11. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1905,7 +2105,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 26. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 27. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -3648,6 +3848,23 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </li>
 </ul>
 </div>
+<h3 id="use-case-sort-employee-list" class="discrete">Use case: Sort employee list</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User request to sort employee list.</p>
+</li>
+<li>
+<p>CarviciM sorts employee list alphabetically according to their names.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
 <h3 id="use-case-customize-the-colour-label-of-job-status" class="discrete">Use case: Customize the colour label of job status</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -4098,23 +4315,6 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </li>
 </ul>
 </div>
-<h3 id="use-case-sort-employee-list" class="discrete">Use case: Sort employee list</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User request to sort employee list.</p>
-</li>
-<li>
-<p>CarviciM sorts employee list alphabetically according to their names.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
 <h3 id="use-case-archiving-of-job-entries" class="discrete">Use case: Archiving of job entries</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -4125,12 +4325,49 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <p>User specifies the date range for archiving.</p>
 </li>
 <li>
-<p>CarviciM extracts the job entries within the selected range and archive them.</p>
+<p>CarviciM extracts the job entries within the selected range and saves them to a new file.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The given date format is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The given date range is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p><em>{More to be added}</em></p>
@@ -4377,7 +4614,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-03 07:39:59 UTC
+Last updated 2018-04-03 16:15:22 UTC
 </div>
 </div>
 </body>
