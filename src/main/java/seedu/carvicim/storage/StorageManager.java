@@ -124,7 +124,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     @Subscribe
     public void handleArchiveEvent(CarvicimChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Archiving data, saving to file"));
         try {
             saveArchiveJob(event.data);
         } catch (IOException e) {

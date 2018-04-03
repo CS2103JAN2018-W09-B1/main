@@ -35,7 +35,7 @@ public class ArchiveCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ArchiveCommand.MESSAGE_USAGE);
 
         // missing start date prefix
-        assertParseFailure(parser, VALID_START_DATE + DATERANGE_DESC_TWO, 
+        assertParseFailure(parser, VALID_START_DATE + DATERANGE_DESC_TWO,
                 expectedMessage);
 
         // missing end date prefix

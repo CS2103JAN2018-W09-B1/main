@@ -644,6 +644,50 @@ image::SortSequenceDiagram.png[width="800"]
 
 ...
 
+The `ArchiveCommand` is implemented this way to ensure that the specified starting date is earlier than the ending date:
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    if (toArchive.compareTo(toArchive.getStartDate(), toArchive.getEndDate()) > 0) {
+        throw new CommandException(MESSAGE_INVALID_DATERANGE);
+    }
+    requireNonNull(model);
+    model.archiveJob(toArchive);
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+`Carvicim` code snippet that extracts the job entries within the selected date range:
+[source,java]
+----
+public void archiveJob(DateRange dateRange) {
+    archiveJobs = new JobList();
+    Iterator<Job> iterator = jobs.iterator();
+    while (iterator.hasNext()) {
+        Job job = iterator.next();
+        Date date = job.getDate();
+        Date startDate = dateRange.getStartDate();
+        Date endDate = dateRange.getEndDate();
+        if (dateRange.compareTo(date, startDate) >= 0 && dateRange.compareTo(date, endDate) <= 0) {
+            archiveJobs.add(job);
+        }
+    }
+}
+----
+
+`StorageManager` code snippet that handles CarvicimChangedEvent to archive the job entries:
+[source,java]
+----
+public void handleArchiveEvent(CarvicimChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event, "Archiving data, saving to file"));
+    try {
+        saveArchiveJob(event.data);
+    } catch (IOException e) {
+        raise(new DataSavingExceptionEvent(e));
+    }
+}
+----
+
 ==== Design Considerations
 
 ===== Aspect: How `ArchiveCommand` executes +
@@ -655,12 +699,12 @@ image::SortSequenceDiagram.png[width="800"]
 ** Cons: We cannot select the range of job entries that we will like to archive.
 
 ===== Aspect: How `ArchiveCommand` saves data +
-* **Current choice:** Creates a new archive file.
-** Pros: We get to archive multiple files with different selected date range.
-** Cons: May have performance issues in terms of memory usage.
-* _Alternative:_ Overwrites the existing archive file.
+* **Current choice:** Overwrites the existing archive file.
 ** Pros: Will use less memory.
 ** Cons: We cannot archive multiple files.
+* _Alternative:_ Creates a new archive file.
+** Pros: We get to archive multiple files with different selected date range.
+** Cons: May have performance issues in terms of memory usage.
 // end::archive[]
 
 // tag::undoredo[]
@@ -1885,7 +1929,23 @@ Use case ends.
 *MSS*
 
 1.  User specifies the date range for archiving.
-2.  CarviciM extracts the job entries within the selected range and archive them.
+2.  CarviciM extracts the job entries within the selected range and saves them to a new file.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given date format is invalid.
+[none]
+** 1a1. CarviciM shows an error message.
++
+Use case ends.
+
+[none]
+* 1b. The given date range is invalid.
+[none]
+** 1b1. CarviciM shows an error message.
 +
 Use case ends.
 
