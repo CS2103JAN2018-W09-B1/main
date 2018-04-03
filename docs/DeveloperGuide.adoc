@@ -606,13 +606,7 @@ If there is no `INDEX` present, `theme` command will return an invalid message, 
 === Sort feature
 ==== Current Implementation
 
-The sort mechanism is facilitated by a `Comparator`. It supports the comparison of employee’s name and arranges the employee list alphabetically. 
-
-====
-[NOTE]
-If there is no `INDEX` present, `theme` command will return an invalid message, which shows the usage information to the user.
-(e.g. theme "").
-====
+The sort mechanism is facilitated by a `Comparator`. It supports the comparison of employee’s name and arranges the employee list alphabetically.
 
 The `Comparator` is implemented this way:
 [source,java]
@@ -635,7 +629,7 @@ image::SortSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: Implementation of `SortCommand` +
+===== Aspect: How `SortCommand` executes +
 * **Current choice:** Sorts the employee list after typing in the sort command.
 ** Pros: Easy to implement, Able to locate the newly added employee easily at the end of the Employee UI Panel.
 ** Cons: May be a hassle to type the sort command word whenever we want to sort the employee list.
@@ -643,6 +637,31 @@ image::SortSequenceDiagram.png[width="800"]
 ** Pros: We do not need to type in the sort command word.
 ** Cons: We must look through the entire employee list to locate the newly added employee.
 // end::sort[]
+
+// tag::archive[]
+=== Archive feature
+==== Current Implementation
+
+...
+
+==== Design Considerations
+
+===== Aspect: How `ArchiveCommand` executes +
+* **Current choice:** Archive job entries within a selected date range.
+** Pros: We get to select the range of job entries that we will like to archive.
+** Cons: Harder to implement.
+* _Alternative:_ Archives all job entries.
+** Pros: Easy to implement.
+** Cons: We cannot select the range of job entries that we will like to archive.
+
+===== Aspect: How `ArchiveCommand` saves data +
+* **Current choice:** Creates a new archive file.
+** Pros: We get to archive multiple files with different selected date range.
+** Cons: May have performance issues in terms of memory usage.
+* _Alternative:_ Overwrites the existing archive file.
+** Pros: Will use less memory.
+** Cons: We cannot archive multiple files.
+// end::archive[]
 
 // tag::undoredo[]
 === Undo/Redo feature
