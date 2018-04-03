@@ -1,5 +1,6 @@
 package seedu.carvicim.logic.commands;
 
+import static seedu.carvicim.commons.core.Messages.MESSAGE_INVALID_DATERANGE;
 import static java.util.Objects.requireNonNull;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_START_DATE;
@@ -37,7 +38,7 @@ public class ArchiveCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         if (toArchive.compareTo(toArchive.getStartDate(), toArchive.getEndDate()) > 0) {
-            throw new CommandException("The specified start date is later than the end date");
+            throw new CommandException(MESSAGE_INVALID_DATERANGE);
         }
         requireNonNull(model);
         model.archiveJob(toArchive);
