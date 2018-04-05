@@ -24,8 +24,10 @@ public class ArchiveCommand extends UndoableCommand {
             + PREFIX_END_DATE + "Mar 25 2018";
 
     public static final String MESSAGE_SUCCESS = "Archived successfully";
+    public static final String MESSAGE_UNSUCCESS = "No jobs within selected range";
 
     private final DateRange toArchive;
+    private int archiveCount;
 
     /**
      * Creates an ArchiveCommand to archive the job entries within the specified {@code DateRange}
@@ -41,8 +43,11 @@ public class ArchiveCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_INVALID_DATERANGE);
         }
         requireNonNull(model);
-        model.archiveJob(toArchive);
-        return new CommandResult(MESSAGE_SUCCESS);
+        archiveCount = model.archiveJob(toArchive);
+        if (archiveCount != 0) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+        return new CommandResult(MESSAGE_UNSUCCESS);
     }
 
     @Override
