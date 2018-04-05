@@ -12,7 +12,7 @@ import seedu.carvicim.model.job.DateRange;
 /**
  * Archives job entries within selected date range.
  */
-public class ArchiveCommand extends UndoableCommand {
+public class ArchiveCommand extends Command {
     public static final String COMMAND_WORD = "archive";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Archives job entries within selected date range. "
@@ -38,9 +38,9 @@ public class ArchiveCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() {
         if (toArchive.compareTo(toArchive.getStartDate(), toArchive.getEndDate()) > 0) {
-            throw new CommandException(MESSAGE_INVALID_DATERANGE);
+            return new CommandResult(MESSAGE_INVALID_DATERANGE);
         }
         requireNonNull(model);
         archiveCount = model.archiveJob(toArchive);
@@ -50,10 +50,4 @@ public class ArchiveCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_UNSUCCESS);
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ArchiveCommand // instanceof handles nulls
-                && toArchive.equals(((ArchiveCommand) other).toArchive));
-    }
 }

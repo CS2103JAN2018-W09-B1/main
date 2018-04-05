@@ -28,7 +28,7 @@ public class XmlSerializableArchiveJobTest {
         XmlSerializableArchiveJob dataFromFile = XmlUtil.getDataFromFile(TYPICAL_JOBS_FILE,
                XmlSerializableArchiveJob.class);
         Carvicim carvicimFromFile = dataFromFile.toModelType();
-        Carvicim typicalJobsCarvicim = TypicalEmployees.getTypicalCarvicimWithAssignedJobsOnly();
+        Carvicim typicalJobsCarvicim = TypicalEmployees.getTypicalCarvicimWithArchivedJob();
         assertEquals(carvicimFromFile, typicalJobsCarvicim);
     }
 
