@@ -26,6 +26,7 @@ import seedu.carvicim.model.job.exceptions.JobNotFoundException;
 import seedu.carvicim.model.person.Employee;
 import seedu.carvicim.model.person.exceptions.DuplicateEmployeeException;
 import seedu.carvicim.model.person.exceptions.EmployeeNotFoundException;
+import seedu.carvicim.model.remark.Remark;
 import seedu.carvicim.storage.session.ImportSession;
 
 /**
@@ -144,6 +145,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void closeJob(Job target) throws JobNotFoundException {
+        carvicim.closeJob(target);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -155,6 +159,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(Employee target) throws EmployeeNotFoundException {
         carvicim.removeEmployee(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addRemark(Job job, Remark remark) {
+        carvicim.addRemark(job, remark);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
         indicateAddressBookChanged();
     }
 

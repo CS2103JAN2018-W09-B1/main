@@ -5,16 +5,16 @@ import java.util.List;
 import seedu.carvicim.commons.core.EventsCenter;
 import seedu.carvicim.commons.core.Messages;
 import seedu.carvicim.commons.core.index.Index;
-import seedu.carvicim.commons.events.ui.JumpToListRequestEvent;
+import seedu.carvicim.commons.events.ui.JumpToEmployeeListRequestEvent;
 import seedu.carvicim.logic.commands.exceptions.CommandException;
 import seedu.carvicim.model.person.Employee;
 
 /**
  * Selects a employee identified using it's last displayed index from the carvicim book.
  */
-public class SelectCommand extends Command {
+public class SelectEmployeeCommand extends Command {
 
-    public static final String COMMAND_WORD = "select";
+    public static final String COMMAND_WORD = "selecte";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the employee identified by the index number used in the last employee listing.\n"
@@ -25,7 +25,7 @@ public class SelectCommand extends Command {
 
     private final Index targetIndex;
 
-    public SelectCommand(Index targetIndex) {
+    public SelectEmployeeCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -38,7 +38,7 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        EventsCenter.getInstance().post(new JumpToEmployeeListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
@@ -46,7 +46,7 @@ public class SelectCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SelectCommand // instanceof handles nulls
-                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+                || (other instanceof SelectEmployeeCommand // instanceof handles nulls
+                && this.targetIndex.equals(((SelectEmployeeCommand) other).targetIndex)); // state check
     }
 }

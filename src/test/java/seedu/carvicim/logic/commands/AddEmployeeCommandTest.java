@@ -30,6 +30,7 @@ import seedu.carvicim.model.job.exceptions.JobNotFoundException;
 import seedu.carvicim.model.person.Employee;
 import seedu.carvicim.model.person.exceptions.DuplicateEmployeeException;
 import seedu.carvicim.model.person.exceptions.EmployeeNotFoundException;
+import seedu.carvicim.model.remark.Remark;
 import seedu.carvicim.testutil.EmployeeBuilder;
 
 public class AddEmployeeCommandTest {
@@ -175,6 +176,11 @@ public class AddEmployeeCommandTest {
         @Override
         public void closeJob(Job target) throws JobNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void addRemark(Job job, Remark remark) {
+            fail("This method should not be called");
         }
 
         @Override
