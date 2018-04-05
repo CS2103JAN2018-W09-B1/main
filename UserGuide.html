@@ -47,11 +47,12 @@
 <li><a href="#listing-entered-commands-code-history-code">4.16. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">4.17. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">4.18. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">4.19. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">4.20. Saving the data</a></li>
-<li><a href="#login-to-gmail-code-login-code">4.21. Login to Gmail : <code>login</code></a></li>
-<li><a href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.22. Email assigned employees belonging to a job : <code>email</code></a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">4.23. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#clearing-the-application-code-clear-code">4.19. Clearing the application : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">4.20. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">4.21. Saving the data</a></li>
+<li><a href="#login-to-gmail-code-login-code">4.22. Login to Gmail : <code>login</code></a></li>
+<li><a href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.23. Email assigned employees belonging to a job : <code>email</code></a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">4.24. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">5. FAQ</a></li>
@@ -1503,21 +1504,42 @@ Format: <code>redo</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.19. Exiting the program : <code>exit</code></a></h3>
+<h3 id="clearing-the-application-code-clear-code"><a class="link" href="#clearing-the-application-code-clear-code">4.19. Clearing the application : <code>clear</code></a></h3>
+<div class="paragraph">
+<p>You can use this command to clear everything on CarviciM.<br>
+Format: <code>clear</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+===
+<code>clear</code> command will remove all job entries and employees in CarviciM.
+===
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.20. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>You can use this command to exit the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">4.20. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">4.21. Saving the data</a></h3>
 <div class="paragraph">
 <p>CarviciM data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="login-to-gmail-code-login-code"><a class="link" href="#login-to-gmail-code-login-code">4.21. Login to Gmail : <code>login</code></a></h3>
+<h3 id="login-to-gmail-code-login-code"><a class="link" href="#login-to-gmail-code-login-code">4.22. Login to Gmail : <code>login</code></a></h3>
 <div class="paragraph">
 <p>You can use this command to login to Gmail. This command will direct you to the login page of Google.<br>
 Format: <code>login</code></p>
@@ -1538,7 +1560,7 @@ Format: <code>login</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="email-assigned-employees-belonging-to-a-job-code-email-code"><a class="link" href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.22. Email assigned employees belonging to a job : <code>email</code></a></h3>
+<h3 id="email-assigned-employees-belonging-to-a-job-code-email-code"><a class="link" href="#email-assigned-employees-belonging-to-a-job-code-email-code">4.23. Email assigned employees belonging to a job : <code>email</code></a></h3>
 <div class="paragraph">
 <p><strong>V1.4 (current):</strong>
 You can use this command to send an email to a dummy email address.<br>
@@ -1551,7 +1573,7 @@ Format: <code>email JOB_NUMBER</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">4.23. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">4.24. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
@@ -1658,6 +1680,9 @@ e.g. <code>set adde a</code></p>
 <p><strong>Theme</strong> : <code>theme INDEX</code><br>
 e.g. <code>theme 1</code></p>
 </li>
+<li>
+<p><strong>Clear entire CarviciM</strong> : <code>clear</code></p>
+</li>
 </ul>
 </div>
 </div>
@@ -1698,7 +1723,7 @@ e.g. <code>theme 1</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-04 21:03:38 UTC
+Last updated 2018-04-05 08:58:59 UTC
 </div>
 </div>
 </body>
