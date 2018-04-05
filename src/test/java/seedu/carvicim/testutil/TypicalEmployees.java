@@ -128,6 +128,27 @@ public class TypicalEmployees {
         return ab;
     }
 
+    /**
+     * Returns an {@code Carvicim} with one job.
+     */
+    public static Carvicim getTypicalCarvicimWithAssignedJobsOnly() {
+        Carvicim ab = new Carvicim();
+        UniqueEmployeeList assignedEmployeeList = new UniqueEmployeeList();
+        try {
+            assignedEmployeeList.add(ALICE);
+        } catch (DuplicateEmployeeException e) {
+            e.printStackTrace();
+        }
+
+        Job firstJob = new Job(new ClientBuilder().build(), new VehicleNumber(VALID_VEHICLE_NUMBER_A),
+                new JobNumber("1"), new Date("Mar 01 2018"), assignedEmployeeList, new Status(Status.STATUS_ONGOING),
+                new RemarkList());
+
+        ab.addJob(firstJob);
+
+        return ab;
+    }
+
     //@@author
     public static List<Employee> getTypicalEmployees() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
