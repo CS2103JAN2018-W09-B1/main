@@ -451,7 +451,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </ul>
 </div>
 <div class="paragraph">
-<p>For example, the <code>Logic</code> component (see the class diagram given below) defines it&#8217;s <a href="#api">API</a> in the <code>Logic.java</code> interface and exposes its functionality using the <code>LogicManager.java</code> class.</p>
+<p>For example, the <code>Logic</code> component defines it&#8217;s <a href="#api">API</a> in the <code>Logic.java</code> interface and exposes its functionality using the <code>LogicManager.java</code> class (figure 2).</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -526,7 +526,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><a href="#api"><strong>API</strong></a> : <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class (figure 5).</p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component uses <a href="https://en.wikipedia.org/wiki/JavaFX">JavaFx</a> UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
@@ -571,7 +571,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 .  <code>Logic</code> uses the <code>AddressBookParser</code> class to parse the user command.
 .  This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.
 .  The command execution can affect the <code>Model</code> (e.g. adding a employee) and/or raise events.
-.  The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
+.  The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code> (figure 6).</p>
 </div>
 <div class="paragraph">
 <p>For a more specific example of the steps above, given below (figure 8) is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> <a href="#api">API</a> call.</p>
@@ -595,7 +595,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><a href="#api"><strong>API</strong></a> : <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The <code>Model</code>,</p>
+<p>The <code>Model</code> (figure 9),</p>
 </div>
 <div class="ulist">
 <ul>
@@ -626,7 +626,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><a href="#api"><strong>API</strong></a> : <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The <code>Storage</code> component,</p>
+<p>The <code>Storage</code> component (figure 10),</p>
 </div>
 <div class="ulist">
 <ul>
@@ -658,7 +658,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p><code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> (refer to figure).</p>
+<p><code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> (figure 11).</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -849,7 +849,7 @@ Both are managed by the class <code>CommandWords</code>.</p>
 <p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
 </div>
 <div class="paragraph">
-<p>As you can see from figure 12, AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component. This is to facilitate the saving of data. CommandWords also has a method checkIntegrity, which ensures that object command words are 1 to 1 with class command words. This allows forward compatibility, as well as protects against data corruption to some extent.</p>
+<p>AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component (figure 12). This is to facilitate the saving of data. CommandWords also has a method checkIntegrity, which ensures that object command words are 1 to 1 with class command words. This allows forward compatibility, as well as protects against data corruption to some extent.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4614,7 +4614,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-05 14:28:27 UTC
+Last updated 2018-04-05 15:32:30 UTC
 </div>
 </div>
 </body>
