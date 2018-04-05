@@ -42,13 +42,24 @@ public class ArchiveCommandTest {
     }
 
     @Test
-    public void executeUnsuccess() throws CommandException {
+    public void executeUnsuccess_invalidDateRange() throws Exception {
         model = new ModelManager(getTypicalCarvicimWithJobs(), new UserPrefs());
         DateRange dateRange = new DateRangeBuilder().withDateRange("Mar 25 2018", "Mar 03 2018").build();
         ArchiveCommand archiveCommand = new ArchiveCommand(dateRange);
         archiveCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_DATERANGE);
+        archiveCommand.execute();
+    }
+
+    @Test
+    public void executeUnsuccess_noJobs() throws Exception {
+        model = new ModelManager(getTypicalCarvicimWithJobs(), new UserPrefs());
+        DateRange dateRange = new DateRangeBuilder().withDateRange("Jan 01 2018", "Jan 01 2018").build();
+        ArchiveCommand archiveCommand = new ArchiveCommand(dateRange);
+        archiveCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         CommandResult commandResult = archiveCommand.execute();
-        assertEquals(Messages.MESSAGE_INVALID_DATERANGE, commandResult.feedbackToUser);
+        assertEquals(ArchiveCommand.MESSAGE_UNSUCCESS, commandResult.feedbackToUser);
     }
 
 }

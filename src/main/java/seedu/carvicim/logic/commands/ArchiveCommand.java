@@ -5,6 +5,7 @@ import static seedu.carvicim.commons.core.Messages.MESSAGE_INVALID_DATERANGE;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.carvicim.logic.parser.CliSyntax.PREFIX_START_DATE;
 
+import seedu.carvicim.logic.commands.exceptions.CommandException;
 import seedu.carvicim.model.job.DateRange;
 
 //@@author richardson0694
@@ -22,7 +23,7 @@ public class ArchiveCommand extends Command {
             + PREFIX_START_DATE + "Mar 03 2018 "
             + PREFIX_END_DATE + "Mar 25 2018";
 
-    public static final String MESSAGE_SUCCESS = "Archived successfully";
+    public static final String MESSAGE_SUCCESS = "Archived successfully to \"archivejob.xml\"";
     public static final String MESSAGE_UNSUCCESS = "No jobs within selected range";
 
     private final DateRange toArchive;
@@ -37,9 +38,9 @@ public class ArchiveCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         if (toArchive.compareTo(toArchive.getStartDate(), toArchive.getEndDate()) > 0) {
-            return new CommandResult(MESSAGE_INVALID_DATERANGE);
+            throw new CommandException(MESSAGE_INVALID_DATERANGE);
         }
         requireNonNull(model);
         archiveCount = model.archiveJob(toArchive);
