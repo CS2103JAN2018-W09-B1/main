@@ -30,7 +30,6 @@ import seedu.carvicim.model.job.exceptions.JobNotFoundException;
 import seedu.carvicim.model.person.Employee;
 import seedu.carvicim.model.person.exceptions.DuplicateEmployeeException;
 import seedu.carvicim.model.person.exceptions.EmployeeNotFoundException;
-import seedu.carvicim.model.remark.Remark;
 import seedu.carvicim.testutil.EmployeeBuilder;
 
 public class AddEmployeeCommandTest {
@@ -129,8 +128,7 @@ public class AddEmployeeCommandTest {
         }
 
         @Override public boolean isViewingImportedJobs() {
-            fail("This method should not be called.");
-            return false;
+            return true;
         }
 
         @Override public void switchJobView() {
@@ -138,6 +136,20 @@ public class AddEmployeeCommandTest {
         }
 
         @Override public void resetJobView() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void showOngoingJobs() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetJobDisplayPanel() {
+            fail("This method should not be called.");
+        }
+
+        @Override public void addRemark(Job target, Job updatedJob) {
             fail("This method should not be called.");
         }
 
@@ -150,11 +162,6 @@ public class AddEmployeeCommandTest {
         public CommandWords getCommandWords() {
             fail("This method should never be called");
             return null;
-        }
-
-        @Override
-        public void initJobNumber() {
-            fail("This method should never be called");
         }
 
         @Override public String appendCommandKeyToMessage(String message) {
@@ -174,13 +181,8 @@ public class AddEmployeeCommandTest {
         }
 
         @Override
-        public void closeJob(Job target) throws JobNotFoundException {
+        public void closeJob(Job target, Job updatedJob) throws JobNotFoundException {
             fail("This method should not be called.");
-        }
-
-        @Override
-        public void addRemark(Job job, Remark remark) {
-            fail("This method should not be called");
         }
 
         @Override

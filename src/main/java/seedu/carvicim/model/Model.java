@@ -9,11 +9,11 @@ import seedu.carvicim.logic.commands.CommandWords;
 import seedu.carvicim.model.job.DateRange;
 import seedu.carvicim.model.job.Job;
 import seedu.carvicim.model.job.JobList;
+import seedu.carvicim.model.job.OngoingJobPredicate;
 import seedu.carvicim.model.job.exceptions.JobNotFoundException;
 import seedu.carvicim.model.person.Employee;
 import seedu.carvicim.model.person.exceptions.DuplicateEmployeeException;
 import seedu.carvicim.model.person.exceptions.EmployeeNotFoundException;
-import seedu.carvicim.model.remark.Remark;
 
 /**
  * The API of the Model component.
@@ -26,11 +26,17 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
 
+    Predicate<Job> PREDICATE_SHOW_ONGOING_JOBS = new OngoingJobPredicate();
+
     boolean isViewingImportedJobs();
 
     void switchJobView();
 
     void resetJobView();
+
+    void showOngoingJobs();
+
+    void resetJobDisplayPanel();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyCarvicim newData, CommandWords newCommandWords);
@@ -45,17 +51,14 @@ public interface Model {
     /** Returns the Carvicim */
     ReadOnlyCarvicim getCarvicim();
 
-    /** Initializes the job number based on the list of jobs */
-    void initJobNumber();
-
     /** Adds the given remark to the job */
-    void addRemark(Job job, Remark remark) throws JobNotFoundException;
+    void addRemark(Job target, Job updatedJob) throws JobNotFoundException;
 
     /** Adds the given job */
     void addJob(Job job);
 
     /** Closes the given job */
-    void closeJob(Job target) throws JobNotFoundException;
+    void closeJob(Job target, Job updatedJob) throws JobNotFoundException;
 
     /** Archives the job entries within the date range */
     int archiveJob(DateRange dateRange);

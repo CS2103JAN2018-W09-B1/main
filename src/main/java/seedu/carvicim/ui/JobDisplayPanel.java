@@ -1,6 +1,5 @@
 package seedu.carvicim.ui;
 
-import java.util.Iterator;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -8,14 +7,14 @@ import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import seedu.carvicim.commons.core.LogsCenter;
+import seedu.carvicim.commons.events.ui.JobDisplayPanelResetRequestEvent;
 import seedu.carvicim.commons.events.ui.JobDisplayPanelUpdateRequestEvent;
 import seedu.carvicim.commons.events.ui.JobPanelSelectionChangedEvent;
 import seedu.carvicim.model.job.Job;
-import seedu.carvicim.model.remark.Remark;
+import seedu.carvicim.model.job.Status;
 
 //@@author whenzei
 /**
@@ -44,7 +43,7 @@ public class JobDisplayPanel extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private FlowPane remarks;
+    private ListView remarks;
     @FXML
     private ListView assignedEmployees;
 
@@ -60,9 +59,15 @@ public class JobDisplayPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlJobDisplayPanelUpdateRequest(JobDisplayPanelUpdateRequestEvent event) {
+    private void handlJobDisplayPanelUpdateRequestEvent(JobDisplayPanelUpdateRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updateFxmlElements(event.getJob());
+    }
+
+    @Subscribe
+    private void handleJobDisplayPanelResetRequestEvent(JobDisplayPanelResetRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearFxmlElements();
     }
 
     /**
@@ -70,13 +75,17 @@ public class JobDisplayPanel extends UiPart<Region> {
      */
     private void updateFxmlElements(Job job) {
         assignedEmployees.setVisible(true);
+        remarks.setVisible(true);
 
         //Clear previous selection's information
         assignedEmployees.refresh();
-        remarks.getChildren().clear();
+        remarks.refresh();
 
         jobNumber.setText(job.getJobNumber().toString());
+
         status.setText(job.getStatus().toString());
+        setStatusLabelColour(job.getStatus().value);
+
         date.setText(job.getDate().toString());
         vehicleNumber.setText(job.getVehicleNumber().toString());
         name.setText(job.getClient().getName().toString());
@@ -84,12 +93,30 @@ public class JobDisplayPanel extends UiPart<Region> {
         email.setText(job.getClient().getEmail().toString());
 
         assignedEmployees.setItems(job.getAssignedEmployeesAsObservableList());
+        remarks.setItems(job.getRemarkList().asObservableList());
+    }
 
-        int count = 1;
-        Iterator<Remark> remarkIterator = job.getRemarks().iterator();
-        while (remarkIterator.hasNext()) {
-            remarks.getChildren().add(new Label(count + ") " + remarkIterator.next().value));
-            count++;
+    private void setStatusLabelColour(String status) {
+        if (status.equals(Status.STATUS_ONGOING)) {
+            this.status.setStyle("-fx-text-fill: green");
+        } else {
+            this.status.setStyle("-fx-text-fill: red");
         }
+    }
+
+    /**
+     * Clear the FXML elements
+     */
+    private void clearFxmlElements() {
+        assignedEmployees.setVisible(false);
+        remarks.setVisible(false);
+
+        jobNumber.setText("");
+        status.setText("");
+        date.setText("");
+        vehicleNumber.setText("");
+        name.setText("");
+        phone.setText("");
+        email.setText("");
     }
 }

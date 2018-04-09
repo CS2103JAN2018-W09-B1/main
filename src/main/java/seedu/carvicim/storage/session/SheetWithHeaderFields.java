@@ -1,8 +1,6 @@
 package seedu.carvicim.storage.session;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.carvicim.model.job.Status.STATUS_CLOSED;
-import static seedu.carvicim.model.job.Status.STATUS_ONGOING;
 import static seedu.carvicim.model.job.VehicleNumber.isValidVehicleNumber;
 import static seedu.carvicim.model.person.Email.isValidEmail;
 import static seedu.carvicim.model.person.Name.isValidName;
@@ -17,7 +15,6 @@ import static seedu.carvicim.storage.session.SheetParser.EMPLOYEE_EMAIL;
 import static seedu.carvicim.storage.session.SheetParser.EMPLOYEE_NAME;
 import static seedu.carvicim.storage.session.SheetParser.EMPLOYEE_PHONE;
 import static seedu.carvicim.storage.session.SheetParser.REMARKS;
-import static seedu.carvicim.storage.session.SheetParser.STATUS;
 import static seedu.carvicim.storage.session.SheetParser.VEHICLE_NUMBER;
 
 import java.util.ArrayList;
@@ -54,6 +51,8 @@ import seedu.carvicim.storage.session.exceptions.FileFormatException;
  */
 public class SheetWithHeaderFields implements Iterable<JobEntry> {
     public static final String SEPARATOR = ", ";
+    public static final String APPROVAL_STATUS_ACCEPTED = "accepted";
+    public static final String APPROVAL_STATUS_REJECTED = "rejected";
 
     private static final String ERROR_MESSAGE_EMPTY_SHEET = "Sheet %d contains no valid job entries!";
     private static final String ERROR_MESSAGE_CORRUPT_JOB_ENTRY = "The following fields are corrupt: ";
@@ -89,7 +88,7 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
         fontStyle.setColor(IndexedColors.RED.getIndex());
         CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
         cellStyle.setFont(fontStyle);
-        cell.setCellValue("rejected");
+        cell.setCellValue(APPROVAL_STATUS_REJECTED);
     }
 
     /**
@@ -104,7 +103,7 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
         fontStyle.setColor(IndexedColors.GREEN.getIndex());
         CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
         cellStyle.setFont(fontStyle);
-        cell.setCellValue("accepted");
+        cell.setCellValue(APPROVAL_STATUS_ACCEPTED);
     }
 
     /**
@@ -127,7 +126,7 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
     }
 
     public String getEmptySheetMessage() {
-        return String.format(ERROR_MESSAGE_EMPTY_SHEET, getSheetIndex());
+        return String.format(ERROR_MESSAGE_EMPTY_SHEET, getSheetIndex() + 1);
     }
 
     public String getCorruptedFieldsMessage(Person client, VehicleNumber vehicleNumber, Employee employee) {
@@ -169,16 +168,14 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
                 commentJobEntry(i, getCorruptedFieldsMessage(client, vehicleNumber, employee));
                 continue;
             }
-            employeeList = new UniqueEmployeeList();
-            try {
-                employeeList.add(employee);
-            } catch (DuplicateEmployeeException e) {
-                e.printStackTrace(); // should not happen
+            String approvalStatus = getApprovalStatus(i);
+            if (approvalStatus.equals(APPROVAL_STATUS_ACCEPTED) || approvalStatus.equals(APPROVAL_STATUS_REJECTED)) {
+                continue;
             }
-            status = getStatus(i);
+            employeeList = createSingleEmployeeList(employee);
             remarkList = getRemarks(i);
-            return new JobEntry(client, vehicleNumber, new JobNumber(), new Date(), employeeList, status, remarkList,
-                getSheetIndex(), i, "");
+            return new JobEntry(client, vehicleNumber, new JobNumber(), new Date(), employeeList,
+                new Status(Status.STATUS_ONGOING), remarkList, getSheetIndex(), i, "");
         }
         throw new FileFormatException(getEmptySheetMessage());
     }
@@ -211,18 +208,6 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
         return null;
     }
 
-    private Status getStatus(int rowNumber) {
-        RowData optionalStatus = optionalFields.get(STATUS);
-        if (optionalStatus == null) {
-            return new Status(STATUS_ONGOING);
-        }
-        String status = readFirstData(optionalStatus, rowNumber).toLowerCase();
-        if (status.equals((STATUS_CLOSED))) {
-            return new Status(status);
-        }
-        return new Status(STATUS_ONGOING);
-    }
-
     private RemarkList getRemarks(int rowNumber) {
         RowData optionalRemarks = optionalFields.get(REMARKS);
         if (optionalRemarks == null) {
@@ -236,6 +221,11 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
             }
         }
         return remarkList;
+    }
+
+    private String getApprovalStatus(int rowNumber) {
+        String approvalStatus = readFirstData(commentFields.get(APPROVAL_STATUS), rowNumber).toLowerCase();
+        return approvalStatus;
     }
 
     /**
@@ -263,7 +253,7 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
     }
     /**
      * Retrieves the job at (@code rowNumber), and missing details from those in first job entry.
-     * Adds missing detail in remarks.
+     * Adds missing fields in remarks.
      */
     private JobEntry getJobEntryAt(int rowNumber, JobEntry previousEntry) {
         Person client = getClient(rowNumber);
@@ -273,7 +263,6 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
         if (client == null || vehicleNumber == null || employee == null) {
             importMessage = getCorruptedFieldsMessage(client, vehicleNumber, employee);
         }
-        // commentJobEntry(rowNumber, importMessage); moved to SessionData when reviewing
         if (client == null) {
             client = previousEntry.getClient();
         }
@@ -283,17 +272,24 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
         if (employee == null) {
             employee = previousEntry.getAssignedEmployees().iterator().next();
         }
+        UniqueEmployeeList employeeList = createSingleEmployeeList(employee);
+        RemarkList remarkList = getRemarks(rowNumber);
+        return new JobEntry(client, vehicleNumber, new JobNumber(), new Date(), employeeList,
+                new Status(Status.STATUS_ONGOING), remarkList, sheet.getWorkbook().getSheetIndex(sheet), rowNumber,
+                importMessage);
+    }
 
+    /**
+     * Creates an (@code UniqueEmployeeList) containing (@code Employee)
+     */
+    private UniqueEmployeeList createSingleEmployeeList(Employee employee) {
         UniqueEmployeeList employeeList = new UniqueEmployeeList();
         try {
             employeeList.add(employee);
         } catch (DuplicateEmployeeException e) {
-            e.printStackTrace(); // should not happen
+            throw new RuntimeException(e.getMessage());
         }
-        Status status = getStatus(rowNumber);
-        RemarkList remarkList = getRemarks(rowNumber);
-        return new JobEntry(client, vehicleNumber, new JobNumber(), new Date(), employeeList, status, remarkList,
-                sheet.getWorkbook().getSheetIndex(sheet), rowNumber, importMessage);
+        return employeeList;
     }
 
     @Override
@@ -309,6 +305,12 @@ public class SheetWithHeaderFields implements Iterable<JobEntry> {
             @Override public JobEntry next() {
                 if (!hasNext()) {
                     return null;
+                }
+                String approvalStatus = getApprovalStatus(currentRow);
+                if (approvalStatus.equals(APPROVAL_STATUS_ACCEPTED)
+                        || approvalStatus.equals(APPROVAL_STATUS_REJECTED)) {
+                    currentRow++;
+                    return next();
                 }
                 previousEntry = getJobEntryAt(currentRow, previousEntry);
                 currentRow++;
