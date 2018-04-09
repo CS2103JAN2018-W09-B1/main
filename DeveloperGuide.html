@@ -287,6 +287,14 @@ This will generate for you all resources required by the application and tests.<
 <div class="paragraph">
 <p>Set up Travis to perform Continuous Integration (CI) for your fork. See <a href="UsingTravis.html">UsingTravis.adoc</a> to learn how to set it up.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="editing-javafx"><a class="link" href="#editing-javafx">1.4.4. Editing JavaFX</a></h4>
+<div class="paragraph">
+<p>To edit the JavaFX scenes, download the <code>.jar</code> snapshot from
+<a href="https://ci.appveyor.com/project/damithc/scenebuilder/build/1.0.9/artifacts" class="bare">https://ci.appveyor.com/project/damithc/scenebuilder/build/1.0.9/artifacts</a>.
+Run the <code>.jar</code> file to get started.</p>
+</div>
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
@@ -330,7 +338,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 </div>
 </div>
 <div class="sect3">
-<h4 id="getting-started-with-coding"><a class="link" href="#getting-started-with-coding">1.4.4. Getting started with coding</a></h4>
+<h4 id="getting-started-with-coding"><a class="link" href="#getting-started-with-coding">1.4.5. Getting started with coding</a></h4>
 <div class="paragraph">
 <p>When you are ready to start coding,</p>
 </div>
@@ -1045,20 +1053,9 @@ any employees not present in the application.</p>
 </div>
 <div class="sect4">
 <h5 id="saving-feedback-from-an-code-importsession-code"><a class="link" href="#saving-feedback-from-an-code-importsession-code">Saving feedback from an <code>ImportSession</code></a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Figure 16 below shows the process of saving a session. On the <code>save</code> command, <code>importSession</code> writes the
-modified excel sheets from <code>sheetWithHeaderFields</code> to the same path as the imported excel file, with
-a timestamp added to the back of the filename.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/SessionCloseSequenceDiagram.png" alt="SessionCloseSequenceDiagram" width="800">
-</div>
-<div class="title">Figure 16. Sequence Digram of <code>ImportSession</code> when saving feedback to a file</div>
+<div class="paragraph">
+<p><code>SessionData</code> autosaves the comments to an excel file with -comments.xls or -comments.xlsx appended,
+in the same directory.</p>
 </div>
 </div>
 </div>
@@ -1342,7 +1339,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/SortSequenceDiagram.png" alt="SortSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 17. <code>SortCommand</code> sequence diagram</div>
+<div class="title">Figure 16. <code>SortCommand</code> sequence diagram</div>
 </div>
 </div>
 <div class="sect3">
@@ -1524,7 +1521,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
-<div class="title">Figure 18. Inheritance diagram for commands</div>
+<div class="title">Figure 17. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -1581,7 +1578,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
-<div class="title">Figure 19. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
+<div class="title">Figure 18. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
 <div class="olist none">
 <ol class="none">
@@ -1594,7 +1591,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
-<div class="title">Figure 20. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
+<div class="title">Figure 19. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1626,7 +1623,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <div class="content">
 <img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
-<div class="title">Figure 21. Step 3: <code>undo</code> action</div>
+<div class="title">Figure 20. Step 3: <code>undo</code> action</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1651,7 +1648,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 22. <code>undo</code> sequence diagram</div>
+<div class="title">Figure 21. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -1679,7 +1676,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
-<div class="title">Figure 23. <code>clear</code> pushed into <code>undoStack</code></div>
+<div class="title">Figure 22. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -1688,7 +1685,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
-<div class="title">Figure 24. <code>list</code> not added into <code>undoStack</code></div>
+<div class="title">Figure 23. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -1697,7 +1694,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
-<div class="title">Figure 25. Stack activity diagram summary</div>
+<div class="title">Figure 24. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
@@ -1869,7 +1866,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
 </div>
-<div class="title">Figure 26. Email authorization sequence diagram</div>
+<div class="title">Figure 25. Email authorization sequence diagram</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -2105,7 +2102,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 27. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 26. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -4614,7 +4611,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-09 06:42:15 UTC
+Last updated 2018-04-09 09:18:53 UTC
 </div>
 </div>
 </body>
