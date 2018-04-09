@@ -40,15 +40,15 @@
 <li><a href="#adding-a-job-entry-code-addj-code">5.2. Adding a job entry: <code>addj</code></a></li>
 <li><a href="#closing-a-job-entry-code-closej-code">5.3. Closing a job entry: <code>closej</code></a></li>
 <li><a href="#adding-remark-to-a-job-code-remark-code">5.4. Adding remark to a job: <code>remark</code></a></li>
-<li><a href="#assigning-removing-employees-to-from-an-ongoing-job-mark-coming-in-v1-5-mark">5.5. Assigning/removing employees to/from an ongoing job: <mark>Coming in V1.5</mark></a></li>
-<li><a href="#archiving-job-entries-code-archive-code">5.6. Archiving job entries: <code>archive</code></a></li>
-<li><a href="#adding-an-employee-code-adde-code">5.7. Adding an employee: <code>adde</code></a></li>
-<li><a href="#listing-all-employees-code-liste-code">5.8. Listing all employees : <code>liste</code></a></li>
-<li><a href="#sorting-all-employees-code-sort-code">5.9. Sorting all employees : <code>sort</code></a></li>
-<li><a href="#listing-all-jobs-code-listj-code">5.10. Listing all jobs : <code>listj</code></a></li>
-<li><a href="#selecting-employees-by-list-number-code-selecte-code">5.11. Selecting employees by list number: <code>selecte</code></a></li>
-<li><a href="#locating-employees-by-name-code-finde-code">5.12. Locating employees by name: <code>finde</code></a></li>
-<li><a href="#deleting-an-employee-code-deletee-code">5.13. Deleting an employee : <code>deletee</code></a></li>
+<li><a href="#listing-all-jobs-code-listj-code">5.5. Listing all jobs : <code>listj</code></a></li>
+<li><a href="#locating-jobs-by-keyword-code-findj-code">5.6. Locating jobs by keyword: <code>findj</code></a></li>
+<li><a href="#archiving-job-entries-code-archive-code">5.7. Archiving job entries: <code>archive</code></a></li>
+<li><a href="#adding-an-employee-code-adde-code">5.8. Adding an employee: <code>adde</code></a></li>
+<li><a href="#listing-all-employees-code-liste-code">5.9. Listing all employees : <code>liste</code></a></li>
+<li><a href="#deleting-an-employee-code-deletee-code">5.10. Deleting an employee : <code>deletee</code></a></li>
+<li><a href="#sorting-all-employees-code-sort-code">5.11. Sorting all employees : <code>sort</code></a></li>
+<li><a href="#selecting-employees-by-list-number-code-selecte-code">5.12. Selecting employees by list number: <code>selecte</code></a></li>
+<li><a href="#locating-employees-by-name-code-finde-code">5.13. Locating employees by name: <code>finde</code></a></li>
 <li><a href="#changing-a-command-word-code-set-code">5.14. Changing a command word : <code>set</code></a></li>
 <li><a href="#importing-jobs-from-an-excel-file">5.15. Importing jobs from an excel file</a></li>
 <li><a href="#setting-a-theme-code-theme-code">5.16. Setting a theme : <code>theme</code></a></li>
@@ -266,66 +266,140 @@ Here are some example commands you can try:</p>
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">5.1. Viewing help : <code>help</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to bring up the help menu.<br>
+<p>To find out more on using CarviciM, you can use this command to bring out the help menu.<br>
 Format: <code>help</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="adding-a-job-entry-code-addj-code"><a class="link" href="#adding-a-job-entry-code-addj-code">5.2. Adding a job entry: <code>addj</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to add a job to CarviciM.<br>
+<p>To add a new job entry into CarviciM, you can use this command.<br>
 Format: <code>addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+</code></p>
 </div>
-<div class="sidebarblock">
-<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Adds a job with the given fields and assign employees based on specified <code>ASSIGNED_EMPLOYEE_INDEX</code>.</p>
+<p>The <code>addj</code> command adds a job with the given fields, and assign employees based on specified <code>ASSIGNED_EMPLOYEE_INDEX</code>.</p>
 </li>
 <li>
-<p>The index refers to the index number shown in the most recent listing.</p>
+<p>The index refers to the index number shown in the most recent employee listing.</p>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 </ul>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>addj n/John Doe p/98765432 e/johnd@example.com v/bhj123 w/3</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see "New job added: &#8230;&#8203; " in the result display.<br></p>
-</li>
-<li>
-<p>The job list panel will be updated to display the newly added job</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>addj n/John Doe p/98765432 e/johnd@example.com v/bhj123 w/3</code><br>
+You will see "New job added: &#8230;&#8203; " in the result display.<br>
+The job list panel will be updated to display the newly added job.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="closing-a-job-entry-code-closej-code"><a class="link" href="#closing-a-job-entry-code-closej-code">5.3. Closing a job entry: <code>closej</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to close an ongoing job based on its job number.<br>
+<p>To indicate that a job is completed in CarviciM, you can use this command.<br>
 Format: <code>closej j/JOB_NUMBER</code></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>closej j/2</code><br>
+This command closes the ongoing job of number 2 in CarviciM.<br>
+You will see "Closed Job: 2" in the result display.<br>
+You will see the job of number 2 have its status shown as "closed" in the job list panel.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-remark-to-a-job-code-remark-code"><a class="link" href="#adding-remark-to-a-job-code-remark-code">5.4. Adding remark to a job: <code>remark</code></a></h3>
+<div class="paragraph">
+<p>To add remark or special note to an ongoing job entry, you can use this command.+
+Format: <code>remark j/JOB_NUMBER r/YOUR_REMARK</code></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>remark j/2 r/An urgent work that should be completed asap</code><br>
+This command will add the remark "An urgent work that should be completed asap" to a job entry of a job number "2".<br>
+You will see the message "Remark Added: An urgent work that should be completed asap" shown in the result display.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-all-jobs-code-listj-code"><a class="link" href="#listing-all-jobs-code-listj-code">5.5. Listing all jobs : <code>listj</code></a></h3>
+<div class="paragraph">
+<p>To view a list of all jobs in CarviciM, you can use this command.<br>
+Format: <code>listj</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>This command will show you all the jobs (closed and ongoing) in CarviciM .</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="locating-jobs-by-keyword-code-findj-code"><a class="link" href="#locating-jobs-by-keyword-code-findj-code">5.6. Locating jobs by keyword: <code>findj</code></a></h3>
+<div class="paragraph">
+<p>To find jobs of specific details, you can use this command.<br>
+Format: <code>finde KEYWORD [MORE_KEYWORDS]</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The search is case insensitive. e.g <code>apr</code> will match <code>Apr</code></p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>John Doe</code> will match <code>Doe John</code></p>
+</li>
+<li>
+<p>The <strong>name</strong>, <strong>vehicle number</strong>, <strong>date</strong> and <strong>job number</strong> will be searched.</p>
+</li>
+<li>
+<p>Only full words will be matched e.g. <code>Joh</code> will not match <code>John</code></p>
+</li>
+<li>
+<p>Jobs details matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>John Apr</code> will return jobs with client name <code>John Doe</code> and date <code>20 Apr 2019</code>.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -334,46 +408,34 @@ Format: <code>closej j/JOB_NUMBER</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>closej j/123</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Closes the ongoing job of number 123 in CarviciM.<br></p>
-</li>
-<li>
-<p>You will see "Closed Job: 123" in the result display.<br></p>
-</li>
-<li>
-<p>You will not see job of number 123 in the job list panel.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="adding-remark-to-a-job-code-remark-code"><a class="link" href="#adding-remark-to-a-job-code-remark-code">5.4. Adding remark to a job: <code>remark</code></a></h3>
-
-</div>
-<div class="sect2">
-<h3 id="assigning-removing-employees-to-from-an-ongoing-job-mark-coming-in-v1-5-mark"><a class="link" href="#assigning-removing-employees-to-from-an-ongoing-job-mark-coming-in-v1-5-mark">5.5. Assigning/removing employees to/from an ongoing job: <mark>Coming in V1.5</mark></a></h3>
-
-</div>
-<div class="sect2">
-<h3 id="archiving-job-entries-code-archive-code"><a class="link" href="#archiving-job-entries-code-archive-code">5.6. Archiving job entries: <code>archive</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to archive job entries.<br>
+<p><code>findj John</code><br>
+You will see all jobs with <code>john</code> as their client name (not case-sensitive), shown in the job list panel.</p>
+</div>
+</li>
+<li>
+<p>Example 2:<br></p>
+<div class="paragraph">
+<p><code>findj Apr Feb</code><br>
+You will see all jobs with <code>Apr</code> or <code>Feb</code> as their job detail (not case-sensitive), shown in the job list panel.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="archiving-job-entries-code-archive-code"><a class="link" href="#archiving-job-entries-code-archive-code">5.7. Archiving job entries: <code>archive</code></a></h3>
+<div class="paragraph">
+<p>To archive job entries within a specified range in CarviciM, you can use this command.<br>
 Format: <code>archive sd/START_DATE ed/END_DATE</code></p>
 </div>
-<div class="sidebarblock">
-<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
@@ -387,110 +449,60 @@ Format: <code>archive sd/START_DATE ed/END_DATE</code></p>
 </li>
 </ul>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>archive sd/Mar 25 2018 ed/Apr 03 2018</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Archive the job entries within the selected date range into CarviciM.<br></p>
-</li>
-<li>
-<p>You will see "Archived Successfully"<br></p>
-</li>
-<li>
-<p>You will see the newly created archive file.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>archive sd/Mar 25 2018 ed/Apr 03 2018</code><br>
+The command will save the job entries within the selected date range in CarviciM.<br>
+You will see "Archived Successfully" in the result display.<br>
+You will see the newly created archive file.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-an-employee-code-adde-code"><a class="link" href="#adding-an-employee-code-adde-code">5.7. Adding an employee: <code>adde</code></a></h3>
+<h3 id="adding-an-employee-code-adde-code"><a class="link" href="#adding-an-employee-code-adde-code">5.8. Adding an employee: <code>adde</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to add an employee to CarviciM.<br>
+<p>To add details of a new employee into CarviciM, you can use this command.<br>
 Format: <code>adde n/NAME p/PHONE_NUMBER e/EMAIL</code></p>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>adde n/John Doe p/98765432 e/johnd@example.com</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Add the details of the employee into CarviciM.<br></p>
-</li>
-<li>
-<p>You will see "New employee added: &#8230;&#8203;" followed by details of the employee.<br></p>
-</li>
-<li>
-<p>You will see the newly added employee in the employee list panel.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>adde n/John Doe p/98765432 e/johnd@example.com</code><br>
+The command will add the details of the new employee into CarviciM.<br>
+You will see "New employee added: &#8230;&#8203;" followed by details of the new employee.<br>
+You will see the newly added details of the employee in the employee list panel.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-employees-code-liste-code"><a class="link" href="#listing-all-employees-code-liste-code">5.8. Listing all employees : <code>liste</code></a></h3>
+<h3 id="listing-all-employees-code-liste-code"><a class="link" href="#listing-all-employees-code-liste-code">5.9. Listing all employees : <code>liste</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to view a list of all employees in CarviciM.<br>
+<p>To view a list of employee details in CarviciM, you can use this command.<br>
 Format: <code>liste</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sorting-all-employees-code-sort-code"><a class="link" href="#sorting-all-employees-code-sort-code">5.9. Sorting all employees : <code>sort</code></a></h3>
+<h3 id="deleting-an-employee-code-deletee-code"><a class="link" href="#deleting-an-employee-code-deletee-code">5.10. Deleting an employee : <code>deletee</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to sort the list of employees alphabetically in CarviciM.<br>
-Format: <code>sort</code></p>
+<p>To remove the details of an employee from CarviciM, you can use this command.<br>
+Format: <code>deletee INDEX</code></p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="listing-all-jobs-code-listj-code"><a class="link" href="#listing-all-jobs-code-listj-code">5.10. Listing all jobs : <code>listj</code></a></h3>
-<div class="paragraph">
-<p>You can use this command to view a list of all employees in CarviciM.<br>
-Format: <code>listj</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="selecting-employees-by-list-number-code-selecte-code"><a class="link" href="#selecting-employees-by-list-number-code-selecte-code">5.11. Selecting employees by list number: <code>selecte</code></a></h3>
-<div class="paragraph">
-<p>You can use this command to select the specified employee from CarviciM to view jobs associated
-with the emlpoyee.<br>
-Format: <code>selecte INDEX</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Selects the employee at the specified <code>INDEX</code>.</p>
+<p>This command deletes the employee details at the specified <code>INDEX</code>.</p>
 </li>
 <li>
 <p>The index refers to the index number shown in the most recent listing.</p>
@@ -500,7 +512,9 @@ Format: <code>selecte INDEX</code></p>
 </li>
 </ul>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -509,89 +523,131 @@ Format: <code>selecte INDEX</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>liste</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see a list of employees displayed in the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>liste</code><br>
+You will see a list of employees displayed in the employee list panel.+</p>
 </div>
-</li>
-<li>
-<p><code>selecte 2</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see an updated job list panel which has the jobs of the 2nd employee.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>deletee 2</code><br>
+You will see an updated employee list panel which has the 2nd employee removed.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>finde Betsy</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see the results of the <code>finde</code> command which shows all employees with matching keyword name.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>finde Betsy</code><br>
+You will see the results of the <code>finde</code> command which shows all employees with matching keyword name, in the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>selecte 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see an updated job list panel which has the jobs of the 1st employee.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>deletee 1</code><br>
+You will see an updated employees list panel which has the 1st employee removed.</p>
 </div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-employees-by-name-code-finde-code"><a class="link" href="#locating-employees-by-name-code-finde-code">5.12. Locating employees by name: <code>finde</code></a></h3>
+<h3 id="sorting-all-employees-code-sort-code"><a class="link" href="#sorting-all-employees-code-sort-code">5.11. Sorting all employees : <code>sort</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to find employees, whose names contain any of the given keywords.<br>
-Format: <code>finde KEYWORD [MORE_KEYWORDS]</code></p>
+<p>To sort the list of employees alphabetically for easy viewing, you can use this command.<br>
+Format: <code>sort</code></p>
 </div>
-<div class="sidebarblock">
-<div class="content">
+</div>
+<div class="sect2">
+<h3 id="selecting-employees-by-list-number-code-selecte-code"><a class="link" href="#selecting-employees-by-list-number-code-selecte-code">5.12. Selecting employees by list number: <code>selecte</code></a></h3>
+<div class="paragraph">
+<p>To select a specific employee from the employee list panel and display the assigned jobs, you can use this command.<br>
+Format: <code>selecte INDEX</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
+<p>This command selects the employee at the specified <code>INDEX</code>.</p>
 </li>
 <li>
-<p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Example 1:<br></p>
+<div class="paragraph">
+<p><code>liste</code><br>
+You will see a list of employees displayed in the employee list panel.<br></p>
+</div>
+<div class="paragraph">
+<p><code>selecte 2</code><br>
+You will see an updated job list panel which has the jobs of the 2nd employee.</p>
+</div>
+</li>
+<li>
+<p>Example 2:<br></p>
+<div class="paragraph">
+<p><code>finde Betsy</code><br>
+You will see the results of the <code>finde</code> command which shows all employees with matching keyword name.<br></p>
+</div>
+<div class="paragraph">
+<p><code>selecte 1</code><br>
+You will see an updated job list panel which has the jobs of the 1st employee.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="locating-employees-by-name-code-finde-code"><a class="link" href="#locating-employees-by-name-code-finde-code">5.13. Locating employees by name: <code>finde</code></a></h3>
+<div class="paragraph">
+<p>To search for employees whose names contain any of the given keywords, you can use this command.<br>
+Format: <code>finde KEYWORD [MORE_KEYWORDS]</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code>.</p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code>.</p>
 </li>
 <li>
 <p>Only the name is searched.</p>
 </li>
 <li>
-<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
+<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code>.</p>
 </li>
 <li>
-<p>Employees matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
+<p>Employees matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code>.</p>
 </li>
 </ul>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -600,121 +656,16 @@ Format: <code>finde KEYWORD [MORE_KEYWORDS]</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>finde John</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see all employees with <code>john</code> as their name (not case-sensitive), shown in the employee list panel.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>finde John</code><br>
+You will see all employees with <code>john</code> as their name (not case-sensitive), shown in the employee list panel.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>finde Betsy Tim John</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see all employees with <code>Betsy</code>, <code>Tim</code>, or <code>John</code> (not case-sensitive), shown in the employees list panel.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="deleting-an-employee-code-deletee-code"><a class="link" href="#deleting-an-employee-code-deletee-code">5.13. Deleting an employee : <code>deletee</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to delete the specified employee from CarviciM.<br>
-Format: <code>deletee INDEX</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Deletes the employee at the specified <code>INDEX</code>.</p>
-</li>
-<li>
-<p>The index refers to the index number shown in the most recent listing.</p>
-</li>
-<li>
-<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>liste</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see a list of employees displayed in the employee list panel.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><code>deletee 2</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see an updated employee list panel which has the 2nd employee removed.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>finde Betsy</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see the results of the <code>finde</code> command which shows all employees with matching keyword name.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><code>deletee 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see an updated employees list panel which has the 1st employee removed.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<p><code>finde Betsy Tim John</code><br>
+You will see all employees with <code>Betsy</code>, <code>Tim</code>, or <code>John</code> (not case-sensitive), shown in the employees list panel.</p>
 </div>
 </li>
 </ul>
@@ -723,7 +674,7 @@ Format: <code>deletee INDEX</code></p>
 <div class="sect2">
 <h3 id="changing-a-command-word-code-set-code"><a class="link" href="#changing-a-command-word-code-set-code">5.14. Changing a command word : <code>set</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to set an easy to use word in place of a default command word.<br>
+<p>To set an easy to use word in place of a default command word, you can use this command.<br>
 Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 </div>
 <div class="admonitionblock note">
@@ -757,42 +708,18 @@ Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>set adde a</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Sets <code>adde</code> command word to <code>a</code> using default.<br></p>
-</li>
-<li>
-<p>You will see "adde has been replaced with a!" in the result display.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>set adde a</code><br>
+Sets <code>adde</code> command word to <code>a</code> using default.<br>
+You will see "adde has been replaced with a!" in the result display.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>set deletee d</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Sets <code>deletee</code> command word to <code>d</code> using default.<br></p>
-</li>
-<li>
-<p>You will see "deletee has been replaced with d!" in the result display.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>set deletee d</code><br>
+Sets <code>deletee</code> command word to <code>d</code> using default.<br>
+You will see "deletee has been replaced with d!" in the result display.</p>
 </div>
 </li>
 </ul>
@@ -803,7 +730,7 @@ Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 <div class="sect3">
 <h4 id="import-command"><a class="link" href="#import-command">5.15.1. Importing a new excel file: <code>import</code></a></h4>
 <div class="paragraph">
-<p>You can use this command to load your excel file by filename or filepath.<br>
+<p>To load your excel file by filename or filepath that contains new job entries, you can use this command.<br>
 Format: <code>import FILE_PATH</code></p>
 </div>
 <div class="admonitionblock note">
@@ -835,28 +762,11 @@ Format: <code>import FILE_PATH</code></p>
 </table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>import excel.xlsx</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Imports file excel.xlsx.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>import excel.xlsx</code><br>
+Imports file excel.xlsx.</p>
 </div>
 </div>
 <div class="sect3">
@@ -880,29 +790,11 @@ You can use this command to import all job entries from an excel file to save ti
 </table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>importAll excel.xlsx</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Imports file excel.xlsx, accepts all job entries and saves the reviewed job entries as
-an external excel file.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>importAll excel.xlsx</code><br>
+Imports file excel.xlsx, accepts all job entries and saves the reviewed job entries as an external excel file.</p>
 </div>
 </div>
 <div class="sect3">
@@ -924,125 +816,57 @@ Format: <code>switch</code></p>
 <div class="sect4">
 <h5 id="accepting-1-job-code-accept-code"><a class="link" href="#accepting-1-job-code-accept-code">Accepting 1 job: <code>accept</code></a></h5>
 <div class="paragraph">
-<p>Accepts a job with job number NUMBER in imported list.
+<p>To accept a job with job number <code>NUMBER</code> in the imported list, you can use this command.
 Format: <code>accept NUMBER</code></p>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>accept 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Accepts the job entry with job number 1 and removes it from imported list.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>accept 1</code><br>
+Accepts the job entry with job number 1 and removes it from imported list.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="acceptAll-command"><a class="link" href="#acceptAll-command">Accepting all remaining imported jobs: <code>acceptAll</code></a></h5>
 <div class="paragraph">
-<p>Accepts all remaining jobs.
+<p>To accept all remaining jobs, you can use this command.
 Format: <code>acceptAll</code></p>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>acceptAll</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Accepts all remaining job entries and clears the imported list.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>acceptAll</code><br>
+Accepts all remaining job entries and clears the imported list.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="rejecting-1-job-code-reject-code"><a class="link" href="#rejecting-1-job-code-reject-code">Rejecting 1 job: <code>reject</code></a></h5>
 <div class="paragraph">
-<p>Rejects a job with job number NUMBER in imported list.
+<p>To reject a job with job number <code>NUMBER</code> in the imported list, you can use this command.
 Format: <code>reject NUMBER</code></p>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>reject 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Rejects job entry with job number 1 and removes it from imported list. It is not added to CarviciM.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>reject 1</code><br>
+Rejects job entry with job number 1 and removes it from imported list. It is not added to CarviciM.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="rejecting-all-remaining-imported-jobs-code-rejectall-code"><a class="link" href="#rejecting-all-remaining-imported-jobs-code-rejectall-code">Rejecting all remaining imported jobs: <code>rejectAll</code></a></h5>
 <div class="paragraph">
-<p>Rejects all remaining jobs.
+<p>To reject all remaining jobs in the imported list, you can use this command.
 Format: <code>rejectAll</code></p>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>rejectAll</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Rejects all remaining job entries and clears the imported list.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>rejectAll</code><br>
+Rejects all remaining job entries and clears the imported list.</p>
 </div>
 </div>
 </div>
@@ -1073,70 +897,30 @@ spacebar character.</p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>accept 1</code> good job`<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Accepts first job and attaches "good job" as a comment to the first job.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>accept 1</code> good job`<br>
+Accepts first job and attaches "good job" as a comment to the first job.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>acceptAll well done</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Accepts all remaining imported jobs and attaches "well done" as a comment to all the remaining imported jobs.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>acceptAll well done</code><br>
+Accepts all remaining imported jobs and attaches "well done" as a comment to all the remaining imported jobs.</p>
 </div>
 </li>
 <li>
 <p>Example 3:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>reject 1 Speak to you during tomorrow&#8217;s meeting.</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Rejects first job and attaches "Speak to you during tomorrow&#8217;s meeting." as a comment to the first job.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>reject 1 Speak to you during tomorrow&#8217;s meeting.</code><br>
+Rejects first job and attaches "Speak to you during tomorrow&#8217;s meeting." as a comment to the first job.</p>
 </div>
 </li>
 <li>
 <p>Example 4:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>rejectAll Please check the customer details.</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Rejects all remaining imported jobs and attaches "Please check the customer details." as a comment to all the remaining imported jobs.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>rejectAll Please check the customer details.</code><br>
+Rejects all remaining imported jobs and attaches "Please check the customer details." as a comment to all the remaining imported jobs.</p>
 </div>
 </li>
 </ul>
@@ -1144,20 +928,42 @@ spacebar character.</p>
 </div>
 <div class="sect3">
 <h4 id="save-command"><a class="link" href="#save-command">5.15.6. Sharing your feedback with your employees:</a></h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>CarviciM autosaves your comments to an excel file with -comments.xls or -comments.xlsx appended,
-in the same directory.</p>
+<p>Filepath: A text representation of the file location in the computer.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>export summary report</code><br>
+Exports the feedback to "summary report.xls"</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="setting-a-theme-code-theme-code"><a class="link" href="#setting-a-theme-code-theme-code">5.16. Setting a theme : <code>theme</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to set the theme of the application.<br>
+<p>To set the theme of the application for a change of working environment, you can use this command.<br>
 Format: <code>theme INDEX</code></p>
 </div>
-<div class="sidebarblock">
-<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
@@ -1171,47 +977,26 @@ Format: <code>theme INDEX</code></p>
 </li>
 </ul>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>theme</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see the list of valid themes to choose from in the <a href="#result-display">result display</a>.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>theme</code><br>
+You will see the list of valid themes to choose from in the result display.<br></p>
 </div>
-</li>
-<li>
-<p><code>theme 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see the theme of the application set as the selected one.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>theme 1</code><br>
+You will see the theme of the application set as the selected one.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">5.17. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
-<p>Lists all the commands that you have entered in reverse chronological order.<br>
+<p>To find out what commands that you have executed recently, you can use this command to list a history of executed commands in reverse chronological order.<br>
 Format: <code>history</code></p>
 </div>
 <div class="admonitionblock note">
@@ -1232,7 +1017,7 @@ Format: <code>history</code></p>
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">5.18. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to restore CarviciM to the state before the previous <em>undoable</em> command was executed.<br>
+<p>To reverse an undoable command that was executed by mistake, you can use this command to restore CarviciM to the state before the execution of that command.<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -1243,7 +1028,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj, `closej</code>, <code>adde</code> and <code>deletee</code>).</p>
+<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj, `closej</code>, <code>adde</code>, <code>deletee</code> and <code>remarkj</code>).</p>
 </div>
 </td>
 </tr>
@@ -1256,82 +1041,33 @@ Format: <code>undo</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>deletee 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Deletes the first employee in CarviciM.+</p>
-</li>
-<li>
-<p>You will see that the first employee is no longer displayed in the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>deletee 1</code><br>
+Deletes the first employee in CarviciM.+You will see that the first employee is no longer displayed in the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>liste</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Shows all employees in CarviciM.<br></p>
-</li>
-<li>
-<p>You will not see the deleted employee of index 1 in employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>liste</code><br>
+Shows all employees in CarviciM.<br>
+You will not see the deleted employee of index 1 in employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see the deleted employee present in the employee list panel again.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>delete 1</code> command)<br>
+You will see the deleted employee present in the employee list panel again.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>closej j/1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that job number 1 is removed from the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>closej j/1</code><br>
+You will see that job number 1 is removed from the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that job number 1 is added back into the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br>
+You will see that job number 1 is added back into the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>The <code>undo</code> command fails as there are no undoable commands.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>undo</code><br>
+The <code>undo</code> command fails as there are no undoable commands.</p>
 </div>
 </li>
 </ul>
@@ -1340,7 +1076,7 @@ Format: <code>undo</code></p>
 <div class="sect2">
 <h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">5.19. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to reverse the most recent <code>undo</code> command.<br>
+<p>To reverse an unwanted undo command that was executed, you can use this command.<br>
 Format: <code>redo</code></p>
 </div>
 <div class="paragraph">
@@ -1350,106 +1086,44 @@ Format: <code>redo</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>deletee 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the first employee is removed from the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>deletee 1</code><br>
+You will see that the first employee is removed from the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the deleted employee is added back into the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br>
+You will see that the deleted employee is added back into the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the same employee is removed from the employee list panel again.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
+You will see that the same employee is removed from the employee list panel again.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>closej j/1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the job number 1 is removed from the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>closej j/1</code><br>
+You will see that the job number 1 has its status changed to "closed" in the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>deletee 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the first employee is removed from the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>deletee 1</code><br>
+You will see that the first employee is removed from the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the deleted employee is added back into the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br>
+You will see that the deleted employee is added back into the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the closed job number 1 is added back into the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br>
+You will see that the closed job number 1 has it status changed to "ongoing" in the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>redo</code> (reapplies the <code>closej j/1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the job number 1 is removed from the job list panel again.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>redo</code> (reapplies the <code>closej j/1</code> command)<br>
+You will see that the job number 1 has its status changed back to "closed" again, in the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the same employee is removed from the employee list panel.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
+You will see that the same employee is removed from the employee list panel.</p>
 </div>
 </li>
 </ul>
@@ -1458,7 +1132,7 @@ Format: <code>redo</code></p>
 <div class="sect2">
 <h3 id="clearing-the-application-code-clear-code"><a class="link" href="#clearing-the-application-code-clear-code">5.20. Clearing the application : <code>clear</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to clear everything on CarviciM.<br>
+<p>To have an empty CarviciM app, you can use this command to clear everything in the app.<br>
 Format: <code>clear</code></p>
 </div>
 <div class="admonitionblock note">
@@ -1468,9 +1142,9 @@ Format: <code>clear</code></p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-===
-<code>clear</code> command will remove all job entries and employees in CarviciM. Job number will start from 1.
-===
+<div class="paragraph">
+<p><code>clear</code> command will remove all job entries and employees in CarviciM. Job number will start from 1.</p>
+</div>
 </td>
 </tr>
 </table>
@@ -1479,7 +1153,7 @@ Format: <code>clear</code></p>
 <div class="sect2">
 <h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">5.21. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to exit the program.<br>
+<p>To exit the program, you can use this command.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
@@ -1603,7 +1277,7 @@ e.g. <code>save</code></p>
 e.g. <code>email 123</code></p>
 </li>
 <li>
-<p><strong>Change <a href="#command-word">Command Word</a></strong> : <code>set</code><br>
+<p><strong>Change Command Word</strong> : <code>set</code><br>
 e.g. <code>set adde a</code></p>
 </li>
 <li>
@@ -1620,7 +1294,7 @@ e.g. <code>theme 1</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-09 09:39:42 UTC
+Last updated 2018-04-09 16:07:47 UTC
 </div>
 </div>
 </body>

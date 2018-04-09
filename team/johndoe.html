@@ -154,7 +154,7 @@
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to restore CarviciM to the state before the previous <em>undoable</em> command was executed.<br>
+<p>To reverse an undoable command that was executed by mistake, you can use this command to restore CarviciM to the state before the execution of that command.<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -165,7 +165,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj, `closej</code>, <code>adde</code> and <code>deletee</code>).</p>
+<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj, `closej</code>, <code>adde</code>, <code>deletee</code> and <code>remarkj</code>).</p>
 </div>
 </td>
 </tr>
@@ -178,82 +178,33 @@ Format: <code>undo</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>deletee 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Deletes the first employee in CarviciM.+</p>
-</li>
-<li>
-<p>You will see that the first employee is no longer displayed in the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>deletee 1</code><br>
+Deletes the first employee in CarviciM.+You will see that the first employee is no longer displayed in the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>liste</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Shows all employees in CarviciM.<br></p>
-</li>
-<li>
-<p>You will not see the deleted employee of index 1 in employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>liste</code><br>
+Shows all employees in CarviciM.<br>
+You will not see the deleted employee of index 1 in employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see the deleted employee present in the employee list panel again.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>delete 1</code> command)<br>
+You will see the deleted employee present in the employee list panel again.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>closej j/1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that job number 1 is removed from the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>closej j/1</code><br>
+You will see that job number 1 is removed from the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that job number 1 is added back into the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br>
+You will see that job number 1 is added back into the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>The <code>undo</code> command fails as there are no undoable commands.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>undo</code><br>
+The <code>undo</code> command fails as there are no undoable commands.</p>
 </div>
 </li>
 </ul>
@@ -262,7 +213,7 @@ Format: <code>undo</code></p>
 <div class="sect2">
 <h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
-<p>You can use this command to reverse the most recent <code>undo</code> command.<br>
+<p>To reverse an unwanted undo command that was executed, you can use this command.<br>
 Format: <code>redo</code></p>
 </div>
 <div class="paragraph">
@@ -272,106 +223,44 @@ Format: <code>redo</code></p>
 <ul>
 <li>
 <p>Example 1:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>deletee 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the first employee is removed from the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>deletee 1</code><br>
+You will see that the first employee is removed from the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the deleted employee is added back into the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br>
+You will see that the deleted employee is added back into the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the same employee is removed from the employee list panel again.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
+You will see that the same employee is removed from the employee list panel again.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>closej j/1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the job number 1 is removed from the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>closej j/1</code><br>
+You will see that the job number 1 has its status changed to "closed" in the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>deletee 1</code><br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the first employee is removed from the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>deletee 1</code><br>
+You will see that the first employee is removed from the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the deleted employee is added back into the employee list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br>
+You will see that the deleted employee is added back into the employee list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the closed job number 1 is added back into the job list panel.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br>
+You will see that the closed job number 1 has it status changed to "ongoing" in the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>redo</code> (reapplies the <code>closej j/1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the job number 1 is removed from the job list panel again.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><code>redo</code> (reapplies the <code>closej j/1</code> command)<br>
+You will see that the job number 1 has its status changed back to "closed" again, in the job list panel.<br></p>
 </div>
-</li>
-<li>
-<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p>You will see that the same employee is removed from the employee list panel.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
+You will see that the same employee is removed from the employee list panel.</p>
 </div>
 </li>
 </ul>
@@ -745,7 +634,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-09 09:39:42 UTC
+Last updated 2018-04-09 16:07:47 UTC
 </div>
 </div>
 </body>
