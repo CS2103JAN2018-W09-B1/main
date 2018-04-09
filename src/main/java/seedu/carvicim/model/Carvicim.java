@@ -35,7 +35,7 @@ public class Carvicim implements ReadOnlyCarvicim {
     private final UniqueEmployeeList employees;
     private final UniqueTagList tags;
     private final JobList jobs;
-    private final JobList archiveJobs;
+    private JobList archiveJobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -133,6 +133,7 @@ public class Carvicim implements ReadOnlyCarvicim {
      */
     public int archiveJob(DateRange dateRange) {
         int archiveJobCount = 0;
+        archiveJobs= new JobList();
         Date startDate = dateRange.getStartDate();
         Date endDate = dateRange.getEndDate();
         Status closed = new Status("closed");
