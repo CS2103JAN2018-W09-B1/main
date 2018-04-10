@@ -45,16 +45,17 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#add-job-feature">3.1. Add job feature</a></li>
-<li><a href="#set-command-feature">3.2. Set command feature</a></li>
-<li><a href="#import-save-feature">3.3. Import/Save feature</a></li>
-<li><a href="#theme-setting-feature">3.4. Theme setting feature</a></li>
-<li><a href="#sort-feature">3.5. Sort feature</a></li>
-<li><a href="#archive-feature">3.6. Archive feature</a></li>
-<li><a href="#undo-redo-feature">3.7. Undo/Redo feature</a></li>
-<li><a href="#send-email-to-employees-about-job">3.8. Send Email to Employees about Job</a></li>
-<li><a href="#proposed-data-encryption">3.9. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.10. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.11. Configuration</a></li>
+<li><a href="#close-job-feature">3.2. Close job feature</a></li>
+<li><a href="#set-command-feature">3.3. Set command feature</a></li>
+<li><a href="#import-save-feature">3.4. Import/Save feature</a></li>
+<li><a href="#theme-setting-feature">3.5. Theme setting feature</a></li>
+<li><a href="#sort-feature">3.6. Sort feature</a></li>
+<li><a href="#archive-feature">3.7. Archive feature</a></li>
+<li><a href="#undo-redo-feature">3.8. Undo/Redo feature</a></li>
+<li><a href="#send-email-to-employees-about-job">3.9. Send Email to Employees about Job</a></li>
+<li><a href="#proposed-data-encryption">3.10. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.11. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.12. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -759,6 +760,19 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 </div>
 </div>
 <div class="paragraph">
+<p>The following sequence diagram shows how the <code>AddJobCommand</code> determines if a <code>Job</code> object can be created and added into the list of jobs if it is valid:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddJobCommand_preprocess_SeqDiag.png" alt="AddJobCommand preprocess SeqDiag" width="1000">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddJobCommand_execute_SeqDiag.png" alt="AddJobCommand execute SeqDiag" width="500">
+</div>
+</div>
+<div class="paragraph">
 <p>The successful execution of <code>AddJobCommand</code> adds the <code>Job</code> to CarviciM.</p>
 </div>
 </div>
@@ -830,12 +844,176 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 </ul>
 </div>
 </div>
+<div class="sect4">
+<h5 id="aspect-ensuring-job-number-generation-is-consistent"><a class="link" href="#aspect-ensuring-job-number-generation-is-consistent">Aspect: Ensuring job number generation is consistent</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Store the next job number as a user preference.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement and initialization of job number is faster.</p>
+</li>
+<li>
+<p>Cons: Deletion of the user preference file will cause the job number to reset.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Going through all jobs at initialization and finding the largest job number.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Does not need to depend on data stored in other files to initialize job number.</p>
+</li>
+<li>
+<p>Cons: May be very slow when the number of jobs in the application is large.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="set-command-feature"><a class="link" href="#set-command-feature">3.2. Set command feature</a></h3>
+<h3 id="close-job-feature"><a class="link" href="#close-job-feature">3.2. Close job feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The close job mechanisim is facilitated by a <code>CloseJobCommand</code>. <code>CloseJobCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>JOB_NUMBER</code> input, and creates the <code>CloseJobCommand</code> object which closes the job. A job that has been closed will have its status changed from "ongoing" to "closed".</p>
+</div>
+<div class="paragraph">
+<p>Since <code>CloseJobCommand</code> is an undoable command, it overrides the <code>preprocessUndoableCommand</code> method of <code>UndoableCommand</code>, to check if the specified job can be closed.</p>
+</div>
+<div class="paragraph">
+<p>[NOTE}</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>If the provided <code>JOB_NUMBER</code> belongs to a closed job or does not match any job in the job list, <code>CloseJobCommand</code> will return an invalid message. <code>CloseJobCommand</code> creates a copy of the job if it is found, and sets the status of the duplicate job to be "closed". This is to complement the undo feature.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><code>preprocessUndoableCommand</code> method code snippet in <code>CloseJobCommand</code>, which checks for the respective job for closing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">protected</span> <span class="type">void</span> preprocessUndoableCommand() <span class="directive">throws</span> CommandException {
+        <span class="predefined-type">List</span>&lt;Job&gt; lastShownJobList = model.getFilteredJobList();
+        <span class="predefined-type">Iterator</span>&lt;Job&gt; jobIterator = lastShownJobList.iterator();
+
+        <span class="keyword">while</span> (jobIterator.hasNext()) {
+            Job currJob = jobIterator.next();
+            <span class="keyword">if</span> (currJob.getJobNumber().equals(<span class="local-variable">this</span>.targetJobNumber)
+                    &amp;&amp; (currJob.getStatus().value).equals(Status.STATUS_ONGOING)) {
+                target = currJob;
+                updatedJob = createUpdatedJob(currJob);
+                <span class="keyword">break</span>;
+            }
+        }
+
+        <span class="keyword">if</span> (target == <span class="predefined-constant">null</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_JOB_NOT_FOUND);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>'createUpdatedJob` method code snippet in <code>CloseJobCommand</code>, which creates a copy of the respective job with the status set as "closed":</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="directive">static</span> Job createUpdatedJob(Job jobToEdit) {
+        <span class="keyword">assert</span> jobToEdit != <span class="predefined-constant">null</span>;
+
+        <span class="keyword">return</span> <span class="keyword">new</span> Job(jobToEdit.getClient(), jobToEdit.getVehicleNumber(), jobToEdit.getJobNumber(),
+                jobToEdit.getDate(), jobToEdit.getAssignedEmployees(),
+                <span class="keyword">new</span> Status(Status.STATUS_CLOSED), jobToEdit.getRemarkList());
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>executeUndoableCommand</code> method code snippet in <code>CloseJobCommand</code>, which updates the job list with the job copy created:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult executeUndoableCommand() {
+        requireNonNull(target);
+        requireNonNull(updatedJob);
+        <span class="keyword">try</span> {
+            model.closeJob(target, updatedJob);
+        } <span class="keyword">catch</span> (JobNotFoundException jnfe) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">AssertionError</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">The target job cannot be missing</span><span class="delimiter">&quot;</span></span>);
+        }
+
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_CLOSE_JOB_SUCCESS, updatedJob));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram show how the <code>preprocessUndoableCommand</code> method in the <code>CloseJobCommand</code> works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/CloseJobCommand_preprocess_SeqDiag.png" alt="CloseJobCommand preprocess SeqDiag" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>The following diagram shows how the <code>executeUndoableCommand</code> method in the <code>CloseJobCommand</code> works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/CloseJobCommand_execute_SeqDiag.png" alt="CloseJobCommand execute SeqDiag" width="400">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-where-to-hold-the-closed-jobs"><a class="link" href="#aspect-where-to-hold-the-closed-jobs">Aspect: Where to hold the closed jobs</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Closed jobs and ongoing jobs are stored in the same list</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: No need to add and maintain additional list for closed jobs.</p>
+</li>
+<li>
+<p>Cons: Requires iterating through all jobs to search for a particular job. Requires the usage of <code>Predicates</code> to filter out "ongoing" and "closed" jobs for displaying to user.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Add an additional list for closed jobs in the <code>ModelManager</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Jobs are stored in dedicated lists of either "ongoing" or "closed", and searching for jobs of a specific status only requires calling one list.</p>
+</li>
+<li>
+<p>Cons: More attributes to manage, and may cause duplicate or missing jobs if it is not managed properly.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="set-command-feature"><a class="link" href="#set-command-feature">3.3. Set command feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/SetCommandObjectDiagram.png" alt="SetCommandObjectDiagram" width="800">
@@ -861,7 +1039,7 @@ Both are managed by the class <code>CommandWords</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-where-to-put-commandwords-for-storage"><a class="link" href="#aspect-where-to-put-commandwords-for-storage">Aspect: Where to put CommandWords for storage</a></h5>
 <div class="ulist">
@@ -964,9 +1142,9 @@ Both are managed by the class <code>CommandWords</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="import-save-feature"><a class="link" href="#import-save-feature">3.3. Import/Save feature</a></h3>
+<h3 id="import-save-feature"><a class="link" href="#import-save-feature">3.4. Import/Save feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.4.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/SessionComponentClassDiagram.png" alt="SessionComponentClassDiagram" width="800">
@@ -1060,7 +1238,7 @@ in the same directory.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-supporting-undoablecommand"><a class="link" href="#aspect-supporting-undoablecommand">Aspect: Supporting UndoableCommand</a></h5>
 <div class="ulist">
@@ -1171,9 +1349,9 @@ it directly.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">3.4. Theme setting feature</a></h3>
+<h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">3.5. Theme setting feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.4.1. Current Implementation</a></h4>
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.5.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The theme setting mechanism is facilitated by a <code>ThemeCommand</code>. <code>ThemeCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>INDEX</code> input of <code>1</code> to <code>2</code>, and creates the <code>ThemeCommand</code> object which selects the application&#8217;s theme.
 The <code>UserPref</code> stores and retrieves the theme preference of the application.</p>
@@ -1273,7 +1451,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-themecommand-code-br"><a class="link" href="#aspect-implementation-of-code-themecommand-code-br">Aspect: Implementation of <code>ThemeCommand</code><br></a></h5>
 <div class="ulist">
@@ -1310,9 +1488,9 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="sort-feature"><a class="link" href="#sort-feature">3.5. Sort feature</a></h3>
+<h3 id="sort-feature"><a class="link" href="#sort-feature">3.6. Sort feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.5.1. Current Implementation</a></h4>
+<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.6.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The sort mechanism is facilitated by a <code>Comparator</code>. It supports the comparison of employee’s name and arranges the employee list alphabetically.</p>
 </div>
@@ -1343,7 +1521,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-sortcommand-code-executes-br"><a class="link" href="#aspect-how-code-sortcommand-code-executes-br">Aspect: How <code>SortCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1380,9 +1558,9 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="archive-feature"><a class="link" href="#archive-feature">3.6. Archive feature</a></h3>
+<h3 id="archive-feature"><a class="link" href="#archive-feature">3.7. Archive feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.6.1. Current Implementation</a></h4>
+<h4 id="current-implementation-7"><a class="link" href="#current-implementation-7">3.7.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>&#8230;&#8203;</p>
 </div>
@@ -1438,7 +1616,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">3.7.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-archivecommand-code-executes-br"><a class="link" href="#aspect-how-code-archivecommand-code-executes-br">Aspect: How <code>ArchiveCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1508,9 +1686,9 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.7. Undo/Redo feature</a></h3>
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.8. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-7"><a class="link" href="#current-implementation-7">3.7.1. Current Implementation</a></h4>
+<h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">3.8.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -1698,7 +1876,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">3.7.2. Design Considerations</a></h4>
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">3.8.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -1835,9 +2013,9 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.8. Send Email to Employees about Job</a></h3>
+<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.9. Send Email to Employees about Job</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">3.8.1. Current Implementation</a></h4>
+<h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">3.9.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>This feature is implemented using Gmail <a href="#api">API</a>.</p>
 </div>
@@ -1909,7 +2087,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">3.8.2. Design Considerations</a></h4>
+<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">3.9.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-email-content"><a class="link" href="#aspect-email-content">Aspect: Email content</a></h5>
 <div class="ulist">
@@ -1979,20 +2157,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.9. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.10. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.10. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.11. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.11, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.12, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -2023,7 +2201,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.11. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.12. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -4611,7 +4789,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-10 12:13:07 UTC
+Last updated 2018-04-10 13:12:10 UTC
 </div>
 </div>
 </body>
