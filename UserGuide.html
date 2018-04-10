@@ -43,23 +43,24 @@
 <li><a href="#listing-all-jobs-code-listj-code">5.5. Listing all jobs : <code>listj</code></a></li>
 <li><a href="#locating-jobs-by-keyword-code-findj-code">5.6. Locating jobs by keyword: <code>findj</code></a></li>
 <li><a href="#archiving-job-entries-code-archive-code">5.7. Archiving job entries: <code>archive</code></a></li>
-<li><a href="#adding-an-employee-code-adde-code">5.8. Adding an employee: <code>adde</code></a></li>
-<li><a href="#listing-all-employees-code-liste-code">5.9. Listing all employees : <code>liste</code></a></li>
-<li><a href="#deleting-an-employee-code-deletee-code">5.10. Deleting an employee : <code>deletee</code></a></li>
-<li><a href="#sorting-all-employees-code-sort-code">5.11. Sorting all employees : <code>sort</code></a></li>
-<li><a href="#selecting-employees-by-list-number-code-selecte-code">5.12. Selecting employees by list number: <code>selecte</code></a></li>
-<li><a href="#locating-employees-by-name-code-finde-code">5.13. Locating employees by name: <code>finde</code></a></li>
-<li><a href="#changing-a-command-word-code-set-code">5.14. Changing a command word : <code>set</code></a></li>
-<li><a href="#importing-jobs-from-an-excel-file">5.15. Importing jobs from an excel file</a></li>
-<li><a href="#setting-a-theme-code-theme-code">5.16. Setting a theme : <code>theme</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">5.17. Listing entered commands : <code>history</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">5.18. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">5.19. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#clearing-the-application-code-clear-code">5.20. Clearing the application : <code>clear</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">5.21. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">5.22. Saving the data</a></li>
-<li><a href="#email-assigned-employees-belonging-to-a-job-code-email-code">5.23. Email assigned employees belonging to a job : <code>email</code></a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">5.24. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#analysing-job-entries-code-analyse-code">5.8. Analysing job entries: <code>analyse</code></a></li>
+<li><a href="#adding-an-employee-code-adde-code">5.9. Adding an employee: <code>adde</code></a></li>
+<li><a href="#listing-all-employees-code-liste-code">5.10. Listing all employees : <code>liste</code></a></li>
+<li><a href="#deleting-an-employee-code-deletee-code">5.11. Deleting an employee : <code>deletee</code></a></li>
+<li><a href="#sorting-all-employees-code-sort-code">5.12. Sorting all employees : <code>sort</code></a></li>
+<li><a href="#selecting-employees-by-list-number-code-selecte-code">5.13. Selecting employees by list number: <code>selecte</code></a></li>
+<li><a href="#locating-employees-by-name-code-finde-code">5.14. Locating employees by name: <code>finde</code></a></li>
+<li><a href="#changing-a-command-word-code-set-code">5.15. Changing a command word : <code>set</code></a></li>
+<li><a href="#importing-jobs-from-an-excel-file">5.16. Importing jobs from an excel file</a></li>
+<li><a href="#setting-a-theme-code-theme-code">5.17. Setting a theme : <code>theme</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">5.18. Listing entered commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">5.19. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">5.20. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#clearing-the-application-code-clear-code">5.21. Clearing the application : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">5.22. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">5.23. Saving the data</a></li>
+<li><a href="#email-assigned-employees-belonging-to-a-job-code-email-code">5.24. Email assigned employees belonging to a job : <code>email</code></a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">5.25. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">6. FAQ</a></li>
@@ -471,13 +472,29 @@ Format: <code>archive sd/START_DATE ed/END_DATE</code></p>
 </div>
 <div class="paragraph">
 <p><code>archive sd/Mar 25 2018 ed/Apr 03 2018</code><br>
-The command will save the job entries within the selected date range in CarviciM.<br>
+The command will save the closed job entries within the selected date range in CarviciM.<br>
 You will see "Archived Successfully" in the result display.<br>
 You will see the newly created archive file.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-an-employee-code-adde-code"><a class="link" href="#adding-an-employee-code-adde-code">5.8. Adding an employee: <code>adde</code></a></h3>
+<h3 id="analysing-job-entries-code-analyse-code"><a class="link" href="#analysing-job-entries-code-analyse-code">5.8. Analysing job entries: <code>analyse</code></a></h3>
+<div class="paragraph">
+<p>To analyse job entries within the current month in CarviciM, you can use this command.<br>
+Format: <code>analyse</code></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>analyse</code><br>
+The command will analyse the job entries within the current month in CarviciM.<br>
+You will see "Result: Number of Jobs: &#8230;&#8203; Number of Ongoing: &#8230;&#8203; Number of Closed: &#8230;&#8203;"
+followed by the number of jobs assigned to each employee.<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-an-employee-code-adde-code"><a class="link" href="#adding-an-employee-code-adde-code">5.9. Adding an employee: <code>adde</code></a></h3>
 <div class="paragraph">
 <p>To add details of a new employee into CarviciM, you can use this command.<br>
 Format: <code>adde n/NAME p/PHONE_NUMBER e/EMAIL</code></p>
@@ -493,14 +510,14 @@ You will see the newly added details of the employee in the employee list panel.
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-employees-code-liste-code"><a class="link" href="#listing-all-employees-code-liste-code">5.9. Listing all employees : <code>liste</code></a></h3>
+<h3 id="listing-all-employees-code-liste-code"><a class="link" href="#listing-all-employees-code-liste-code">5.10. Listing all employees : <code>liste</code></a></h3>
 <div class="paragraph">
 <p>To view a list of employee details in CarviciM, you can use this command.<br>
 Format: <code>liste</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-an-employee-code-deletee-code"><a class="link" href="#deleting-an-employee-code-deletee-code">5.10. Deleting an employee : <code>deletee</code></a></h3>
+<h3 id="deleting-an-employee-code-deletee-code"><a class="link" href="#deleting-an-employee-code-deletee-code">5.11. Deleting an employee : <code>deletee</code></a></h3>
 <div class="paragraph">
 <p>To remove the details of an employee from CarviciM, you can use this command.<br>
 Format: <code>deletee INDEX</code></p>
@@ -560,14 +577,14 @@ You will see an updated employees list panel which has the 1st employee removed.
 </div>
 </div>
 <div class="sect2">
-<h3 id="sorting-all-employees-code-sort-code"><a class="link" href="#sorting-all-employees-code-sort-code">5.11. Sorting all employees : <code>sort</code></a></h3>
+<h3 id="sorting-all-employees-code-sort-code"><a class="link" href="#sorting-all-employees-code-sort-code">5.12. Sorting all employees : <code>sort</code></a></h3>
 <div class="paragraph">
 <p>To sort the list of employees alphabetically for easy viewing, you can use this command.<br>
 Format: <code>sort</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="selecting-employees-by-list-number-code-selecte-code"><a class="link" href="#selecting-employees-by-list-number-code-selecte-code">5.12. Selecting employees by list number: <code>selecte</code></a></h3>
+<h3 id="selecting-employees-by-list-number-code-selecte-code"><a class="link" href="#selecting-employees-by-list-number-code-selecte-code">5.13. Selecting employees by list number: <code>selecte</code></a></h3>
 <div class="paragraph">
 <p>To select a specific employee from the employee list panel and display the assigned jobs, you can use this command.<br>
 Format: <code>selecte INDEX</code></p>
@@ -627,7 +644,7 @@ You will see an updated job list panel which has the jobs of the 1st employee.</
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-employees-by-name-code-finde-code"><a class="link" href="#locating-employees-by-name-code-finde-code">5.13. Locating employees by name: <code>finde</code></a></h3>
+<h3 id="locating-employees-by-name-code-finde-code"><a class="link" href="#locating-employees-by-name-code-finde-code">5.14. Locating employees by name: <code>finde</code></a></h3>
 <div class="paragraph">
 <p>To search for employees whose names contain any of the given keywords, you can use this command.<br>
 Format: <code>finde KEYWORD [MORE_KEYWORDS]</code></p>
@@ -685,7 +702,7 @@ You will see all employees with <code>Betsy</code>, <code>Tim</code>, or <code>J
 </div>
 </div>
 <div class="sect2">
-<h3 id="changing-a-command-word-code-set-code"><a class="link" href="#changing-a-command-word-code-set-code">5.14. Changing a command word : <code>set</code></a></h3>
+<h3 id="changing-a-command-word-code-set-code"><a class="link" href="#changing-a-command-word-code-set-code">5.15. Changing a command word : <code>set</code></a></h3>
 <div class="paragraph">
 <p>To set an easy to use word in place of a default command word, you can use this command.<br>
 Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
@@ -739,9 +756,9 @@ You will see "deletee has been replaced with d!" in the result display.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-jobs-from-an-excel-file"><a class="link" href="#importing-jobs-from-an-excel-file">5.15. Importing jobs from an excel file</a></h3>
+<h3 id="importing-jobs-from-an-excel-file"><a class="link" href="#importing-jobs-from-an-excel-file">5.16. Importing jobs from an excel file</a></h3>
 <div class="sect3">
-<h4 id="import-command"><a class="link" href="#import-command">5.15.1. Importing a new excel file: <code>import</code></a></h4>
+<h4 id="import-command"><a class="link" href="#import-command">5.16.1. Importing a new excel file: <code>import</code></a></h4>
 <div class="paragraph">
 <p>To load your excel file by filename or filepath that contains new job entries, you can use this command.<br>
 Format: <code>import FILE_PATH</code></p>
@@ -783,7 +800,7 @@ Imports file excel.xlsx.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code">5.15.2. Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
+<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code">5.16.2. Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
 <div class="paragraph">
 <p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
 additionally it accepts all job entries and saves the reviews of the jobs. <code>importAll</code> is
@@ -811,14 +828,14 @@ Imports file excel.xlsx, accepts all job entries and saves the reviewed job entr
 </div>
 </div>
 <div class="sect3">
-<h4 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">5.15.3. Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h4>
+<h4 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">5.16.3. Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h4>
 <div class="paragraph">
 <p>You can use this command to switch between the list of unreviewed jobs and jobs in CarviciM.<br>
 Format: <code>switch</code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">5.15.4. Accepting and rejecting changes</a></h4>
+<h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">5.16.4. Accepting and rejecting changes</a></h4>
 <div class="paragraph">
 <p>You can use 4 commands when reviewing changes:
 * <code>accept NUMBER</code>
@@ -884,7 +901,7 @@ Rejects all remaining job entries and clears the imported list.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="writing-comments-to-your-reviews-mark-coming-in-v1-5-mark"><a class="link" href="#writing-comments-to-your-reviews-mark-coming-in-v1-5-mark">5.15.5. Writing comments to your reviews <mark>Coming in V1.5</mark></a></h4>
+<h4 id="writing-comments-to-your-reviews-mark-coming-in-v1-5-mark"><a class="link" href="#writing-comments-to-your-reviews-mark-coming-in-v1-5-mark">5.16.5. Writing comments to your reviews <mark>Coming in V1.5</mark></a></h4>
 <div class="paragraph">
 <p>While accepting or rejecting changes, you can enter your comments behind the command.</p>
 </div>
@@ -940,7 +957,7 @@ Rejects all remaining imported jobs and attaches "Please check the customer deta
 </div>
 </div>
 <div class="sect3">
-<h4 id="save-command"><a class="link" href="#save-command">5.15.6. Sharing your feedback with your employees:</a></h4>
+<h4 id="save-command"><a class="link" href="#save-command">5.16.6. Sharing your feedback with your employees:</a></h4>
 <div class="paragraph">
 <p>CarviciM autosaves your comments to an excel file with -comments.xls or -comments.xlsx appended,
 in the same directory.</p>
@@ -948,7 +965,7 @@ in the same directory.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="setting-a-theme-code-theme-code"><a class="link" href="#setting-a-theme-code-theme-code">5.16. Setting a theme : <code>theme</code></a></h3>
+<h3 id="setting-a-theme-code-theme-code"><a class="link" href="#setting-a-theme-code-theme-code">5.17. Setting a theme : <code>theme</code></a></h3>
 <div class="paragraph">
 <p>To set the theme of the application for a change of working environment, you can use this command.<br>
 Format: <code>theme INDEX</code></p>
@@ -990,7 +1007,7 @@ You will see the theme of the application set as the selected one.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">5.17. Listing entered commands : <code>history</code></a></h3>
+<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">5.18. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
 <p>To find out what commands that you have executed recently, you can use this command to list a history of executed commands in reverse chronological order.<br>
 Format: <code>history</code></p>
@@ -1011,7 +1028,7 @@ Format: <code>history</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">5.18. Undoing previous command : <code>undo</code></a></h3>
+<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">5.19. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
 <p>To reverse an undoable command that was executed by mistake, you can use this command to restore CarviciM to the state before the execution of that command.<br>
 Format: <code>undo</code></p>
@@ -1070,7 +1087,7 @@ The <code>undo</code> command fails as there are no undoable commands.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">5.19. Redoing the previously undone command : <code>redo</code></a></h3>
+<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">5.20. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>To reverse an unwanted undo command that was executed, you can use this command.<br>
 Format: <code>redo</code></p>
@@ -1126,7 +1143,7 @@ You will see that the same employee is removed from the employee list panel.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-the-application-code-clear-code"><a class="link" href="#clearing-the-application-code-clear-code">5.20. Clearing the application : <code>clear</code></a></h3>
+<h3 id="clearing-the-application-code-clear-code"><a class="link" href="#clearing-the-application-code-clear-code">5.21. Clearing the application : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>To have an empty CarviciM app, you can use this command to clear everything in the app.<br>
 Format: <code>clear</code></p>
@@ -1147,14 +1164,14 @@ Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">5.21. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">5.22. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>To exit the program, you can use this command.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">5.22. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">5.23. Saving the data</a></h3>
 <div class="paragraph">
 <p>CarviciM data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
@@ -1164,7 +1181,7 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="email-assigned-employees-belonging-to-a-job-code-email-code"><a class="link" href="#email-assigned-employees-belonging-to-a-job-code-email-code">5.23. Email assigned employees belonging to a job : <code>email</code></a></h3>
+<h3 id="email-assigned-employees-belonging-to-a-job-code-email-code"><a class="link" href="#email-assigned-employees-belonging-to-a-job-code-email-code">5.24. Email assigned employees belonging to a job : <code>email</code></a></h3>
 <div class="paragraph">
 <p><strong>V1.4 (current):</strong>
 You can use this command to send an email to a dummy email address.<br>
@@ -1177,7 +1194,7 @@ Format: <code>email JOB_NUMBER</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">5.24. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">5.25. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
@@ -1209,6 +1226,10 @@ e.g. <code>closej j/1232</code></p>
 <li>
 <p><strong>Archive job entries</strong> <code>archive sd/START_DATE ed/END_DATE</code><br>
 e.g. <code>archive sd/Mar 25 2018 ed/Apr 03 2018</code></p>
+</li>
+<li>
+<p><strong>Analyse job entries</strong> <code>analyse</code><br>
+e.g. <code>analyse</code></p>
 </li>
 <li>
 <p><strong>Add Employee</strong> <code>adde n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG]&#8230;&#8203;</code><br>
@@ -1290,7 +1311,7 @@ e.g. <code>theme 1</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-10 20:13:59 UTC
+Last updated 2018-04-10 20:22:08 UTC
 </div>
 </div>
 </body>

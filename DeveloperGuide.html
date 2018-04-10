@@ -51,11 +51,12 @@
 <li><a href="#theme-setting-feature">3.5. Theme setting feature</a></li>
 <li><a href="#sort-feature">3.6. Sort feature</a></li>
 <li><a href="#archive-feature">3.7. Archive feature</a></li>
-<li><a href="#undo-redo-feature">3.8. Undo/Redo feature</a></li>
-<li><a href="#send-email-to-employees-about-job">3.9. Send Email to Employees about Job</a></li>
-<li><a href="#proposed-data-encryption">3.10. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.11. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.12. Configuration</a></li>
+<li><a href="#analyse-feature">3.8. Analyse feature</a></li>
+<li><a href="#undo-redo-feature">3.9. Undo/Redo feature</a></li>
+<li><a href="#send-email-to-employees-about-job">3.10. Send Email to Employees about Job</a></li>
+<li><a href="#proposed-data-encryption">3.11. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.12. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.13. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1729,9 +1730,115 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.8. Undo/Redo feature</a></h3>
+<h3 id="analyse-feature"><a class="link" href="#analyse-feature">3.8. Analyse feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">3.8.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The <code>AnalyseCommand</code> is facilitated by a <code>HashMap</code>, which is responsible for keeping track of
+the number of jobs assigned to each employee.</p>
+</div>
+<div class="paragraph">
+<p>The <code>HashMap</code> is initialized this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">HashMap</span>&lt;<span class="predefined-type">Name</span>, <span class="predefined-type">Integer</span>&gt; analyse = <span class="keyword">new</span> <span class="predefined-type">HashMap</span>&lt;<span class="predefined-type">Name</span>, <span class="predefined-type">Integer</span>&gt;();
+
+<span class="directive">public</span> <span class="type">void</span> initEmployeeJobCount(UniqueEmployeeList employeeList) {
+    <span class="predefined-type">Iterator</span>&lt;Employee&gt; iteratorEmployee = employeeList.iterator();
+    <span class="keyword">while</span> (iteratorEmployee.hasNext()) {
+        Employee employee = iteratorEmployee.next();
+        analyse.put(employee.getName(), <span class="integer">0</span>);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>HashMap</code> is updated this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> updateEmployeeJobCount(Job job) {
+    <span class="predefined-type">Iterator</span>&lt;Employee&gt; iteratorEmployee = job.getAssignedEmployees().iterator();
+    <span class="keyword">while</span> (iteratorEmployee.hasNext()) {
+        Employee employee = iteratorEmployee.next();
+        <span class="type">int</span> jobCount = analyse.get(employee.getName());
+        analyse.put(employee.getName(), jobCount + <span class="integer">1</span>);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>JobList</code> code snippet that formats the analyse result:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> getAnalyseResult() {
+    <span class="directive">final</span> <span class="predefined-type">StringBuilder</span> builder = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+    builder.append(<span class="string"><span class="delimiter">&quot;</span><span class="content">Number of Jobs: </span><span class="delimiter">&quot;</span></span>)
+            .append(jobCount)
+            .append(<span class="string"><span class="delimiter">&quot;</span><span class="content"> Number of Ongoing: </span><span class="delimiter">&quot;</span></span>)
+            .append(ongoingCount)
+            .append(<span class="string"><span class="delimiter">&quot;</span><span class="content"> Number of Closed: </span><span class="delimiter">&quot;</span></span>)
+            .append(closedCount)
+            .append(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>);
+    <span class="predefined-type">Set</span> set = analyse.entrySet();
+    builder.append(set);
+    <span class="keyword">return</span> builder.toString();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the analyse operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AnalyseSequenceDiagram.png" alt="AnalyseSequenceDiagram" width="800">
+</div>
+<div class="title">Figure 19. <code>AnalyseCommand</code> sequence diagram</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">3.8.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-code-analysecommand-code-executes-br"><a class="link" href="#aspect-how-code-analysecommand-code-executes-br">Aspect: How <code>AnalyseCommand</code> executes<br></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Analyses job entries within the current month.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: We get to decide who should be assigned more jobs based on the analyse result.</p>
+</li>
+<li>
+<p>Cons: Harder to implement.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Analyses all job entries.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: The analyse result would be less helpful for job assignment.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.9. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">3.9.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -1742,7 +1849,7 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 <div class="content">
 <img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
-<div class="title">Figure 19. Inheritance diagram for commands</div>
+<div class="title">Figure 20. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -1799,7 +1906,7 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 <div class="content">
 <img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
-<div class="title">Figure 20. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
+<div class="title">Figure 21. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
 <div class="olist none">
 <ol class="none">
@@ -1812,7 +1919,7 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 <div class="content">
 <img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
-<div class="title">Figure 21. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
+<div class="title">Figure 22. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1844,7 +1951,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <div class="content">
 <img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
-<div class="title">Figure 22. Step 3: <code>undo</code> action</div>
+<div class="title">Figure 23. Step 3: <code>undo</code> action</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1869,7 +1976,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 23. <code>undo</code> sequence diagram</div>
+<div class="title">Figure 24. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -1897,7 +2004,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
-<div class="title">Figure 24. <code>clear</code> pushed into <code>undoStack</code></div>
+<div class="title">Figure 25. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -1906,7 +2013,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
-<div class="title">Figure 25. <code>list</code> not added into <code>undoStack</code></div>
+<div class="title">Figure 26. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -1915,11 +2022,11 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
-<div class="title">Figure 26. Stack activity diagram summary</div>
+<div class="title">Figure 27. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">3.8.2. Design Considerations</a></h4>
+<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">3.9.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -2056,9 +2163,9 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.9. Send Email to Employees about Job</a></h3>
+<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.10. Send Email to Employees about Job</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">3.9.1. Current Implementation</a></h4>
+<h4 id="current-implementation-10"><a class="link" href="#current-implementation-10">3.10.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>This feature is implemented using Gmail <a href="#api">API</a>.</p>
 </div>
@@ -2087,7 +2194,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
 </div>
-<div class="title">Figure 27. Email authorization sequence diagram</div>
+<div class="title">Figure 28. Email authorization sequence diagram</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -2130,7 +2237,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">3.9.2. Design Considerations</a></h4>
+<h4 id="design-considerations-10"><a class="link" href="#design-considerations-10">3.10.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-email-content"><a class="link" href="#aspect-email-content">Aspect: Email content</a></h5>
 <div class="ulist">
@@ -2200,20 +2307,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.10. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.11. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.11. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.12. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.12, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.13, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -2244,7 +2351,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.12. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.13. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2323,7 +2430,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 28. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 29. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -3535,10 +3642,10 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <p>has a need to assign employees to jobs with ease</p>
 </li>
 <li>
-<p>has a need to keep an archive of completed job entries</p>
+<p>has a need to keep an archive of closed job entries</p>
 </li>
 <li>
-<p>has a need to monitor employee’s performance</p>
+<p>has a need to monitor employee’s workload</p>
 </li>
 </ul>
 </div>
@@ -4832,7 +4939,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-10 20:13:59 UTC
+Last updated 2018-04-10 20:22:08 UTC
 </div>
 </div>
 </body>
