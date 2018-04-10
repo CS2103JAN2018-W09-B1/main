@@ -1029,20 +1029,23 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="sect3">
 <h4 id="current-implementation-7"><a class="link" href="#current-implementation-7">Current Implementation</a></h4>
 <div class="paragraph">
-<p>&#8230;&#8203;</p>
+<p>The <code>ArchiveCommand</code> is facilitated by a <code>AddJobCommandParser</code>, which is responsible for parsing the input starting <code>Date</code> and ending <code>Date</code>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>ArchiveCommand</code> is implemented this way to ensure that the specified starting date is earlier than the ending date:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> CommandResult executeUndoableCommand() <span class="directive">throws</span> CommandException {
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> CommandResult execute() <span class="directive">throws</span> CommandException {
     <span class="keyword">if</span> (toArchive.compareTo(toArchive.getStartDate(), toArchive.getEndDate()) &gt; <span class="integer">0</span>) {
         <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_INVALID_DATERANGE);
     }
     requireNonNull(model);
-    model.archiveJob(toArchive);
-    <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_SUCCESS);
+    archiveCount = model.archiveJob(toArchive);
+    <span class="keyword">if</span> (archiveCount != <span class="integer">0</span>) {
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_SUCCESS);
+    }
+    <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_UNSUCCESS);
 }</code></pre>
 </div>
 </div>
@@ -1051,35 +1054,71 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> archiveJob(DateRange dateRange) {
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">int</span> archiveJob(DateRange dateRange) {
+    <span class="type">int</span> archiveJobCount = <span class="integer">0</span>;
     archiveJobs = <span class="keyword">new</span> JobList();
+    <span class="predefined-type">Date</span> startDate = dateRange.getStartDate();
+    <span class="predefined-type">Date</span> endDate = dateRange.getEndDate();
+    Status closed = <span class="keyword">new</span> Status(<span class="string"><span class="delimiter">&quot;</span><span class="content">closed</span><span class="delimiter">&quot;</span></span>);
     <span class="predefined-type">Iterator</span>&lt;Job&gt; iterator = jobs.iterator();
     <span class="keyword">while</span> (iterator.hasNext()) {
         Job job = iterator.next();
         <span class="predefined-type">Date</span> date = job.getDate();
-        <span class="predefined-type">Date</span> startDate = dateRange.getStartDate();
-        <span class="predefined-type">Date</span> endDate = dateRange.getEndDate();
-        <span class="keyword">if</span> (dateRange.compareTo(date, startDate) &gt;= <span class="integer">0</span> &amp;&amp; dateRange.compareTo(date, endDate) &lt;= <span class="integer">0</span>) {
+        date = <span class="keyword">new</span> <span class="predefined-type">Date</span>(date.toString());
+        Status status = job.getStatus();
+        <span class="type">boolean</span> withinRange = (dateRange.compareTo(date, startDate) &gt;= <span class="integer">0</span> &amp;&amp; dateRange.compareTo(date, endDate) &lt;= <span class="integer">0</span>)
+                ? <span class="predefined-constant">true</span>
+                : <span class="predefined-constant">false</span>;
+        <span class="type">boolean</span> isClosed = (status.equals(closed))
+                ? <span class="predefined-constant">true</span>
+                : <span class="predefined-constant">false</span>;
+        <span class="keyword">if</span> (withinRange &amp;&amp; isClosed) {
             archiveJobs.add(job);
+            archiveJobCount++;
         }
     }
+    <span class="keyword">return</span> archiveJobCount;
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>StorageManager</code> code snippet that handles CarvicimChangedEvent to archive the job entries:</p>
+<p>New classes has been added to the storage component to allow Carvicim to archive closed job entries within the specified date range.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ArchiveStorageComponentDiagram.png" alt="ArchiveStorageComponentDiagram" width="800">
+</div>
+<div class="title">Figure 7. <code>ArchiveCommand</code> Storage Component Diagram</div>
+</div>
+<div class="paragraph">
+<p>As seen from Figure 17, <code>XmlSerializableArchiveJob</code> is used to serialize the archive job entries into a xml format based on <code>XmlAdaptedJob</code>.
+The access of information to the archive job xml file is control by <code>XmlArchiveJobStorage</code>.
+The <code>StorageManager</code> manages both the storage of Carvicim and archive data.</p>
+</div>
+<div class="paragraph">
+<p><code>StorageManager</code> code snippet that handles ArchiveEvent to archive the job entries:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> handleArchiveEvent(CarvicimChangedEvent event) {
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> handleArchiveEvent(ArchiveEvent event) {
     logger.info(LogsCenter.getEventHandlingLogMessage(event, <span class="string"><span class="delimiter">&quot;</span><span class="content">Archiving data, saving to file</span><span class="delimiter">&quot;</span></span>));
     <span class="keyword">try</span> {
         saveArchiveJob(event.data);
+        saveCarvicim(event.data);
     } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
         raise(<span class="keyword">new</span> DataSavingExceptionEvent(e));
     }
 }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the archive operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ArchiveSequenceDiagram.png" alt="ArchiveSequenceDiagram" width="800">
+</div>
+<div class="title">Figure 8. <code>ArchiveCommand</code> sequence diagram</div>
 </div>
 </div>
 <div class="sect3">
@@ -1122,20 +1161,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Overwrites the existing archive file.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Will use less memory.</p>
-</li>
-<li>
-<p>Cons: We cannot archive multiple files.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><em>Alternative:</em> Creates a new archive file.</p>
+<p><strong>Current choice:</strong> Creates a new archive file.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1143,6 +1169,19 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </li>
 <li>
 <p>Cons: May have performance issues in terms of memory usage.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Overwrites the existing archive file.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Will use less memory.</p>
+</li>
+<li>
+<p>Cons: We cannot archive multiple files.</p>
 </li>
 </ul>
 </div>
@@ -1166,7 +1205,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="../images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
-<div class="title">Figure 7. Inheritance diagram for commands</div>
+<div class="title">Figure 9. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -1223,7 +1262,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="../images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
-<div class="title">Figure 8. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
+<div class="title">Figure 10. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
 <div class="olist none">
 <ol class="none">
@@ -1236,7 +1275,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="../images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
-<div class="title">Figure 9. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
+<div class="title">Figure 11. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1268,7 +1307,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <div class="content">
 <img src="../images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
-<div class="title">Figure 10. Step 3: <code>undo</code> action</div>
+<div class="title">Figure 12. Step 3: <code>undo</code> action</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1293,7 +1332,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 11. <code>undo</code> sequence diagram</div>
+<div class="title">Figure 13. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -1321,7 +1360,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
-<div class="title">Figure 12. <code>clear</code> pushed into <code>undoStack</code></div>
+<div class="title">Figure 14. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -1330,7 +1369,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
-<div class="title">Figure 13. <code>list</code> not added into <code>undoStack</code></div>
+<div class="title">Figure 15. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -1339,7 +1378,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
-<div class="title">Figure 14. Stack activity diagram summary</div>
+<div class="title">Figure 16. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
@@ -1511,7 +1550,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="../images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
 </div>
-<div class="title">Figure 15. Email authorization sequence diagram</div>
+<div class="title">Figure 17. Email authorization sequence diagram</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1747,7 +1786,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="../images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 16. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 18. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -4256,7 +4295,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-10 14:14:39 UTC
+Last updated 2018-04-10 16:32:02 UTC
 </div>
 </div>
 </body>
