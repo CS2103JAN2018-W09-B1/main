@@ -74,7 +74,7 @@ public class XmlArchiveJobStorage implements ArchiveJobStorage {
     public void saveArchiveJob(ReadOnlyCarvicim carvicim, String filePath) throws IOException {
         requireNonNull(carvicim);
         requireNonNull(filePath);
-        
+
         File file = FileUtil.createIfMissingAndNewIfExist(filePath);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableArchiveJob(carvicim));
     }
