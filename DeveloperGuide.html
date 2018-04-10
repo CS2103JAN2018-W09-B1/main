@@ -889,15 +889,19 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <div class="paragraph">
 <p>Since <code>CloseJobCommand</code> is an undoable command, it overrides the <code>preprocessUndoableCommand</code> method of <code>UndoableCommand</code>, to check if the specified job can be closed.</p>
 </div>
-<div class="paragraph">
-<p>[NOTE}</p>
-</div>
-<div class="exampleblock">
-<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>If the provided <code>JOB_NUMBER</code> belongs to a closed job or does not match any job in the job list, <code>CloseJobCommand</code> will return an invalid message. <code>CloseJobCommand</code> creates a copy of the job if it is found, and sets the status of the duplicate job to be "closed". This is to complement the undo feature.</p>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><code>preprocessUndoableCommand</code> method code snippet in <code>CloseJobCommand</code>, which checks for the respective job for closing:</p>
@@ -4789,7 +4793,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-10 13:12:10 UTC
+Last updated 2018-04-10 13:22:18 UTC
 </div>
 </div>
 </body>
