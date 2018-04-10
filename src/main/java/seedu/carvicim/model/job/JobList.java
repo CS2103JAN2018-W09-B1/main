@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.carvicim.model.job.exceptions.JobNotFoundException;
 import seedu.carvicim.model.person.Employee;
 import seedu.carvicim.model.person.Name;
+import seedu.carvicim.model.person.UniqueEmployeeList;
 
 //@@author whenzei
 /**
@@ -122,9 +123,9 @@ public class JobList implements Iterable<Job> {
     }
 
     /**
-     * Get the respective job counts for the current month.
+     * Get the respective job counts for both ongoing and closed.
      */
-    public JobList analyseCount(JobList analyseList) {
+    public JobList analyseJobStatusCount(JobList analyseList) {
         analyseList = analyseList.getCurrentMonthJobList();
         Status ongoing = new Status("ongoing");
         Iterator<Job> iterator = analyseList.iterator();
@@ -141,23 +142,11 @@ public class JobList implements Iterable<Job> {
     }
 
     /**
-     * Get the respective job counts for the current month.
+     * Get the respective job counts for each employee.
      */
-    public JobList initAnalyseList(JobList analyseList) {
-        analyseList = analyseList.analyseCount(analyseList);
-        Iterator<Job> iteratorJob = analyseList.iterator();
-        while (iteratorJob.hasNext()) {
-            Job job = iteratorJob.next();
-            initEmployeeJobCount(job);
-        }
-        return analyseList;
-    }
-
-    /**
-     * Get the respective job counts for the current month.
-     */
-    public JobList analyseList(JobList analyseList) {
-        analyseList = initAnalyseList(analyseList);
+    public JobList analyseList(JobList analyseList, UniqueEmployeeList employeeList) {
+        analyseList = analyseList.analyseJobStatusCount(analyseList);
+        initEmployeeJobCount(employeeList);
         Iterator<Job> iteratorJob = analyseList.iterator();
         while (iteratorJob.hasNext()) {
             Job job = iteratorJob.next();
@@ -170,8 +159,8 @@ public class JobList implements Iterable<Job> {
     /**
      * Initialise the employee job count.
      */
-    public void initEmployeeJobCount(Job job) {
-        Iterator<Employee> iteratorEmployee = job.getAssignedEmployees().iterator();
+    public void initEmployeeJobCount(UniqueEmployeeList employeeList) {
+        Iterator<Employee> iteratorEmployee = employeeList.iterator();
         while (iteratorEmployee.hasNext()) {
             Employee employee = iteratorEmployee.next();
             analyse.put(employee.getName(), 0);
@@ -190,7 +179,7 @@ public class JobList implements Iterable<Job> {
         }
     }
     /**
-     * Get the respective job counts.
+     * Get the analyse result.
      */
     public String getAnalyseResult() {
         final StringBuilder builder = new StringBuilder();
