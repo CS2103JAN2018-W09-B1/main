@@ -644,7 +644,7 @@ image::SortSequenceDiagram.png[width="800"]
 === Archive feature
 ==== Current Implementation
 
-...
+The `ArchiveCommand` is facilitated by a `AddJobCommandParser`, which is responsible for parsing the input starting `Date` and ending `Date`.
 
 The `ArchiveCommand` is implemented this way to ensure that the specified starting date is earlier than the ending date:
 [source,java]
@@ -692,6 +692,15 @@ public int archiveJob(DateRange dateRange) {
 }
 ----
 
+New classes has been added to the storage component to allow Carvicim to archive closed job entries within the specified date range.
+
+.`ArchiveCommand` Storage Component Diagram
+image::ArchiveStorageComponentDiagram.png[width="800"]
+
+As seen from Figure 17, `XmlSerializableArchiveJob` is used to serialize the archive job entries into a xml format based on `XmlAdaptedJob`.
+The access of information to the archive job xml file is control by `XmlArchiveJobStorage`.
+The `StorageManager` manages both the storage of Carvicim and archive data.
+
 `StorageManager` code snippet that handles ArchiveEvent to archive the job entries:
 [source,java]
 ----
@@ -705,6 +714,11 @@ public void handleArchiveEvent(ArchiveEvent event) {
     }
 }
 ----
+
+The following sequence diagram shows how the archive operation works:
+
+.`ArchiveCommand` sequence diagram
+image::ArchiveSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
