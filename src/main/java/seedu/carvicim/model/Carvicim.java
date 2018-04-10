@@ -133,7 +133,7 @@ public class Carvicim implements ReadOnlyCarvicim {
      */
     public int archiveJob(DateRange dateRange) {
         int archiveJobCount = 0;
-        archiveJobs= new JobList();
+        archiveJobs = new JobList();
         Date startDate = dateRange.getStartDate();
         Date endDate = dateRange.getEndDate();
         Status closed = new Status("closed");
@@ -141,6 +141,7 @@ public class Carvicim implements ReadOnlyCarvicim {
         while (iterator.hasNext()) {
             Job job = iterator.next();
             Date date = job.getDate();
+            date = new Date(date.toString());
             Status status = job.getStatus();
             boolean withinRange = (dateRange.compareTo(date, startDate) >= 0 && dateRange.compareTo(date, endDate) <= 0)
                     ? true
