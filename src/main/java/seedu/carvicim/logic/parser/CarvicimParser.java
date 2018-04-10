@@ -19,11 +19,11 @@ import seedu.carvicim.logic.commands.CommandWords;
 import seedu.carvicim.logic.commands.DeleteEmployeeCommand;
 import seedu.carvicim.logic.commands.EmailCommand;
 import seedu.carvicim.logic.commands.ExitCommand;
+import seedu.carvicim.logic.commands.FindByTagCommand;
 import seedu.carvicim.logic.commands.FindEmployeeCommand;
 import seedu.carvicim.logic.commands.FindJobCommand;
 import seedu.carvicim.logic.commands.HelpCommand;
 import seedu.carvicim.logic.commands.HistoryCommand;
-import seedu.carvicim.logic.commands.ImportAllCommand;
 import seedu.carvicim.logic.commands.ImportCommand;
 import seedu.carvicim.logic.commands.ListEmployeeCommand;
 import seedu.carvicim.logic.commands.ListJobCommand;
@@ -106,9 +106,6 @@ public class CarvicimParser {
         case FindEmployeeCommand.COMMAND_WORD:
             return new FindEmployeeCommandParser().parse(arguments);
 
-        case ImportAllCommand.COMMAND_WORD:
-            return new ImportAllCommandParser().parse(arguments);
-
         case ListEmployeeCommand.COMMAND_WORD:
             return new ListEmployeeCommand();
 
@@ -146,7 +143,7 @@ public class CarvicimParser {
             return new RemarkCommandParser().parse(arguments);
 
         case EmailCommand.COMMAND_WORD:
-            return new EmailCommand();
+            return new EmailCommandParser().parse(arguments);
 
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
@@ -158,10 +155,10 @@ public class CarvicimParser {
             return new SwitchCommand();
 
         case AcceptAllCommand.COMMAND_WORD:
-            return new AcceptAllCommand();
+            return new AcceptAllCommandParser().parse(arguments);
 
         case RejectAllCommand.COMMAND_WORD:
-            return new RejectAllCommand();
+            return new RejectAllCommandParser().parse(arguments);
 
         case RejectCommand.COMMAND_WORD:
             return new RejectCommandParser().parse(arguments);
@@ -180,6 +177,9 @@ public class CarvicimParser {
 
         case AnalyseCommand.COMMAND_WORD:
             return new AnalyseCommand();
+
+        case FindByTagCommand.COMMAND_WORD:
+            return new FindByTagCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
