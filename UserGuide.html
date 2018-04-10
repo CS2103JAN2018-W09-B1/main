@@ -146,6 +146,19 @@ This app will not work with earlier versions of Java 8.
 </li>
 <li>
 <p>Copy the file to the folder you want to use as the home folder for your CarviciM.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Please ensure that the no files in the directory are named comments.temp or workbook.temp as this will affect the
+application.
+</td>
+</tr>
+</table>
+</div>
 </li>
 <li>
 <p>Double-click the file to start the app. You should see the Graphical User Interface (GUI) as shown in the image below.</p>
@@ -816,7 +829,7 @@ Format: <code>switch</code></p>
 <div class="sect4">
 <h5 id="accepting-1-job-code-accept-code"><a class="link" href="#accepting-1-job-code-accept-code">Accepting 1 job: <code>accept</code></a></h5>
 <div class="paragraph">
-<p>To accept a job with job number <code>NUMBER</code> in the imported list, you can use this command.
+<p>To accept a job with job index <code>NUMBER</code> in the imported list, you can use this command.
 Format: <code>accept NUMBER</code></p>
 </div>
 <div class="paragraph">
@@ -824,7 +837,7 @@ Format: <code>accept NUMBER</code></p>
 </div>
 <div class="paragraph">
 <p><code>accept 1</code><br>
-Accepts the job entry with job number 1 and removes it from imported list.</p>
+Accepts the job entry with job index number 1 and removes it from imported list.</p>
 </div>
 </div>
 <div class="sect4">
@@ -844,7 +857,7 @@ Accepts all remaining job entries and clears the imported list.</p>
 <div class="sect4">
 <h5 id="rejecting-1-job-code-reject-code"><a class="link" href="#rejecting-1-job-code-reject-code">Rejecting 1 job: <code>reject</code></a></h5>
 <div class="paragraph">
-<p>To reject a job with job number <code>NUMBER</code> in the imported list, you can use this command.
+<p>To reject a job with job index <code>NUMBER</code> in the imported list, you can use this command.
 Format: <code>reject NUMBER</code></p>
 </div>
 <div class="paragraph">
@@ -852,7 +865,7 @@ Format: <code>reject NUMBER</code></p>
 </div>
 <div class="paragraph">
 <p><code>reject 1</code><br>
-Rejects job entry with job number 1 and removes it from imported list. It is not added to CarviciM.</p>
+Rejects job entry with job index number 1 and removes it from imported list. It is not added to CarviciM.</p>
 </div>
 </div>
 <div class="sect4">
@@ -928,26 +941,9 @@ Rejects all remaining imported jobs and attaches "Please check the customer deta
 </div>
 <div class="sect3">
 <h4 id="save-command"><a class="link" href="#save-command">5.15.6. Sharing your feedback with your employees:</a></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>Filepath: A text representation of the file location in the computer.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="paragraph">
-<p><code>export summary report</code><br>
-Exports the feedback to "summary report.xls"</p>
+<p>CarviciM autosaves your comments to an excel file with -comments.xls or -comments.xlsx appended,
+in the same directory.</p>
 </div>
 </div>
 </div>
@@ -1294,7 +1290,7 @@ e.g. <code>theme 1</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-09 16:07:47 UTC
+Last updated 2018-04-10 04:21:28 UTC
 </div>
 </div>
 </body>
