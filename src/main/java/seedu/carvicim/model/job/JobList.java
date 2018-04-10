@@ -124,7 +124,7 @@ public class JobList implements Iterable<Job> {
     /**
      * Get the respective job counts for the current month.
      */
-    public JobList analyseList(JobList analyseList) {
+    public JobList analyseCount(JobList analyseList) {
         analyseList = analyseList.getCurrentMonthJobList();
         Status ongoing = new Status("ongoing");
         Iterator<Job> iterator = analyseList.iterator();
@@ -137,6 +137,33 @@ public class JobList implements Iterable<Job> {
             }
             analyseList.jobCount++;
         }
+        return analyseList;
+    }
+
+    /**
+     * Get the respective job counts for the current month.
+     */
+    public JobList initAnalyseList(JobList analyseList) {
+        analyseList = analyseList.analyseCount(analyseList);
+        Iterator<Job> iteratorJob = analyseList.iterator();
+        while (iteratorJob.hasNext()) {
+            Job job = iteratorJob.next();
+            initEmployeeJobCount(job);
+        }
+        return analyseList;
+    }
+
+    /**
+     * Get the respective job counts for the current month.
+     */
+    public JobList analyseList(JobList analyseList) {
+        analyseList = initAnalyseList(analyseList);
+        Iterator<Job> iteratorJob = analyseList.iterator();
+        while (iteratorJob.hasNext()) {
+            Job job = iteratorJob.next();
+            updateEmployeeJobCount(job);
+        }
+        analyseList.analyse = analyse;
         return analyseList;
     }
 
