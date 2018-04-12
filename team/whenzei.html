@@ -25,7 +25,11 @@
 <h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>CarviciM is a car servicing management application built on the <a href="https://github.com/nus-cs2103-AY1718S2/addressbook-level4">AddressBook - Level 4</a> project, which is used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
+<p>CarviciM is an efficient and systematic application for car servicing managers to manage their servicing jobs and employee assignment. It is a Command Line Interface (CLI) application which is optimized for users who are adpet at using the keyboard.
+CarviciM is built on the <a href="https://github.com/nus-cs2103-AY1718S2/addressbook-level4">AddressBook - Level 4</a> project (used for teaching Software Engineering principles). It is written in Java, and has about 10 kLoC.</p>
+</div>
+<div class="paragraph">
+<p>This portfolio summarize my contributions for the development of CarviciM. It showcases the software engineering knowledge that i have learned and applied throughout the project.</p>
 </div>
 </div>
 </div>
@@ -42,16 +46,23 @@
 <p>What it does: allows the user to add new job entries with employees assignment for each job, close an ongoing job entry in the application, and add remark to ongoing jobs.</p>
 </li>
 <li>
-<p>Justification: This set of features are the basis of the application for managing job entries.</p>
+<p>Justification: Car servicing managers need to manage huge numbers of job entries, and keep track of the employees that are assigned to them. These set of features give them a systematic and convenient way to manage the servicing jobs.</p>
 </li>
 <li>
-<p>Highlights: This enhancement requires the morphing of the <em>AddressBook - Level 4</em> project and require substantial changes to the codebase. The implementation required changes to existing commands so that the newly added commands would work properly. Most changes were made in the Model component.</p>
+<p>Highlights: This enhancement requires the morphing of the <em>AddressBook - Level 4</em> project and require substantial changes to the codebase. As the added features interact with the 'management of contacts' feature from the addressbook application, changes were to be made to the existing commands so that the newly added commands would work properly. Most changes were made in the Model component.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
 <p><strong>Minor enhancement</strong>: added a theme command that allows the user to select theme from a list of themes provided.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Justification: The default application only supports one theme and users would prefer to have more control over how the application looks . They may prefer to use different themes under certain circumstances (e.g. A brighter look would be prefered when working in a different environment, as it is more pleasing to the eyes.)</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-W09-B1/main/blob/master/collated/functional/whenzei.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-W09-B1/main/blob/master/collated/test/whenzei.md">Test Code</a>]</p>
@@ -85,7 +96,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Worked on the formatting of the User Guide to improve user readability</p>
+<p>Worked on the formatting of the User Guide to improve readability.</p>
+</li>
+<li>
+<p>Made User Guide more user-friendly by adding screenshots.</p>
 </li>
 </ul>
 </div>
@@ -130,7 +144,7 @@
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
 <div class="paragraph">
-<p><code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> (figure 11).</p>
+<p>To implement the job management feature, new classes are added to the <code>Model</code> component. <code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> as shown below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -246,7 +260,7 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Adding a list to keep track of all jobs in CarviciM, and adding an attribute for keeping a list of assigned employees in <code>Job</code> class.</p>
+<p><strong>Current choice:</strong> Adding a list in <code>Carvicim</code> class to keep track of all jobs, and adding an attribute for keeping a list of assigned employees in <code>Job</code> class.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -478,9 +492,157 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 </div>
 </div>
 <div class="sect2">
-<h3 id="set-command-feature"><a class="link" href="#set-command-feature">Set command feature</a></h3>
+<h3 id="job-remark-feature"><a class="link" href="#job-remark-feature">Job remark feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">Current Implementation</a></h4>
+<div class="paragraph">
+<p>The remark feature is facilitated by <code>RemarkCommand</code> which is an <code>UndoableCommand</code>. <code>RemarkCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>JOB_NUMBER</code> and <code>REMARK</code> input, and creates the <code>RemarkCommand</code> object.</p>
+</div>
+<div class="paragraph">
+<p>Similar to the <code>CloseJobCommand</code>, the <code>RemarkCommand</code> is also an undoable command which overrides the <code>preprocessUndoableCommand</code> method of <code>UndoableCommand</code>. It checks if the specified job can have a remark added.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the paramters are invalid, <code>remark</code> command will return an invalid message, which shows the usage information to the user.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>RemarkCommandParser</code> code snippet to validate the parameters, <code>JOB_NUMBER</code> and <code>REMARK</code>, which returns <code>RemarkCommand</code> object if valid, and invalid message otherwise:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> RemarkCommand parse(<span class="predefined-type">String</span> args) <span class="directive">throws</span> <span class="exception">ParseException</span> {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_JOB_NUMBER, PREFIX_REMARK);
+
+        <span class="keyword">if</span> (!arePrefixesPresent(argMultimap, PREFIX_JOB_NUMBER, PREFIX_REMARK)
+                || !argMultimap.getPreamble().isEmpty()) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(<span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+        }
+
+        <span class="keyword">try</span> {
+            Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+            JobNumber jobNumber = ParserUtil.parseJobNumber(argMultimap.getValue(PREFIX_JOB_NUMBER)).get();
+
+            <span class="keyword">return</span> <span class="keyword">new</span> RemarkCommand(remark, jobNumber);
+        } <span class="keyword">catch</span> (IllegalValueException ive) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(ive.getMessage(), ive);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>preprocessUndoableCommand</code> method code snippet in <code>RemarkCommand</code>, which checks if the job exists and if it has a valid job status:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">protected</span> <span class="type">void</span> preprocessUndoableCommand() <span class="directive">throws</span> CommandException {
+        <span class="predefined-type">List</span>&lt;Job&gt; lastShownJobList = model.getFilteredJobList();
+        <span class="predefined-type">Iterator</span>&lt;Job&gt; jobIterator = lastShownJobList.iterator();
+
+        <span class="keyword">while</span> (jobIterator.hasNext()) {
+            Job currentJob = jobIterator.next();
+            <span class="keyword">if</span> (currentJob.getJobNumber().equals(jobNumber)
+                    &amp;&amp; (currentJob.getStatus().value).equals(Status.STATUS_ONGOING)) {
+                target = currentJob;
+                updatedJob = createUpdatedJob(target, remark);
+                <span class="keyword">break</span>;
+            }
+        }
+
+        <span class="keyword">if</span> (target == <span class="predefined-constant">null</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_JOB_NOT_FOUND);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>createUpdatedJob</code> method code snippet in <code>CloseJobCommand</code>, which creates a copy of the respective job with new remark added into its list of remarks.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="directive">static</span> Job createUpdatedJob(Job jobToEdit, Remark remark) {
+        <span class="keyword">assert</span> jobToEdit != <span class="predefined-constant">null</span>;
+        RemarkList remarks = <span class="keyword">new</span> RemarkList(jobToEdit.getRemarkList().getRemarks());
+        remarks.add(remark);
+
+        <span class="keyword">return</span> <span class="keyword">new</span> Job(jobToEdit.getClient(), jobToEdit.getVehicleNumber(), jobToEdit.getJobNumber(),
+                jobToEdit.getDate(), jobToEdit.getAssignedEmployees(), jobToEdit.getStatus(), remarks);
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>executeUndoableCommand</code> method code snippet in <code>RemarkCommand</code>, which updates the job list with the job copy created and posts an <code>JobDisplayPanelUpdateRequestEvent</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult executeUndoableCommand() {
+        requireNonNull(target);
+        requireNonNull(updatedJob);
+        <span class="keyword">try</span> {
+            model.addRemark(target, updatedJob);
+        } <span class="keyword">catch</span> (JobNotFoundException jnfe) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">AssertionError</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">The target job cannot be missing</span><span class="delimiter">&quot;</span></span>);
+        }
+        EventsCenter.getInstance().post(<span class="keyword">new</span> JobDisplayPanelUpdateRequestEvent(updatedJob));
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_REMARK_SUCCESS, remark));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the <code>preprocessUndoableCommand</code> method in <code>RemarkCommand</code> works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/RemarkCommand_preprocess_SeqDiag.png" alt="RemarkCommand preprocess SeqDiag" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the <code>executeUndoableCommand</code> method in <code>RemarkCommand</code> works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/RemarkCommand_execute_SeqDiag.png" alt="RemarkCommand execute SeqDiag" width="400">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-checking-if-given-code-job_number-code-input-points-to-a-valid-job-in-carvicim"><a class="link" href="#aspect-checking-if-given-code-job_number-code-input-points-to-a-valid-job-in-carvicim">Aspect: Checking if given <code>JOB_NUMBER</code> input points to a valid job in CarviciM</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Perform check in the <code>preprocessUndoableCommand</code> method in <code>RemarkCommand</code>, by going through the list of jobs.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Does not introduce more coupling.</p>
+</li>
+<li>
+<p>Cons: May take some time if job list has many entries.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="set-command-feature"><a class="link" href="#set-command-feature">Set command feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="../images/SetCommandObjectDiagram.png" alt="SetCommandObjectDiagram" width="800">
@@ -506,7 +668,7 @@ Both are managed by the class <code>CommandWords</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-where-to-put-commandwords-for-storage"><a class="link" href="#aspect-where-to-put-commandwords-for-storage">Aspect: Where to put CommandWords for storage</a></h5>
 <div class="ulist">
@@ -611,7 +773,7 @@ Both are managed by the class <code>CommandWords</code>.</p>
 <div class="sect2">
 <h3 id="import-save-feature"><a class="link" href="#import-save-feature">Import/Save feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">Current Implementation</a></h4>
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="../images/SessionComponentClassDiagram.png" alt="SessionComponentClassDiagram" width="800">
@@ -705,7 +867,7 @@ in the same directory.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-supporting-undoablecommand"><a class="link" href="#aspect-supporting-undoablecommand">Aspect: Supporting UndoableCommand</a></h5>
 <div class="ulist">
@@ -818,7 +980,7 @@ it directly.</p>
 <div class="sect2">
 <h3 id="theme-setting-feature"><a class="link" href="#theme-setting-feature">Theme setting feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">Current Implementation</a></h4>
+<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">Current Implementation</a></h4>
 <div class="paragraph">
 <p>The theme setting mechanism is facilitated by a <code>ThemeCommand</code>. <code>ThemeCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>INDEX</code> input of <code>1</code> to <code>2</code>, and creates the <code>ThemeCommand</code> object which selects the application&#8217;s theme.
 The <code>UserPref</code> stores and retrieves the theme preference of the application.</p>
@@ -918,7 +1080,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-themecommand-code-br"><a class="link" href="#aspect-implementation-of-code-themecommand-code-br">Aspect: Implementation of <code>ThemeCommand</code><br></a></h5>
 <div class="ulist">
@@ -957,7 +1119,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="sect2">
 <h3 id="sort-feature"><a class="link" href="#sort-feature">Sort feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">Current Implementation</a></h4>
+<h4 id="current-implementation-7"><a class="link" href="#current-implementation-7">Current Implementation</a></h4>
 <div class="paragraph">
 <p>The sort mechanism is facilitated by a <code>Comparator</code>. It supports the comparison of employee’s name and arranges the employee list alphabetically.</p>
 </div>
@@ -988,7 +1150,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">Design Considerations</a></h4>
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-sortcommand-code-executes-br"><a class="link" href="#aspect-how-code-sortcommand-code-executes-br">Aspect: How <code>SortCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1027,7 +1189,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="sect2">
 <h3 id="archive-feature"><a class="link" href="#archive-feature">Archive feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-7"><a class="link" href="#current-implementation-7">Current Implementation</a></h4>
+<h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">Current Implementation</a></h4>
 <div class="paragraph">
 <p>The <code>ArchiveCommand</code> is facilitated by a <code>AddJobCommandParser</code>, which is responsible for parsing the input starting <code>Date</code> and ending <code>Date</code>.</p>
 </div>
@@ -1122,7 +1284,7 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">Design Considerations</a></h4>
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-archivecommand-code-executes-br"><a class="link" href="#aspect-how-code-archivecommand-code-executes-br">Aspect: How <code>ArchiveCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1194,7 +1356,7 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 <div class="sect2">
 <h3 id="analyse-feature"><a class="link" href="#analyse-feature">Analyse feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">Current Implementation</a></h4>
+<h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">Current Implementation</a></h4>
 <div class="paragraph">
 <p>The <code>AnalyseCommand</code> is facilitated by a <code>HashMap</code>, which is responsible for keeping track of
 the number of jobs assigned to each employee.</p>
@@ -1261,7 +1423,7 @@ the number of jobs assigned to each employee.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">Design Considerations</a></h4>
+<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-analysecommand-code-executes-br"><a class="link" href="#aspect-how-code-analysecommand-code-executes-br">Aspect: How <code>AnalyseCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1300,7 +1462,7 @@ the number of jobs assigned to each employee.</p>
 <div class="sect2">
 <h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">Current Implementation</a></h4>
+<h4 id="current-implementation-10"><a class="link" href="#current-implementation-10">Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -1488,7 +1650,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">Design Considerations</a></h4>
+<h4 id="design-considerations-10"><a class="link" href="#design-considerations-10">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -1627,7 +1789,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="sect2">
 <h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">Send Email to Employees about Job</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-10"><a class="link" href="#current-implementation-10">Current Implementation</a></h4>
+<h4 id="current-implementation-11"><a class="link" href="#current-implementation-11">Current Implementation</a></h4>
 <div class="paragraph">
 <p>This feature is implemented using Gmail <a href="#api">API</a>.</p>
 </div>
@@ -1699,7 +1861,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-10"><a class="link" href="#design-considerations-10">Design Considerations</a></h4>
+<h4 id="design-considerations-11"><a class="link" href="#design-considerations-11">Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-email-content"><a class="link" href="#aspect-email-content">Aspect: Email content</a></h5>
 <div class="ulist">
@@ -4401,7 +4563,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-12 08:07:17 UTC
+Last updated 2018-04-12 17:54:36 UTC
 </div>
 </div>
 </body>
