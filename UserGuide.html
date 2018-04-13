@@ -791,6 +791,18 @@ Format: <code>import FILE_PATH</code></p>
 </tr>
 </table>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The excel file must not be password-protected
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Example:</p>
 </div>
@@ -828,14 +840,42 @@ Imports file excel.xlsx, accepts all job entries and saves the reviewed job entr
 </div>
 </div>
 <div class="sect3">
-<h4 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">5.16.3. Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h4>
+<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code-2"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code-2">5.16.3. Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
+<div class="paragraph">
+<p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
+additionally it accepts all job entries and saves the reviews of the jobs. <code>importAll</code> is
+equivalent to an <a href="#import-command"><code>import</code></a>, <a href="#acceptAll-command"><code>acceptAll</code></a> and
+<a href="#save-command"><code>save</code></a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use this command to import all job entries from an excel file to save time.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>importAll excel.xlsx</code><br>
+Imports file excel.xlsx, accepts all job entries and saves the reviewed job entries as an external excel file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">5.16.4. Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h4>
 <div class="paragraph">
 <p>You can use this command to switch between the list of unreviewed jobs and jobs in CarviciM.<br>
 Format: <code>switch</code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">5.16.4. Accepting and rejecting changes</a></h4>
+<h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">5.16.5. Accepting and rejecting changes</a></h4>
 <div class="paragraph">
 <p>You can use 4 commands when reviewing changes:
 * <code>accept NUMBER</code>
@@ -901,7 +941,7 @@ Rejects all remaining job entries and clears the imported list.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="writing-comments-to-your-reviews-mark-coming-in-v1-5-mark"><a class="link" href="#writing-comments-to-your-reviews-mark-coming-in-v1-5-mark">5.16.5. Writing comments to your reviews <mark>Coming in V1.5</mark></a></h4>
+<h4 id="writing-comments-to-your-reviews-mark-coming-in-v1-5-mark"><a class="link" href="#writing-comments-to-your-reviews-mark-coming-in-v1-5-mark">5.16.6. Writing comments to your reviews <mark>Coming in V1.5</mark></a></h4>
 <div class="paragraph">
 <p>While accepting or rejecting changes, you can enter your comments behind the command.</p>
 </div>
@@ -957,7 +997,7 @@ Rejects all remaining imported jobs and attaches "Please check the customer deta
 </div>
 </div>
 <div class="sect3">
-<h4 id="save-command"><a class="link" href="#save-command">5.16.6. Sharing your feedback with your employees:</a></h4>
+<h4 id="save-command"><a class="link" href="#save-command">5.16.7. Sharing your feedback with your employees:</a></h4>
 <div class="paragraph">
 <p>CarviciM autosaves your comments to an excel file with -comments.xls or -comments.xlsx appended,
 in the same directory.</p>
@@ -1311,7 +1351,7 @@ e.g. <code>theme 1</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-12 17:54:36 UTC
+Last updated 2018-04-13 00:38:58 UTC
 </div>
 </div>
 </body>
