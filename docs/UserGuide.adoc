@@ -186,7 +186,7 @@ You will see the message "Remark added to job number 2: An urgent work that shou
 image::remark-command-example.PNG[width="500"]
 // end:remark[]
 
-=== Reassigning employees of a job: `reassign` #Coming in V2.0#
+=== Reassigning employees of a job: `reassign` #[Coming in V2.0]#
 
 To reassign employees belonging to a job due to manpower constraints , you can use this command. +
 Format: `reassign j/JOB_NUMBER [-/INDEX_OF_EMPLOYEE_TO_RETIRE] [+/INDEX_OF_EMPLOYEE_TO_ASSIGN]`
@@ -523,7 +523,7 @@ Example:
 `rejectAll` +
 Rejects all remaining job entries and clears the imported list.
 
-==== Writing comments to your reviews #Coming in V1.5#
+==== Writing comments to your reviews
 
 While accepting or rejecting changes, you can enter your comments behind the command.
 
