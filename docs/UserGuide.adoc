@@ -120,18 +120,17 @@ This section will explain to you how you can use the features of CarviciM.
 To find out more on using CarviciM, you can use this command to bring out the help menu. +
 Format: `help`
 
-=== Job management features
-==== Adding a job entry: `addj`
+=== Adding a job entry: `addj`
 
 To add a new job entry and assign employees to the job, you can use this command. +
 Format: `addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+`
 
 [NOTE]
-=====
+====
 * The `addj` command adds a job with the given fields, and assign employees based on specified `ASSIGNED_EMPLOYEE_INDEX`.
 * The index refers to the index number shown in the most recent employee listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-=====
+====
 
 Example:
 
@@ -149,7 +148,7 @@ _Figure 5.2.1.2 : Job list panel before addition of job entry_
 image::addj-job-list-panel-after.PNG[width="300"]
 _Figure 5.2.1.3 : Job list panel after addition of job entry_
 
-==== Closing a job entry: `closej`
+=== Closing a job entry: `closej`
 
 To indicate that a job is completed in CarviciM, you can use this command. +
 Format: `closej j/JOB_NUMBER`
@@ -172,7 +171,7 @@ image::closej-job-list-panel-after.PNG[width="300"]
 _Figure 5.2.2.3 : Job list panel after job is closed_
 
 // tag::remark[]
-==== Adding remark to a job: `remark`
+=== Adding remark to a job: `remark`
 
 To add remark or special note to an ongoing job entry, you can use this command. +
 Format: `remark j/JOB_NUMBER r/YOUR_REMARK`
@@ -188,49 +187,49 @@ _Figure 5.2.3.1 : Result display showing feedback for remark added_
 
 // end:remark[]
 
-==== Reassigning employees of a job: `reassign` #[Coming in V2.0]#
+=== Reassigning employees of a job: `reassign` #[Coming in V2.0]#
 
 To reassign employees belonging to a job due to manpower constraints , you can use this command. +
 Format: `reassign j/JOB_NUMBER [-/INDEX_OF_EMPLOYEE_TO_RETIRE] [+/INDEX_OF_EMPLOYEE_TO_ASSIGN]`
 
 [NOTE]
-=====
+====
 * At least one of the optional fields should be present.
-=====
+====
 
 Example:
 
 `reassign -/2 -/1 +/3 +/4` +
 This command will retire employees of index 1 and 2 from the assigned employee list belonging to the specified job, and newly assign employees of index 3 and 4 from the list of employees shown in the employee list panel.
 
-==== Listing all jobs : `listj`
+=== Listing all jobs : `listj`
 
 To view a list of all jobs in CarviciM, you can use this command to display them in the job list panel. +
 Format: `listj`
 
 [NOTE]
-=====
+====
 * This command will show you all the jobs (closed and ongoing) in CarviciM .
-=====
+====
 
-==== Listing all ongoing jobs : `listoj`
+=== Listing all ongoing jobs : `listoj`
 
 To view a list of all *ongoing* jobs in CarviciM, you can use this command to display them in the job list panel. +
 Format: `listoj`
 
-==== Locating jobs by keyword: `findj`
+=== Locating jobs by keyword: `findj`
 
 To find jobs of specific details, you can use this command. +
 Format: `finde KEYWORD [MORE_KEYWORDS]`
 
 [NOTE]
-=====
+====
 * The search is case insensitive. e.g `apr` will match `Apr`
 * The order of the keywords does not matter. e.g. `John Doe` will match `Doe John`
 * The *name*, *vehicle number*, *date* and *job number* will be searched.
 * Only full words will be matched e.g. `Joh` will not match `John`
 * Jobs details matching at least one keyword will be returned (i.e. `OR` search). e.g. `John Apr` will return jobs with client name `John Doe` and date `20 Apr 2019`.
-=====
+====
 
 Examples:
 
@@ -244,17 +243,17 @@ You will see all jobs with `john` as their client name (not case-sensitive), sho
 `findj Apr Feb` +
 You will see all jobs with `Apr` or `Feb` as their job detail (not case-sensitive), shown in the job list panel.
 
-==== Selecting employee entry by list number: `selectj`
+=== Selecting employee entry by list number: `selectj`
 
 To select a specific job entry from the job list panel and display the assigned jobs, you can use this command. +
 Format: `selectj j/JOB_NUMBER`
 
 [NOTE]
-=====
+====
 * This command selects the job entry with the provided `JOB_NUMBER`.
 * The `JOB_NUMBER` should be amongst the job entries in the most recent listing.
 * The `JOB_NUMBER` must be a positive integer 1, 2, 3...
-=====
+====
 
 Example:
 
@@ -302,8 +301,7 @@ You will see "Result: Number of Jobs: ... Number of Ongoing: ... Number of Close
 followed by the number of jobs assigned to each employee. +
 // end::analyse[]
 
-=== Employee entries management
-==== Adding an employee: `adde`
+=== Adding an employee: `adde`
 
 To add a new employee entry into CarviciM, you can use this command. +
 Format: `adde n/NAME p/PHONE_NUMBER e/EMAIL`
@@ -315,22 +313,22 @@ The command will add the details of the new employee into CarviciM. +
 You will see "New employee added: ..." followed by details of the new employee. +
 You will see the newly added details of the employee in the employee list panel.
 
-==== Listing all employee entries : `liste`
+=== Listing all employee entries : `liste`
 
 To view a list of employee details in CarviciM, you can use this command. +
 Format: `liste`
 
-==== Deleting an employee entry : `deletee`
+=== Deleting an employee entry : `deletee`
 
 To remove the details of an employee from CarviciM, you can use this command. +
 Format: `deletee INDEX`
 
 [NOTE]
-=====
+====
 * This command deletes the employee entry at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-=====
+====
 
 Examples:
 
@@ -351,23 +349,23 @@ You will see the results of the `finde` command which shows all employee entries
 You will see an updated employee list panel which has the 1st employee entry removed.
 
 // tag::sort[]
-==== Sorting all employee entries : `sort`
+=== Sorting all employee entries : `sort`
 
 To sort the list of employee entries alphabetically for easy viewing, you can use this command. +
 Format: `sort`
 // end::sort[]
 
-==== Selecting employee entry by list number: `selecte`
+=== Selecting employee entry by list number: `selecte`
 
 To select a specific employee entry from the employee list panel and display the assigned jobs, you can use this command. +
 Format: `selecte INDEX`
 
 [NOTE]
-=====
+====
 * This command selects the employee entry at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-=====
+====
 
 Examples:
 
@@ -385,19 +383,19 @@ You will see the results of the `finde` command which shows all employee entries
 +
 `selecte 1`
 
-==== Locating employee entries by name: `finde`
+=== Locating employee entries by name: `finde`
 
 To search for employee entries whose names contain any of the given keywords, you can use this command. +
 Format: `finde KEYWORD [MORE_KEYWORDS]`
 
 [NOTE]
-=====
+====
 * The search is case insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`.
 * Employee entries matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
-=====
+====
 
 Examples:
 
