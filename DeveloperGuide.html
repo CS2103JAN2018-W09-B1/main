@@ -279,10 +279,10 @@ This will generate for you all resources required by the application and tests.<
 <div class="sect3">
 <h4 id="updating-documentation-to-match-your-fork"><a class="link" href="#updating-documentation-to-match-your-fork">1.4.2. Updating documentation to match your fork</a></h4>
 <div class="paragraph">
-<p>After forking the repo, links in the documentation will still point to the <code>se-edu/addressbook-level4</code> repo.</p>
+<p>After forking the repo, links in the documentation will still point to the <code>se-edu/carvicim</code> repo.</p>
 </div>
 <div class="paragraph">
-<p>If you plan to develop this as a separate product (i.e. instead of contributing to the <code>se-edu/addressbook-level4</code>) , you should replace the URL in the variable <code>repoURL</code> in <code>DeveloperGuide.adoc</code> and <code>UserGuide.adoc</code> with the URL of your fork.</p>
+<p>If you plan to develop this as a separate product (i.e. instead of contributing to the <code>se-edu/carvicim</code>) , you should replace the URL in the variable <code>repoURL</code> in <code>DeveloperGuide.adoc</code> and <code>UserGuide.adoc</code> with the URL of your fork.</p>
 </div>
 </div>
 <div class="sect3">
@@ -478,7 +478,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <div class="content">
 <img src="images/SDforDeletePerson.png" alt="SDforDeletePerson" width="800">
 </div>
-<div class="title">Figure 3. Component interactions for <code>delete 1</code> command (part 1)</div>
+<div class="title">Figure 3. Component interactions for <code>deletee 1</code> command (part 1)</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -503,7 +503,7 @@ Note how the <code>Model</code> simply raises a <code>CarvicimChangedEvent</code
 <div class="content">
 <img src="images/SDforDeletePersonEventHandling.png" alt="SDforDeletePersonEventHandling" width="800">
 </div>
-<div class="title">Figure 4. Component interactions for <code>delete 1</code> command (part 2)</div>
+<div class="title">Figure 4. Component interactions for <code>deletee 1</code> command (part 2)</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -4049,18 +4049,6 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock">take note of details that are specific to the job</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">archive job entries</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">extract job entries within the selected range for archiving</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">analyse job entries</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">keep track of employees' performance</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">import job entries</p></td>
@@ -4097,6 +4085,18 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock">print out all the completed job entries and view it with a better program</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">archive job entries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">extract job entries within the selected range for archiving</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">analyse job entries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keep track of employees' workload</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">change the colour label of job status</p></td>
@@ -4126,88 +4126,6 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <div class="sectionbody">
 <div class="paragraph">
 <p>(For all use cases below, the <strong>System</strong> is the <code>CarviciM</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
-</div>
-<h3 id="use-case-add-remarks-to-an-ongoing-job-entry" class="discrete">Use case: Add remarks to an ongoing job entry</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User selects a job entry.</p>
-</li>
-<li>
-<p>CarviciM shows logged remarks in the job.</p>
-</li>
-<li>
-<p>User requests to log a remark.</p>
-</li>
-<li>
-<p>CarviciM reflects the added remark at end of log.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The remarks list is empty.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a1. CarviciM shows an empty list.</p>
-<div class="paragraph">
-<p>Use case resumes at step 3.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>3a. The given remark is empty.</p>
-<div class="paragraph">
-<p>Use case resumes at step 3.</p>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-tab-auto-complete-commands" class="discrete">Use case: Tab auto-complete commands</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User types incomplete argument in command.</p>
-</li>
-<li>
-<p>User presses tab key.</p>
-</li>
-<li>
-<p>CarviciM completes the command.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. Argument has more than one possible auto-complete.</p>
-<div class="paragraph">
-<p>Use case resumes at step 1.</p>
-</div>
-</li>
-</ul>
 </div>
 <h3 id="use-case-add-employee" class="discrete">Use case: Add employee</h3>
 <div class="paragraph">
@@ -4342,60 +4260,6 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </li>
 </ol>
 </div>
-<h3 id="use-case-customize-the-colour-label-of-job-status" class="discrete">Use case: Customize the colour label of job status</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User specifies color label of a job status.</p>
-</li>
-<li>
-<p>CarviciM updates the label colors displayed.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. The label provided is not valid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b. The color provided is not valid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <h3 id="use-case-add-job-entry" class="discrete">Use case: Add job entry</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -4468,6 +4332,55 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </div>
 </li>
 </ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-add-remarks-to-an-ongoing-job-entry" class="discrete">Use case: Add remarks to an ongoing job entry</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User selects a job entry.</p>
+</li>
+<li>
+<p>CarviciM shows logged remarks in the job.</p>
+</li>
+<li>
+<p>User requests to log a remark.</p>
+</li>
+<li>
+<p>CarviciM reflects the added remark at end of log.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The remarks list is empty.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. CarviciM shows an empty list.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The given remark is empty.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
 </div>
 </li>
 </ul>
@@ -4667,6 +4580,181 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </li>
 </ul>
 </div>
+<h3 id="use-case-archiving-of-job-entries" class="discrete">Use case: Archiving of job entries</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User specifies the date range for archiving.</p>
+</li>
+<li>
+<p>CarviciM extracts the closed job entries within the selected range and saves them to a new xml file.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The given date format is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The given date range is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c. No job entries found within selected date range.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c1. CarviciM shows an error message.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-analysing-of-job-entries" class="discrete">Use case: Analysing of job entries</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to analyse the job entries.</p>
+</li>
+<li>
+<p>CarviciM analyses the job entries within the current month and provides a summary of the job entries.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="use-case-tab-auto-complete-commands" class="discrete">Use case: Tab auto-complete commands</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User types incomplete argument in command.</p>
+</li>
+<li>
+<p>User presses tab key.</p>
+</li>
+<li>
+<p>CarviciM completes the command.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. Argument has more than one possible auto-complete.</p>
+<div class="paragraph">
+<p>Use case resumes at step 1.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-customize-the-colour-label-of-job-status" class="discrete">Use case: Customize the colour label of job status</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User specifies color label of a job status.</p>
+</li>
+<li>
+<p>CarviciM updates the label colors displayed.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The label provided is not valid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The color provided is not valid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 <h3 id="use-case-set-custom-command-word" class="discrete">Use case: Set custom command word</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -4779,60 +4867,6 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <ul class="none">
 <li>
 <p>1b. The given theme index is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-archiving-of-job-entries" class="discrete">Use case: Archiving of job entries</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User specifies the date range for archiving.</p>
-</li>
-<li>
-<p>CarviciM extracts the job entries within the selected range and saves them to a new file.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. The given date format is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b. The given date range is invalid.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
@@ -5091,7 +5125,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-14 20:43:23 UTC
+Last updated 2018-04-14 21:40:03 UTC
 </div>
 </div>
 </body>
