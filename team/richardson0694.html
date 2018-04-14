@@ -139,7 +139,7 @@ Format: <code>archive sd/START_DATE ed/END_DATE</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Archives the closed job entries within the specified <code>START_DATE</code> and <code>END_DATE</code>.</p>
+<p>Archives the <strong>closed</strong> job entries within the specified <code>START_DATE</code> and <code>END_DATE</code>.</p>
 </li>
 <li>
 <p>The <code>START_DATE</code> <strong>must be earlier than</strong> the <code>END_DATE</code>.</p>
@@ -159,8 +159,26 @@ Format: <code>archive sd/START_DATE ed/END_DATE</code></p>
 <div class="paragraph">
 <p><code>archive sd/Mar 25 2018 ed/Apr 03 2018</code><br>
 The command will save the closed job entries within the selected date range in CarviciM.<br>
-You will see "Archived Successfully" in the result display.<br>
-You will see the newly created archive file.</p>
+You will see "Archived Successfully" in the result display (shown in the image below).<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Archive%20Result%201.png" alt="Archive Result 1" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.10.1 : Result display indicating that archiving is completed successfully</em></p>
+</div>
+<div class="paragraph">
+<p>You will see the newly created archive xml file (shown in the image below).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Archive%20Result%202.png" alt="Archive Result 2" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.10.2 : New archivejob xml file created in the data folder</em></p>
 </div>
 </div>
 <div class="sect2">
@@ -176,7 +194,15 @@ Format: <code>analyse</code></p>
 <p><code>analyse</code><br>
 The command will analyse the job entries within the current month in CarviciM.<br>
 You will see "Result: Number of Jobs: &#8230;&#8203; Number of Ongoing: &#8230;&#8203; Number of Closed: &#8230;&#8203;"
-followed by the number of jobs assigned to each employee.<br></p>
+followed by the number of jobs assigned to each employee in the result display (shown in the image below).<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Analyse%20Result.png" alt="Analyse Result" width="850">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.11.1 : Result display showing a summary of the job entries</em></p>
 </div>
 </div>
 <div class="sect2">
@@ -184,6 +210,31 @@ followed by the number of jobs assigned to each employee.<br></p>
 <div class="paragraph">
 <p>To sort the list of employee entries alphabetically for easy viewing, you can use this command.<br>
 Format: <code>sort</code></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p>Given a unsorted list of employees (shown in the image below).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Sort%20Result%201.png" alt="Sort Result 1" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.15.1 : Employee List Panel showing a list of unsorted employee entries</em></p>
+</div>
+<div class="paragraph">
+<p>You will see the sorted list of employee after the execution of <code>sort</code> command (shown in the image below).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Sort%20Result%202.png" alt="Sort Result 2" width="850">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.15.2 : Employee List Panel showing a list of sorted employee entries</em></p>
 </div>
 </div>
 </div>
@@ -549,7 +600,7 @@ the number of jobs assigned to each employee.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-14 18:32:23 UTC
+Last updated 2018-04-14 19:51:58 UTC
 </div>
 </div>
 </body>

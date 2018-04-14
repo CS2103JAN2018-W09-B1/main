@@ -489,7 +489,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Note how the <code>Model</code> simply raises a <code>AddressBookChangedEvent</code> when the Address Book data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
+Note how the <code>Model</code> simply raises a <code>CarvicimChangedEvent</code> when the Carvicim data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
 </td>
 </tr>
 </table>
@@ -537,7 +537,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><a href="#api"><strong>API</strong></a> : <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class (figure 5).</p>
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>JobListPanel</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class (figure 5).</p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component uses <a href="https://en.wikipedia.org/wiki/JavaFX">JavaFx</a> UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103JAN2018-W09-B1/main/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
@@ -614,10 +614,10 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
 </li>
 <li>
-<p>stores the Address Book data.</p>
+<p>stores the Carvicim data.</p>
 </li>
 <li>
-<p>exposes an unmodifiable <code>ObservableList&lt;Person&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+<p>exposes an unmodifiable <code>ObservableList&lt;Employee&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
 </li>
 <li>
 <p>does not depend on any of the other three components.</p>
@@ -645,7 +645,10 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>can save <code>UserPref</code> objects in json format and read it back.</p>
 </li>
 <li>
-<p>can save the Address Book data in xml format and read it back.</p>
+<p>can save the Carvicim data in xml format and read it back.</p>
+</li>
+<li>
+<p>can save the ArchiveJob data in xml format and read it back.</p>
 </li>
 </ul>
 </div>
@@ -5088,7 +5091,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-14 18:32:23 UTC
+Last updated 2018-04-14 19:51:58 UTC
 </div>
 </div>
 </body>
