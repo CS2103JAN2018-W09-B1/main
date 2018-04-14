@@ -78,9 +78,9 @@ You can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to config
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo.
+After forking the repo, links in the documentation will still point to the `se-edu/carvicim` repo.
 
-If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/carvicim`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -165,7 +165,7 @@ image::LogicClassDiagram.png[width="800"]
 
 The _Sequence Diagram_ below (figure 3) shows how the components interact for the scenario where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
+.Component interactions for `deletee 1` command (part 1)
 image::SDforDeletePerson.png[width="800"]
 [none]
 
@@ -176,7 +176,7 @@ Note how the `Model` simply raises a `CarvicimChangedEvent` when the Carvicim da
 
 The diagram below (figure 4) shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+.Component interactions for `deletee 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 [none]
 
