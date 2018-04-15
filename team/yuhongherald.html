@@ -26,11 +26,23 @@
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://github.com/CS2103JAN2018-W09-B1/main">CarviciM</a> is a car servicing management application built on the
-<a href="https://github.com/nus-cs2103-AY1718S2/addressbook-level4">AddressBook - Level 4</a> project,
-which is used for teaching Software Engineering principles.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX.
-It is written in Java, and has about 10 kLoC.</p>
+<p>efficient
+systematic
+free</p>
+</div>
+<div class="paragraph">
+<p>ability to import</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/CS2103JAN2018-W09-B1/main">CarviciM</a> is a fast and robust desktop application for car servicing managers
+monitoring and approving large volumes of job entries. It features importing
+job entries from excel files, displaying job entries as eas-to-read-cards and
+the ability to send reminders to employees through email.</p>
+</div>
+<div class="paragraph">
+<p>Built on the <a href="https://github.com/nus-cs2103-AY1718S2/addressbook-level4">AddressBook - Level 4</a> project, which is used for teaching Software Engineering principles.
+the application uses JavaFX to create a Guided User Interface (GUI) with a Command Line Interface (CLI) as the main
+medium of interaction. It is written in Java, and has about 10 kLoC.</p>
 </div>
 </div>
 <div class="sect2">
@@ -38,21 +50,21 @@ It is written in Java, and has about 10 kLoC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major enhancement</strong>: added <strong>the ability to import job entries from an excel file</strong></p>
+<p><strong>Major enhancement</strong>: added the ability to import job entries from an excel file</p>
 <div class="ulist">
 <ul>
 <li>
 <p>What it does: allows the user to collate job entries from different people in the form of excel files.
-Also allows discrete accepting and rejecting of job entries, with comments written to another excel file.</p>
+Also allows discrete accepting and rejecting of job entries, with autosave and a system to feedback to
+excel file providers.</p>
 </li>
 <li>
 <p>Justification: A significant improvement to CarviciM by simplifying collation of job entries
 from different sources, which managers often do from admins, hence saving time and effort.</p>
 </li>
 <li>
-<p>Highlights: This enhancement supports autosave feature and handles IOException thoroughly. Job entries with empty
-fields will inherit their empty fields from the previous entry. Column headers can be added if necessary,
-and does not enforce strict order.</p>
+<p>Highlights: This enhancement handles IOException thoroughly. Job entries with empty
+fields will inherit their empty fields from the previous entry. Column headers does not enforce strict order.</p>
 </li>
 <li>
 <p>Credits: Apache POI and POI-ooxml library are used to support excel file handling.</p>
@@ -85,11 +97,17 @@ alternative to the original.</p>
 </div>
 </li>
 <li>
-<p>Enhancements to existing features:</p>
+<p>Improving UI design</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Resized the UI Panels and application window so that they fit nicely</p>
+<p>Resized the UI Panels and application window so that they fit nicely
+<a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/152">#151</a></p>
+</li>
+<li>
+<p>Added JobListPanel to support displaying jobs
+<a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/53">#53</a>
+<a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/65">#65</a></p>
 </li>
 </ul>
 </div>
@@ -117,11 +135,6 @@ alternative to the original.</p>
 <p>Community:</p>
 <div class="ulist">
 <ul>
-<li>
-<p>Added JobListPanel to support displaying jobs
-<a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/53">#53</a>
-<a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/65">#65</a></p>
-</li>
 <li>
 <p>PRs reviewed (with non-trivial review comments):
 <a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/73">#73</a></p>
@@ -234,7 +247,7 @@ COMMAND_WORD of the command as <code>newWord</code></p>
 </table>
 </div>
 <div class="paragraph">
-<p>You don&#8217;t have to worry if you forgot your custom words! They will displayed in the result display
+<p>You don&#8217;t have to worry if you forgot your custom words! They will be displayed in the result display
 whenever you make a mistake!</p>
 </div>
 <div class="paragraph">
@@ -263,7 +276,7 @@ You will see "d has been replaced with delete!" in the result display.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-jobs-from-an-excel-file"><a class="link" href="#importing-jobs-from-an-excel-file">Importing jobs from an excel file</a></h3>
+<h3 id="importing-jobs-from-an-excel-file-code-importall-code-code-import-code-code-accept-code-code-reject-code-code-acceptall-code-code-rejectall-code-code-switch-code"><a class="link" href="#importing-jobs-from-an-excel-file-code-importall-code-code-import-code-code-accept-code-code-reject-code-code-acceptall-code-code-rejectall-code-code-switch-code">Importing jobs from an excel file <code>importAll</code>, <code>import</code>, <code>accept</code>, <code>reject</code>, <code>acceptAll</code>, <code>rejectAll</code>, <code>switch</code></a></h3>
 <div class="sect3">
 <h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code">Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
 <div class="paragraph">
@@ -290,11 +303,22 @@ You should see:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="import-command"><a class="link" href="#import-command">Importing a new excel file: <code>import</code></a></h4>
+<h4 id="importing-job-entries-discretely-code-import-code-code-accept-code-code-reject-code-code-acceptall-code-code-rejectall-code-code-switch-code"><a class="link" href="#importing-job-entries-discretely-code-import-code-code-accept-code-code-reject-code-code-acceptall-code-code-rejectall-code-code-switch-code">Importing job entries discretely <code>import</code>, <code>accept</code>, <code>reject</code>, <code>acceptAll</code>, <code>rejectAll</code>, <code>switch</code></a></h4>
 <div class="paragraph">
-<p>To discretely import job entries, you must first import a file, then <a href="#accept-reject"><code>accept</code> and <code>reject</code></a>
-job entries.</p>
+<p>To discretely import job entries, here are the steps you should follow:</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#import-command">import</a> a file</p>
+</li>
+<li>
+<p><a href="#accept-reject"><code>accept</code> and <code>reject</code></a> job entries.</p>
+</li>
+</ol>
+</div>
+<div class="sect4">
+<h5 id="import-command"><a class="link" href="#import-command">Importing a new excel file: <code>import</code></a></h5>
 <div class="paragraph">
 <p>To start import a file, use this command as follows:<br>
 Format: <code>import FILE_PATH</code></p>
@@ -467,8 +491,8 @@ Imports the example file excel-file.xlsx shown above. You should see:</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h4>
+<div class="sect4">
+<h5 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h5>
 <div class="paragraph">
 <p>You can use this command to switch between the list of unreviewed jobs and jobs in CarviciM.<br>
 Format: <code>switch</code></p>
@@ -486,8 +510,8 @@ You can see the current job list in the job list indicator.
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="accept-reject"><a class="link" href="#accept-reject">Accepting and rejecting changes</a></h4>
+<div class="sect4">
+<h5 id="accept-reject"><a class="link" href="#accept-reject">Accepting and rejecting changes</a></h5>
 <div class="paragraph">
 <p>You can use 4 commands when reviewing changes:</p>
 </div>
@@ -507,8 +531,8 @@ You can see the current job list in the job list indicator.
 </li>
 </ul>
 </div>
-<div class="sect4">
-<h5 id="accepting-1-job-code-accept-code"><a class="link" href="#accepting-1-job-code-accept-code">Accepting 1 job: <code>accept</code></a></h5>
+<div class="sect5">
+<h6 id="accepting-1-job-code-accept-code"><a class="link" href="#accepting-1-job-code-accept-code">Accepting 1 job: <code>accept</code></a></h6>
 <div class="paragraph">
 <p>To accept a job with job index <code>NUMBER</code> in the imported list, use this command as follows:
 Format: <code>accept NUMBER</code></p>
@@ -521,8 +545,8 @@ Format: <code>accept NUMBER</code></p>
 Accepts the job entry with job index number 1 and removes it from imported list.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="acceptAll-command"><a class="link" href="#acceptAll-command">Accepting all remaining imported jobs: <code>acceptAll</code></a></h5>
+<div class="sect5">
+<h6 id="acceptAll-command"><a class="link" href="#acceptAll-command">Accepting all remaining imported jobs: <code>acceptAll</code></a></h6>
 <div class="paragraph">
 <p>To accept all remaining jobs, use this command as follows:
 Format: <code>acceptAll</code></p>
@@ -535,8 +559,8 @@ Format: <code>acceptAll</code></p>
 Accepts all remaining job entries and clears the imported list.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="rejecting-1-job-code-reject-code"><a class="link" href="#rejecting-1-job-code-reject-code">Rejecting 1 job: <code>reject</code></a></h5>
+<div class="sect5">
+<h6 id="rejecting-1-job-code-reject-code"><a class="link" href="#rejecting-1-job-code-reject-code">Rejecting 1 job: <code>reject</code></a></h6>
 <div class="paragraph">
 <p>To reject a job with job index <code>NUMBER</code> in the imported list, use this command as follows:
 Format: <code>reject NUMBER</code></p>
@@ -549,8 +573,8 @@ Format: <code>reject NUMBER</code></p>
 Rejects job entry with job index number 1 and removes it from imported list. It is not added to CarviciM.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="rejecting-all-remaining-imported-jobs-code-rejectall-code"><a class="link" href="#rejecting-all-remaining-imported-jobs-code-rejectall-code">Rejecting all remaining imported jobs: <code>rejectAll</code></a></h5>
+<div class="sect5">
+<h6 id="rejecting-all-remaining-imported-jobs-code-rejectall-code"><a class="link" href="#rejecting-all-remaining-imported-jobs-code-rejectall-code">Rejecting all remaining imported jobs: <code>rejectAll</code></a></h6>
 <div class="paragraph">
 <p>To reject all remaining jobs in the imported list, use this command as follows:
 Format: <code>rejectAll</code></p>
@@ -564,8 +588,8 @@ Rejects all remaining job entries and clears the imported list.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="writing-comments-to-your-reviews"><a class="link" href="#writing-comments-to-your-reviews">Writing comments to your reviews</a></h4>
+<div class="sect4">
+<h5 id="writing-comments-to-your-reviews"><a class="link" href="#writing-comments-to-your-reviews">Writing comments to your reviews</a></h5>
 <div class="paragraph">
 <p>While accepting or rejecting changes, you can enter your comments behind the command.</p>
 </div>
@@ -618,6 +642,7 @@ Rejects all remaining imported jobs and attaches "Please check the customer deta
 </div>
 </li>
 </ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -1195,7 +1220,7 @@ The `jobNumber</code> associated with the same imported job might also change on
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:06:43 UTC
+Last updated 2018-04-15 15:14:10 UTC
 </div>
 </div>
 </body>
