@@ -27,7 +27,7 @@ With this feature, the manager can ensure that workload is equally distributed a
 * *Minor enhancement*: Added *the ability to sort the employee list.*
 ** What it does: Allows the user to sort the employee list alphabetically according to their names.
 ** Justification: After adding in a new employee, the employee entries could be found at the end of the employee list.
-With this feature, the manager would be able to organise and locate the employee easily. 
+With this feature, the manager would be able to organise and locate the employee easily.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W09-B1/main/blob/master/collated/functional/richardson0694.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B1/main/blob/master/collated/test/richardson0694.md[Test code]]
 
