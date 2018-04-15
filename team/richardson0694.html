@@ -35,23 +35,61 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major enhancement</strong>: added <strong>the ability to archive closed job entries</strong> and <strong>the ability to analyse job entries</strong></p>
+<p><strong>Major enhancement</strong>: Added <strong>the ability to archive job entries</strong> and <strong>the ability to analyse job entries</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>What it does: allows the user to archive closed job entries within the specified date range and analyse the job entries within the current month.</p>
+<p>Archive Job Entries</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: Allows the user to archive closed job entries within the specified date range.</p>
 </li>
 <li>
-<p>Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.</p>
+<p>Justification: The number of job entries will keep growing as time goes by, the car servicing manager would have a hard time looking at the large number of job entries.
+However, the manager would not like to delete all the old job entries since these information can be used by the technicians or mechanics to find out the most effective and efficient way to maintain or repair the customer’s vehicle.
+Hence, these job entries should be kept for auditing and referencing purpose by making use of the archiving feature.</p>
 </li>
 <li>
-<p>Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.</p>
+<p>Highlights: This enhancement requires an in-depth analysis of design alternatives in order to select the most appropriate way to save the archived jobs.
+In addition, the implementation was challenging as it required changes to be made existing storage system.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Minor enhancement</strong>: sorting the employee list alphabetically according to their names.</p>
+<p>Analyse Job Entries</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: Analyse the job entries within the current month.</p>
+</li>
+<li>
+<p>Justification: Every employee hopes to receive fair treatment and equal workload. However, the manager may not be able to remember the number of jobs that each employee has on hand currently and assign more jobs to a particular employee.
+With this feature, the manager can ensure that workload is equally distributed among employees by taking the analyse result into consideration.</p>
+</li>
+<li>
+<p>Highlights: This enhancement required a suitable data structure to keep track of employee&#8217;s workload.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: Added <strong>the ability to sort the employee list.</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: Allows the user to sort the employee list alphabetically according to their names.</p>
+</li>
+<li>
+<p>Justification: After adding in a new employee, the employee entries could be found at the end of the employee list.
+With this feature, the manager would be able to organise and locate the employee easily.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-W09-B1/main/blob/master/collated/functional/richardson0694.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-W09-B1/main/blob/master/collated/test/richardson0694.md">Test code</a>]</p>
@@ -65,20 +103,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Managed releases <code>v1.3</code> - <code>v1.5rc</code> (3 releases) on GitHub</p>
-</li>
-</ul>
-</div>
+<p>Updated releases <code>v1.4</code> - <code>v1.5rc</code> (2 releases) on GitHub</p>
 </li>
 <li>
-<p>Enhancements to existing features:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Updated the GUI color scheme (Pull requests <a href="https://github.com">#33</a>, <a href="https://github.com">#34</a>)</p>
-</li>
-<li>
-<p>Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests <a href="https://github.com">#36</a>, <a href="https://github.com">#38</a>)</p>
+<p>Closed issues on GitHub</p>
 </li>
 </ul>
 </div>
@@ -88,7 +116,16 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Updated existing images of the Developer Guide: <a href="https://github.com">#14</a></p>
+<p>Updated User Guide with implemented features such as analysing, archiving and sorting.</p>
+</li>
+<li>
+<p>Included features implementation for analysing, archiving and sorting to Developer Guide.</p>
+</li>
+<li>
+<p>Added in images for adding and deleting of employee in User Guide: (Pull request <a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/190">#190</a>)</p>
+</li>
+<li>
+<p>Updated existing images of the Developer Guide: (Pull requests <a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/182">#182</a>, <a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/183">#183</a>, <a href="https://github.com/CS2103JAN2018-W09-B1/main/pull/190">#190</a>)</p>
 </li>
 </ul>
 </div>
@@ -226,7 +263,7 @@ Format: <code>sort</code></p>
 <p><em>Figure 5.15.1 : Employee List Panel showing a list of unsorted employee entries</em></p>
 </div>
 <div class="paragraph">
-<p>You will see the sorted list of employee after the execution of <code>sort</code> command (shown in the image below).</p>
+<p>You will see the sorted list of employees after the execution of <code>sort</code> command (shown in the image below).</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -600,7 +637,7 @@ the number of jobs assigned to each employee.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 09:04:57 UTC
+Last updated 2018-04-15 10:35:09 UTC
 </div>
 </div>
 </body>
