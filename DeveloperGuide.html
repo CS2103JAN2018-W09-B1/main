@@ -875,6 +875,8 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <div class="paragraph">
 <p>Since <code>CloseJobCommand</code> is an undoable command, it overrides the <code>preprocessUndoableCommand</code> method of <code>UndoableCommand</code>, to check if the specified job can be closed.</p>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -882,12 +884,12 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>If the provided <code>JOB_NUMBER</code> belongs to a closed job or does not match any job in the job list, <code>CloseJobCommand</code> will return an invalid message. <code>CloseJobCommand</code> creates a copy of the job if it is found, and sets the status of the duplicate job to be "closed". This is to complement the undo feature.</p>
-</div>
+If the provided <code>JOB_NUMBER</code> belongs to a closed job or does not match any job in the job list, <code>CloseJobCommand</code> will return an invalid message. <code>CloseJobCommand</code> creates a copy of the job if it is found, and sets the status of the duplicate job to be "closed". This is to support the undo feature.
 </td>
 </tr>
 </table>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p><code>preprocessUndoableCommand</code> method code snippet in <code>CloseJobCommand</code>, which checks for the respective job for closing:</p>
@@ -1010,6 +1012,8 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <div class="paragraph">
 <p>Similar to the <code>CloseJobCommand</code>, the <code>RemarkCommand</code> is also an undoable command which overrides the <code>preprocessUndoableCommand</code> method of <code>UndoableCommand</code>. It checks if the specified job can have a remark added.</p>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1017,12 +1021,12 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>If the paramters are invalid, <code>remark</code> command will return an invalid message, which shows the usage information to the user.</p>
-</div>
+If the paramters are invalid, <code>remark</code> command will return an invalid message, which shows the usage information to the user.
 </td>
 </tr>
 </table>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p><code>RemarkCommandParser</code> code snippet to validate the parameters, <code>JOB_NUMBER</code> and <code>REMARK</code>, which returns <code>RemarkCommand</code> object if valid, and invalid message otherwise:</p>
@@ -4794,7 +4798,7 @@ These instructions only provide a starting point for testers to work on; testers
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:14:09 UTC
+Last updated 2018-04-15 15:25:42 UTC
 </div>
 </div>
 </body>
