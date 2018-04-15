@@ -296,7 +296,7 @@ e.g. typing <strong><code>help</code></strong> into the command box (as shown in
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">5.1. Viewing help : <code>help</code></a></h3>
 <div class="paragraph">
-<p>To find out more on using CarviciM, you can use this command to open the help menu.<br>
+<p>To find out more on using CarviciM, you can use this command to open the help menu:<br>
 Format: <code>help</code></p>
 </div>
 </div>
@@ -465,7 +465,7 @@ This command will retire employees of index 1 and 2 from the assigned employee l
 <div class="sect2">
 <h3 id="listing-all-jobs-code-listj-code"><a class="link" href="#listing-all-jobs-code-listj-code">5.6. Listing all jobs : <code>listj</code></a></h3>
 <div class="paragraph">
-<p>To view a list of all jobs in CarviciM, you can use this command to display them in the job list panel.<br>
+<p>To view a list of all jobs in CarviciM, you can use this command to display them in the job list panel:<br>
 Format: <code>listj</code></p>
 </div>
 <div class="admonitionblock note">
@@ -490,7 +490,7 @@ Format: <code>listj</code></p>
 <div class="sect2">
 <h3 id="listing-all-ongoing-jobs-code-listoj-code"><a class="link" href="#listing-all-ongoing-jobs-code-listoj-code">5.7. Listing all ongoing jobs : <code>listoj</code></a></h3>
 <div class="paragraph">
-<p>To view a list of all <strong>ongoing</strong> jobs in CarviciM, you can use this command to display them in the job list panel.<br>
+<p>To view a list of all <strong>ongoing</strong> jobs in CarviciM, you can use this command to display them in the job list panel:<br>
 Format: <code>listoj</code></p>
 </div>
 </div>
@@ -1034,7 +1034,7 @@ You will see all employee entries with the tags <code>technican</code> and/or <c
 </table>
 </div>
 <div class="paragraph">
-<p>You will need to login to Gmail before you can use the <code>email</code> feature to send out emails to your employees (see Section 5.19 below). To login to Gmail, use the <code>login</code> command as follows:<br>
+<p>You will need to login to Gmail before you can use the <code>email</code> feature to send out emails to your employees (see Section 5.20 below). To login to Gmail, use the <code>login</code> command as follows:<br>
 Format: <code>login</code></p>
 </div>
 <div class="paragraph">
@@ -1048,7 +1048,7 @@ Format: <code>login</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>When you are redirected to the Gmail login page, CarviciM may sometimes appear as if it is not responding. Don&#8217;t panic! Once you have successfully logged in to Gmail, CarviciM will be up and running again, from exactly where you left off.</p>
+<p>When you are redirected to the Gmail login page, CarviciM may (although unlikely to happen) appear as if it is not responding. If so, don&#8217;t panic! Once you have successfully logged in to Gmail, CarviciM will be up and running again, from exactly where you left off.</p>
 </div>
 </td>
 </tr>
@@ -1057,11 +1057,11 @@ Format: <code>login</code></p>
 <div class="paragraph">
 <p>When prompted to give your permission to allow CarviciM to access your Gmail account, click on <code>ALLOW</code>.</p>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1084,8 +1084,15 @@ Format: <code>login</code></p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
+<div class="ulist">
+<ul>
+<li>
 <p>Before using this command, ensure that you are connected to the internet.</p>
+</li>
+<li>
+<p>You will need to <code>login</code> first before you can send out emails. If you have yet to <code>login</code>, the <code>email</code> command will first redirect you to the Gmail login page on your default internet browser before sending the emails. Please see Section 5.18 above on how to <code>login</code>.</p>
+</li>
+</ul>
 </div>
 </td>
 </tr>
@@ -1102,12 +1109,27 @@ Format: <code>email j/JOB_NUMBER</code></p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>You will need to <code>login</code> first before you can send out emails. If you have yet to <code>login</code>, the <code>email</code> command will first redirect you to the Gmail login page on your default internet browser before sending the emails. Please see Section 5.18 above on how to <code>login</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>JOB_NUMBER</code> <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
 </div>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Take a look at the image below for a sample of the contents of the emails that will be sent when you use this command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/Email_example.PNG" alt="Email example" width="550">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.20.1 : Sample of auto-generated email content</em></p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -1492,7 +1514,7 @@ You will see the theme of the application set as the selected one.</p>
 <div class="sect2">
 <h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">5.24. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
-<p>To find out what commands that you have executed recently, you can use this command to list a history of executed commands in reverse chronological order.<br>
+<p>To find out what commands that you have executed recently, use this command to list a history of executed commands in reverse chronological order:<br>
 Format: <code>history</code></p>
 </div>
 <div class="admonitionblock note">
@@ -1513,7 +1535,7 @@ Format: <code>history</code></p>
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">5.25. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>To reverse an undoable command that was executed by mistake, you can use this command to restore CarviciM to the state before the execution of that command.<br>
+<p>Nobody&#8217;s perfect. To reverse an undoable command that was executed by mistake, use this command to restore CarviciM to the state before the execution of that command:<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -1628,7 +1650,7 @@ You will see that the same employee entry is removed from the employee list pane
 <div class="sect2">
 <h3 id="clearing-the-application-code-clear-code"><a class="link" href="#clearing-the-application-code-clear-code">5.27. Clearing the application : <code>clear</code></a></h3>
 <div class="paragraph">
-<p>To have an empty CarviciM app, you can use this command to clear everything in the app.<br>
+<p>To have an empty CarviciM app, use this command to clear everything in the app:<br>
 Format: <code>clear</code></p>
 </div>
 <div class="admonitionblock note">
@@ -1677,8 +1699,20 @@ There is no need to save manually.</p>
 <strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.</p>
 </div>
 <div class="paragraph">
-<p><strong>Q</strong>: Can i use this application without internet connection?<br>
-<strong>A</strong>: You will be able to use most commands in CarviciM except for the <code>email</code> command.</p>
+<p><strong>Q</strong>: Can I use this application without internet connection?<br>
+<strong>A</strong>: You will be able to use most commands in CarviciM except for the <code>login</code> and <code>email</code> command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Q</strong>: Why can&#8217;t I use my mouse?
+<strong>A</strong>: CarviciM is targeted at users who can type fast. The commands can be executed faster than with a mouse if you are fast typer.</p>
+</div>
+<div class="paragraph">
+<p><strong>Q</strong>: I want to be able to view an employee&#8217;s schedule on a calendar so that I can better allocate jobs. How can I do that?
+<strong>A</strong>: We hear you. We are currently working on this feature, and it will be one of the new features in CarviciM 2.0. Do watch out for the update!</p>
+</div>
+<div class="paragraph">
+<p><strong>Q</strong>: The problem that I am facing is not listed here. What can I do?
+<strong>A</strong>: Don&#8217;t worry, simply drop us an email at <em>carvicim@gmail.com</em> and we will respond to you shortly.</p>
 </div>
 </div>
 </div>
@@ -1854,7 +1888,7 @@ There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 10:59:44 UTC
+Last updated 2018-04-15 11:05:49 UTC
 </div>
 </div>
 </body>

@@ -145,7 +145,7 @@
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>To reverse an undoable command that was executed by mistake, you can use this command to restore CarviciM to the state before the execution of that command.<br>
+<p>Nobody&#8217;s perfect. To reverse an undoable command that was executed by mistake, use this command to restore CarviciM to the state before the execution of that command:<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -284,7 +284,7 @@ You will see that the same employee entry is removed from the employee list pane
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/LoginCommand_SeqDiagram.png" alt="LoginCommand SeqDiagram" width="550">
+<img src="../images/LoginCommand_SeqDiagram.PNG" alt="LoginCommand SeqDiagram" width="550">
 </div>
 <div class="title">Figure 1. Login sequence diagram</div>
 </div>
@@ -325,12 +325,31 @@ You will see that the same employee entry is removed from the employee list pane
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/EmailCommand_SeqDiagram.png" alt="EmailCommand SeqDiagram" width="550">
+<img src="../images/EmailCommand_SeqDiagram.PNG" alt="EmailCommand SeqDiagram" width="550">
 </div>
 <div class="title">Figure 2. Email sequence diagram</div>
 </div>
 <div class="paragraph">
-<p>To explain the sequence of events in greater detail, when the user enters the <code>email j/JOB_NUMBER</code> command, a <code>UniqueEmployeeList</code> of <code>JOB_NUMBER</code> job is obtained from the <code>Job</code> object. Using a <code>for</code> loop, an email is sent to each employee in the <code>UniqueEmployeeList</code>. To craft an email, an empty <code>Properties</code> list is created, which is used to create an email <code>Session</code>. A <code>MimeMessage</code>, a class in the <code>javax.mail.internet</code> package is created using that <code>Session</code>. The body of the <code>MimeMessage</code> contains details extracted from the particular <code>Job</code>, and is then encoded using <a href="https://en.wikipedia.org/wiki/Base64">base64url</a> and repackaged into a <code>Message</code> by setting the value of the <code>raw</code> property of the <code>Message</code> to the encoded <code>MimeMessage</code>. Finally, this <code>Message</code> is sent by making a call to <code>messages.send</code>.</p>
+<p>To explain the sequence of events in greater detail, when the user enters the <code>email j/JOB_NUMBER</code> command, a <code>UniqueEmployeeList</code> of <code>JOB_NUMBER</code> job is obtained from the <code>Job</code> object. Using a <code>for</code> loop, an email is sent to each employee in the <code>UniqueEmployeeList</code>.</p>
+</div>
+<div class="paragraph">
+<p>To craft an email, an empty <code>Properties</code> list is created, which is used to create an email <code>Session</code>. A <code>MimeMessage</code>, a class in the <code>javax.mail.internet</code> package is created using that <code>Session</code>. The body of the <code>MimeMessage</code> contains details extracted from the particular <code>Job</code>, and is then encoded using <a href="https://en.wikipedia.org/wiki/Base64">base64url</a> and repackaged into a <code>Message</code> by setting the value of the <code>raw</code> property of the <code>Message</code> to the encoded <code>MimeMessage</code>. How the repacking is done is shown in the code snippet below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> Message createMessageWithEmail(MimeMessage emailContent) <span class="directive">throws</span> MessagingException, <span class="exception">IOException</span> {
+    <span class="predefined-type">ByteArrayOutputStream</span> buffer = <span class="keyword">new</span> <span class="predefined-type">ByteArrayOutputStream</span>();
+    emailContent.writeTo(buffer);
+    <span class="type">byte</span><span class="type">[]</span> bytes = buffer.toByteArray();
+    <span class="predefined-type">String</span> encodedEmail = Base64.encodeBase64URLSafeString(bytes);
+    Message message = <span class="keyword">new</span> Message();
+    message.setRaw(encodedEmail);
+    <span class="keyword">return</span> message;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, this <code>Message</code> is sent by making a call to <code>messages.send</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
@@ -407,7 +426,7 @@ You will see that the same employee entry is removed from the employee list pane
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 10:59:44 UTC
+Last updated 2018-04-15 11:05:49 UTC
 </div>
 </div>
 </body>
