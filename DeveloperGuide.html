@@ -48,8 +48,8 @@
 <li><a href="#add-job-feature">4.1. Add job feature</a></li>
 <li><a href="#close-job-feature">4.2. Close job feature</a></li>
 <li><a href="#job-remark-feature">4.3. Job remark feature</a></li>
-<li><a href="#set-command-feature">4.4. Set command feature</a></li>
-<li><a href="#import-save-feature">4.5. Import/Save feature</a></li>
+<li><a href="#supporting-setting-of-command-word-alias-feature">4.4. Supporting setting of command word alias feature</a></li>
+<li><a href="#import-feature">4.5. Import feature</a></li>
 <li><a href="#theme-setting-feature">4.6. Theme setting feature</a></li>
 <li><a href="#find-by-tag-feature">4.7. Find by tag feature</a></li>
 <li><a href="#sort-feature">4.8. Sort feature</a></li>
@@ -95,17 +95,6 @@
 </li>
 <li><a href="#product-scope">Appendix B: Product Scope</a></li>
 <li><a href="#user-stories">Appendix C: User Stories</a></li>
-<li><a href="#use-cases">Appendix D: Use Cases</a></li>
-<li><a href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></li>
-<li><a href="#glossary">Appendix F: Glossary</a></li>
-<li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
-<ul class="sectlevel2">
-<li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-employee">G.2. Deleting a employee</a></li>
-<li><a href="#closing-a-job">G.3. Closing a job</a></li>
-<li><a href="#adding-remark-to-a-job">G.4. Adding remark to a job</a></li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
@@ -1159,17 +1148,116 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 </div>
 </div>
 <div class="sect2">
-<h3 id="set-command-feature"><a class="link" href="#set-command-feature">4.4. Set command feature</a></h3>
+<h3 id="supporting-setting-of-command-word-alias-feature"><a class="link" href="#supporting-setting-of-command-word-alias-feature">4.4. Supporting setting of command word alias feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">4.4.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
-<img src="images/SetCommandObjectDiagram.png" alt="SetCommandObjectDiagram" width="800">
+<img src="images/SetCommandClassDiagram.png" alt="SetCommandClassDiagram" width="400">
 </div>
-<div class="title">Figure 12. Object Diagram of CommandWords at runtime</div>
+<div class="title">Figure 12. Class Diagram with CommandWords</div>
 </div>
 <div class="paragraph">
-<p><code>SetCommand</code> keeps 2 lists of command words:</p>
+<p>The user can set a command word alias using the command <code>set</code>, specifying the old command
+word and new command word. This is how <code>set</code> command handles user requests using <code>currentWord</code>
+and <code>newWord</code> respectively.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult executeUndoableCommand() <span class="directive">throws</span> CommandException {
+        requireNonNull(model);
+        <span class="keyword">try</span> {
+            model.getCommandWords().setCommandWord(currentWord, newWord);
+        } <span class="keyword">catch</span> (CommandWordException e) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(e.getMessage());
+        }
+        <span class="keyword">if</span> (CommandWords.isDefaultCommandWord(currentWord)) {
+            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(getMessageDefaultSuccess());
+        } <span class="keyword">else</span> <span class="keyword">if</span> (CommandWords.isDefaultCommandWord(newWord)) {
+            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(getMessageRemoveAliasSuccess());
+        }
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(getMessageAliasSuccess());
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The command splits into 3 cases:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When <code>currentWord</code> is a command word and <code>newWord</code> is an alias, <code>newWord</code> will be set as alias
+for command specified by <code>currentWord</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">CommandWords.isDefaultCommandWord(currentWord)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>When <code>newWord</code> is a command word and <code>currentWord</code> is an alias, <code>currentWord</code> will be removed
+and the alias for command specified by <code>newWord</code> will be reset</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">CommandWords.isDefaultCommandWord(newWord)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>If <code>currentWord</code> and <code>newWord</code> are both new alias, the old alias will be replaced by the new alias.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The command will fail if one of the following occurs</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>currentWord</code> and <code>newWord</code> is the same</p>
+</li>
+<li>
+<p><code>newWord</code> overwrites another alias or command word</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> isCommandWordsValid(<span class="predefined-type">String</span> currentWord, <span class="predefined-type">String</span> newWord) <span class="directive">throws</span> CommandWordException {
+        <span class="keyword">if</span> (currentWord.equals(newWord)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandWordException(getMessageNoChange());
+        }
+        <span class="keyword">if</span> (isDefaultCommandWord(newWord)
+                &amp;&amp; !commands.get(newWord).equals(currentWord)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandWordException(getMessageOverwriteDefault(newWord));
+        }
+        <span class="keyword">if</span> (commands.containsValue(newWord)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandWordException(getMessageUsed(newWord));
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>currentWord</code> is not an existing alias or command word. This is checked by iterating through commands.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>set</code> command makes use of class <code>CommandWords</code> to manage the custom command words.
+<code>SetCommand</code> keeps 2 lists of command words:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1177,24 +1265,31 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <p>The default command words stored as a class level reference <code>COMMANDS</code></p>
 </li>
 <li>
-<p>The custom user command words stored as a field <code>commands</code> in the object
-Both are managed by the class <code>CommandWords</code>.</p>
+<p>The command word aliases are stored as a field <code>commands</code> in the object</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>,
-as it is required to parse commands in <code>AddressBookParser</code>.</p>
+<p>Both are managed by the class <code>CommandWords</code>.</p>
 </div>
 <div class="paragraph">
-<p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
+<p>CarvicimParser makes a reference to <code>CommandWords</code> to facilitate retrieval of alias command words.
+However, <code>CommandWords</code> resides in <code>Model</code> (Figure 12). This is to facilitate the saving of data.</p>
 </div>
 <div class="paragraph">
-<p>CarviciMParser makes a reference to CommandWords.
-However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component (figure 12).
-This is to facilitate the saving of data. CommandWords also has a method <code>checkIntegrity()</code>,
-which ensures that object command words are 1 to 1 with class command words.
-This allows forward compatibility, and protects against data corruption to some extent.</p>
+<p>CommandWords also has a method <code>checkIntegrity()</code>, which ensures that object command words are 1 to 1 with class command words.
+This allows forward compatibility when new command words are introduced, and old ones removed,
+and protects against data corruption to some extent.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SetCommandSequenceDiagram.png" alt="SetCommandSequenceDiagram" width="800">
+</div>
+<div class="title">Figure 13. Class Diagram with CommandWords</div>
+</div>
+<div class="paragraph">
+<p>At runtime, CarvicimParser checks if the command word provided by the user matches any of the alias before proceeding
+parsing a command, as shown in Figure 13.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1208,23 +1303,24 @@ This allows forward compatibility, and protects against data corruption to some 
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Single Responsibility Principle is maintained as custom command words in <code>CommandWords</code> is a user preference.</p>
+<p>Pros: Single Responsibility Principle is maintained as custom command words in <code>CommandWords</code> is a user preference.
+CommandWords is also Serializable, which makes it compatible with <code>JsonUserPrefsStorage</code>.</p>
 </li>
 <li>
-<p>Cons: More coupling is required for the AddressBook to retrieve the custom command words.</p>
+<p>Cons: <code>CommandWords</code> is now coupled with <code>UserPrefs</code></p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Place <code>CommandWords</code> in <code>AddressBook</code></p>
+<p><em>Alternative:</em> Place <code>CommandWords</code> into a separate Storage class</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Direct access to custom words in commands.</p>
+<p>Pros: Reduced coupling.</p>
 </li>
 <li>
-<p>Cons: Single Responsibility Principle will be violated.</p>
+<p>Cons: More files will be created in the application directory, making it more cluttered and cumbersome to backup.</p>
 </li>
 </ul>
 </div>
@@ -1237,27 +1333,27 @@ This allows forward compatibility, and protects against data corruption to some 
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Provide direct access to <code>CommandWords</code> when more details are needed and keep minimal <a href="#api">API</a> on <code>ModelManager</code>.</p>
+<p><strong>Current choice:</strong> Create getters and setters and provide a copy of <code>CommandWords</code> when more detail is needed.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to implement, and is neat.</p>
+<p>Pros: Easy to enforce rules on the changing of the alias in <code>CommandWords</code>.</p>
 </li>
 <li>
-<p>Cons: Accidental modification can lead to bugs.</p>
+<p>Cons: Need to modify getters and setters to change the implementation of <code>CommandWords</code>.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> <code>ModelManager</code> and member variables gets access and provides <a href="#api">API</a> to access <code>CommandWords</code>.</p>
+<p><em>Alternative:</em> Create <code>CommandWords</code> like an augmented <code>HashMap</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Write protection.</p>
+<p>Pros: Minimal new <a href="#api">APIs</a> are required, and flexibility is given to classes accessing <code>CommandWords</code>.</p>
 </li>
 <li>
-<p>Cons: <code>CommandWords</code> is frequently accessed, so many more <a href="#api">APIs</a> are required.</p>
+<p>Cons: Difficult to enforce rules, breaking the rules of mapped words can lead to bugs.</p>
 </li>
 </ul>
 </div>
@@ -1277,20 +1373,21 @@ This allows forward compatibility, and protects against data corruption to some 
 <p>Pros: Easier to maintain the Open-Closed Principle, also follows the Single Responsibility Principle.</p>
 </li>
 <li>
-<p>Cons: Increased coupling.</p>
+<p>Cons: Command words have to be explicitly declared under class reference to support alias</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Store the default list in <code>Commands</code>.</p>
+<p><em>Alternative:</em> Store the default list in <code>Command</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Reduced coupling.</p>
+<p>Pros: <code>Command</code> is the super class of all commands, a method to enforce declaration of the command word
+can be done easily.</p>
 </li>
 <li>
-<p>Cons: <code>Commands</code> is an abstract class, it is not appropriate to reference class variables.</p>
+<p>Cons: <code>Command</code> is an abstract class, it is not appropriate to reference class variables.</p>
 </li>
 </ul>
 </div>
@@ -1301,14 +1398,19 @@ This allows forward compatibility, and protects against data corruption to some 
 </div>
 </div>
 <div class="sect2">
-<h3 id="import-save-feature"><a class="link" href="#import-save-feature">4.5. Import/Save feature</a></h3>
+<h3 id="import-feature"><a class="link" href="#import-feature">4.5. Import feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">4.5.1. Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/SessionComponentClassDiagram.png" alt="SessionComponentClassDiagram" width="800">
 </div>
-<div class="title">Figure 13. Object Diagram of <code>session</code> component</div>
+<div class="title">Figure 14. Class Diagram of <code>session</code> component</div>
+</div>
+<div class="paragraph">
+<p><code>ImportSession</code> resides in the <code>Session</code> component in the <code>Storage</code> component as shown above. The
+<code>Session</code> component is responsible for processing excel files, as well as keeping the state of the excel
+files during runtime, in the form of <code>SessionData</code>.</p>
 </div>
 <div class="paragraph">
 <p><code>ImportSession</code> uses a Singleton design pattern. It is responsible for initializing and closing the session.
@@ -1333,24 +1435,22 @@ with a timestamp added to the back of the filename.</p>
 </div>
 <div class="paragraph">
 <p><code>ImportSession</code> is designed to be stateless on its own, with all data stored in <code>SessionData</code>. This helps to
-support <code>UndoableCommand</code>. Currently, <code>SessionData</code> is not persistent in the event of a crash.</p>
-</div>
-<div class="paragraph">
-<p>The flow of using <code>ImportSession</code> is as follows:</p>
+support <code>UndoableCommand</code>.
+The flow of using <code>ImportSession</code> is as follows:</p>
 </div>
 <div class="sect4">
 <h5 id="loading-a-file-into-code-importsession-code"><a class="link" href="#loading-a-file-into-code-importsession-code">Loading a file into <code>ImportSession</code></a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Figure 14 below shows the process of initializing ImportSession. On the <code>import</code> command,
+<p>Figure 15 below shows the process of initializing ImportSession. On the <code>import</code> command,
 <code>getInstance</code> is used to retrieve the <code>importSession</code> instance, before it calls
 <code>initialize(fileName)</code>. A new <code>SheetParser</code> is created to populate <code>sessionData</code> with excel sheet data
 as shown in Figure 11, which comes as:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>SheetWithHeaderField</code>: augmented <code>Sheet</code> that provides API to indicate approval status and
+<p><code>SheetWithHeaderField</code>: Augmented <code>Sheet</code> that provides API to indicate approval status and
 write comments.</p>
 </li>
 <li>
@@ -1360,7 +1460,7 @@ write comments.</p>
 <div class="content">
 <img src="images/sessionInitializationSequenceDiagram.png" alt="sessionInitializationSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 14. Sequence Diagram of <code>ImportSession</code> initialization</div>
+<div class="title">Figure 15. Sequence Diagram of <code>ImportSession</code> initialization</div>
 </div>
 </li>
 </ol>
@@ -1374,7 +1474,7 @@ write comments.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Figure 15 below shows the process of reviewing job entries in an import session. On the <code>review</code>
+<p>Figure 16 below shows the process of reviewing job entries in an import session. On the <code>review</code>
 command, <code>sessionData</code> updates the relevant <code>jobEntry</code> and retrieves the sheet and row number,
 which is used to update <code>sheetWithHeaderFields</code>. Upon reviewing a job, CarviciM will add the job and
 any employees not present in the application.</p>
@@ -1382,7 +1482,7 @@ any employees not present in the application.</p>
 <div class="content">
 <img src="images/sessionReviewSequenceDiagram.png" alt="sessionReviewSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 15. Sequence Digram of <code>ImportSession</code> during the reviewing of a job</div>
+<div class="title">Figure 16. Sequence Digram of <code>ImportSession</code> during the reviewing of a job</div>
 </div>
 </li>
 </ul>
@@ -1391,7 +1491,7 @@ any employees not present in the application.</p>
 <div class="sect4">
 <h5 id="saving-feedback-from-an-code-importsession-code"><a class="link" href="#saving-feedback-from-an-code-importsession-code">Saving feedback from an <code>ImportSession</code></a></h5>
 <div class="paragraph">
-<p><code>SessionData</code> autosaves the comments to an excel file with -comments.xls or -comments.xlsx appended,
+<p><code>SessionData</code> autosaves the comments to an excel file with the same file name and <code>-comments.xls</code> or <code>-comments.xlsx</code> appended,
 in the same directory.</p>
 </div>
 </div>
@@ -1403,18 +1503,20 @@ in the same directory.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Add the previous instance of <code>sessionData</code> when setting data for <code>Command</code>, with a
-<code>SaveFileStack</code> as shown in Figure 11. Load this <code>sessionData</code> on <code>undo</code> or <code>redo</code> command.</p>
+<p><strong>Current choice:</strong> Save a copy of the previous instance of <code>sessionData</code> using <code>createCopy()</code> whenever an
+<code>UndoableCommand</code> is executed, then load the previous instance on undo. Data in the copy will be written to
+a <code>.temp</code> file, with a timestamp prepended to its name to make it unique. Most of the <code>.temp</code> files will be
+wiped on application exit.</p>
 <div class="ulist">
 <ul>
 <li>
 <p>Pros: <code>sessionData</code> stores data for <code>importSession</code>, making it appropriate to be used as data in <code>undo</code>
-and <code>redo</code>. Modification is only limited to <code>UndoableCommand</code>. Single Responsibility Principle is maintained,
-as the storage of save file locations is limited to <code>SaveFileStack</code>.</p>
+and <code>redo</code>. Modification is only limited to <code>UndoableCommand</code>. Code for <code>undo</code> can be reused for any commands that
+affect <code>sessionData</code> in the future, respecting Open Closed Principle.</p>
 </li>
 <li>
-<p>Cons: <code>sessionData</code> will have to store the boolean <code>initialized</code> in <code>sessionData</code> so that it will
-stay up-to-date with the <code>UndoRedoStack</code>.</p>
+<p>Cons: IOException still has to be handled in <code>sessionData</code> on undo. <code>undo</code> and <code>redo</code> can fail now because of IOException and they have to be modified. <code>.temp</code> files
+can also cause home folder to bloat in size during runtime after many commands are entered.</p>
 </li>
 </ul>
 </div>
@@ -1424,11 +1526,12 @@ stay up-to-date with the <code>UndoRedoStack</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Open Closed Principle is respected, there is no need to modify <code>UndoableCommand</code>.</p>
+<p>Pros: <code>ImportSession</code> can effectively handle <code>undo</code> and <code>redo</code> on its own without additional dependencies.
+Open Closed Principle is respected, there is no need to modify <code>UndoableCommand</code>.</p>
 </li>
 <li>
-<p>Cons: Commands that modify <code>sessionData</code> have to be written differently from other commands to support
-<code>undo</code> and <code>redo</code>. The delimiter rule is also violated as <code>importSession</code> is unnecessarily involved.</p>
+<p>Cons: Difficult to coordinate with <code>UndoRedoStack</code> as jobs and employees in <code>model</code> are also affected. IOExceptions
+thrown also need to be handled, requiring <code>UndoableCommand</code> to be modified for handling of Exceptions.</p>
 </li>
 </ul>
 </div>
@@ -1437,7 +1540,7 @@ stay up-to-date with the <code>UndoRedoStack</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-supporting-mass-add-methods-addjobs-addmissingemployees"><a class="link" href="#aspect-supporting-mass-add-methods-addjobs-addmissingemployees">Aspect: Supporting mass add methods addJobs/addMissingEmployees</a></h5>
+<h5 id="aspect-supporting-mass-add-method-addjobsandnewemployees"><a class="link" href="#aspect-supporting-mass-add-method-addjobsandnewemployees">Aspect: Supporting mass add method addJobsAndNewEmployees</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1455,15 +1558,15 @@ behavior of <code>Model</code>.</p>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Add the methods to <code>ImportSession</code></p>
+<p><em>Alternative:</em> Add the methods to an abstract <code>ReviewCommand</code> and inherit the methods for <code>AcceptAll</code>/<code>RejectAll</code> commands.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: The behavior of these methods can be tailored specifically to <code>ImportSession</code>.</p>
+<p>Pros: The behavior of these methods can be tailored specifically to <code>AcceptAll</code>/<code>RejectAll</code> commands.</p>
 </li>
 <li>
-<p>Cons: Unnecessary coupling between <code>Model</code> and <code>ImportSession</code> when <code>Command</code> is already coupled to <code>Model</code>.
-The Single Responsibility Principle is also violated.</p>
+<p>Cons: Modifying the implementation of <code>Model</code> may affect the behavior of <code>ReviewCommand</code> without knowing, leading to
+potential regressions.</p>
 </li>
 </ul>
 </div>
@@ -1472,32 +1575,104 @@ The Single Responsibility Principle is also violated.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-persistent-data"><a class="link" href="#aspect-persistent-data">Aspect: Persistent Data</a></h5>
+<h5 id="aspect-reading-of-first-row-headers-from-excel-files"><a class="link" href="#aspect-reading-of-first-row-headers-from-excel-files">Aspect: Reading of first row headers from excel files</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Keep all data from <code>ImportSession</code> on <code>sessionData</code> and use it to initialize on startup.</p>
+<p><strong>Current choice:</strong> Allow compulsory and optional fields, with variable number of columns and variable order.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: <code>ImportSession</code> gets to stay as a <code>Singleton</code>, preventing confusion.</p>
+<p>Pros: Flexible on format of imported excel files. Also allows future expansion of single column fields.</p>
 </li>
 <li>
-<p>Cons: There will be increased coupling between <code>Session</code> and <code>Storage</code>.</p>
+<p>Cons: User may not appreciate the flexibility if he or she can enforce the format of the excel files received.
+Flexibility provided is not enough for unknown headers.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Combine <code>ImportSession</code> and <code>SessionData</code> into 1 single class and store
-it directly.</p>
+<p><em>Alternative:</em> Fix the format of the headers.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: <code>ImportSession</code> can be directly initialized on startup and coupling is reduced.</p>
+<p>Pros: Confusion can be reduced, importing errors can also be minimized.</p>
 </li>
 <li>
-<p>Cons: Confusion may occur due to allowing more than one <code>ImportSession</code>.</p>
+<p>Cons: Users cannot further customize job entries on import with optional fields, optional field data will be lost.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-reading-of-job-entries-from-excel-files"><a class="link" href="#aspect-reading-of-job-entries-from-excel-files">Aspect: Reading of job entries from excel files</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Find the first complete job entry. Subsequently, whenever the next job entry is read, if there
+are empty fields, take those fields from the previous job entry. Missing fields will be added to remarks and comments.
+Repeat until there are no job entries in the file.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Allows excel sheet providers to save time on filling reused data between adjacent job entries.</p>
+</li>
+<li>
+<p>Cons: Unintentional blanks may result in job entries with wrong data being imported, requiring the user to look
+through the remarks of the imported job entries.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Only import complete job entries</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Incomplete job entries will not be errorneously imported into CarviciM.</p>
+</li>
+<li>
+<p>Cons: User will not be able to review incomplete job entries in the CarviciM as only complete jobs are imported.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-uniqueness-of-job-entries"><a class="link" href="#aspect-uniqueness-of-job-entries">Aspect: Uniqueness of job entries</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Use <code>jobNumber</code> in the application on import. To prevent reimporting the same excel
+file twice, a file with the same name and a <code>-comments.xls</code> or <code>-comments.xlsx</code> appended, and every subsequent import reads from this file if</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Job entry number is controlled by CarviciM and can stay unique. Job entries from excel files can
+also stay unique if there are no duplicates within or across excel files.</p>
+</li>
+<li>
+<p>Cons: User might import the same file if the <code>-comments.xls</code> or <code>-comments.xlsx gets misplaced, and become confused.
+The `jobNumber</code> associated with the same imported job might also change on every different import.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> Use a hash function to decide the <code>jobNumber</code> of a job. When there is a collision, add a suffix to make the <code>jobNumber</code> unique.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: <code>jobNumber</code> stays the same on import, independent of when it is imported.</p>
+</li>
+<li>
+<p>Cons: <code>JobNumber</code> has to be modified to support this implementation.</p>
 </li>
 </ul>
 </div>
@@ -1739,7 +1914,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/SortSequenceDiagram.png" alt="SortSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 16. <code>SortCommand</code> sequence diagram</div>
+<div class="title">Figure 17. <code>SortCommand</code> sequence diagram</div>
 </div>
 </div>
 <div class="sect3">
@@ -1869,10 +2044,10 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <div class="content">
 <img src="images/ArchiveStorageComponentDiagram.png" alt="ArchiveStorageComponentDiagram" width="800">
 </div>
-<div class="title">Figure 17. <code>ArchiveCommand</code> Storage Component Diagram</div>
+<div class="title">Figure 18. <code>ArchiveCommand</code> Storage Component Diagram</div>
 </div>
 <div class="paragraph">
-<p>As seen from Figure 17, <code>XmlSerializableArchiveJob</code> is used to serialize the archive job entries into a xml format based on <code>XmlAdaptedJob</code>.
+<p>As seen from Figure 18, <code>XmlSerializableArchiveJob</code> is used to serialize the archive job entries into a xml format based on <code>XmlAdaptedJob</code>.
 The access of information to the archive job xml file is control by <code>XmlArchiveJobStorage</code>.
 The <code>StorageManager</code> manages both the storage of Carvicim and archive data.</p>
 </div>
@@ -1899,7 +2074,7 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 <div class="content">
 <img src="images/ArchiveSequenceDiagram.png" alt="ArchiveSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 18. <code>ArchiveCommand</code> sequence diagram</div>
+<div class="title">Figure 19. <code>ArchiveCommand</code> sequence diagram</div>
 </div>
 </div>
 <div class="sect3">
@@ -2038,7 +2213,7 @@ the number of jobs assigned to each employee.</p>
 <div class="content">
 <img src="images/AnalyseSequenceDiagram.png" alt="AnalyseSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 19. <code>AnalyseCommand</code> sequence diagram</div>
+<div class="title">Figure 20. <code>AnalyseCommand</code> sequence diagram</div>
 </div>
 </div>
 <div class="sect3">
@@ -2092,7 +2267,7 @@ the number of jobs assigned to each employee.</p>
 <div class="content">
 <img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
-<div class="title">Figure 20. Inheritance diagram for commands</div>
+<div class="title">Figure 21. Inheritance diagram for commands</div>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram above, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -2149,7 +2324,7 @@ the number of jobs assigned to each employee.</p>
 <div class="content">
 <img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
 </div>
-<div class="title">Figure 21. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
+<div class="title">Figure 22. Step 1: <code>delete 5</code> command pushed onto the <code>undoStack</code></div>
 </div>
 <div class="olist none">
 <ol class="none">
@@ -2162,7 +2337,7 @@ the number of jobs assigned to each employee.</p>
 <div class="content">
 <img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
-<div class="title">Figure 22. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
+<div class="title">Figure 23. Step 2: execute <code>add n/David &#8230;&#8203;</code></div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -2194,7 +2369,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <div class="content">
 <img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
-<div class="title">Figure 23. Step 3: <code>undo</code> action</div>
+<div class="title">Figure 24. Step 3: <code>undo</code> action</div>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -2219,7 +2394,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 24. <code>undo</code> sequence diagram</div>
+<div class="title">Figure 25. <code>undo</code> sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code>redo</code> does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -2247,7 +2422,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
 </div>
-<div class="title">Figure 25. <code>clear</code> pushed into <code>undoStack</code></div>
+<div class="title">Figure 26. <code>clear</code> pushed into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
@@ -2256,7 +2431,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
-<div class="title">Figure 26. <code>list</code> not added into <code>undoStack</code></div>
+<div class="title">Figure 27. <code>list</code> not added into <code>undoStack</code></div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -2265,7 +2440,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
 </div>
-<div class="title">Figure 27. Stack activity diagram summary</div>
+<div class="title">Figure 28. Stack activity diagram summary</div>
 </div>
 </div>
 <div class="sect3">
@@ -2419,7 +2594,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/LoginCommand_SeqDiagram.PNG" alt="LoginCommand SeqDiagram" width="550">
 </div>
-<div class="title">Figure 28. Login sequence diagram</div>
+<div class="title">Figure 29. Login sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>In the <code>authorize</code> method, a <code>GoogleAuthorizationCodeFlow</code> object is created to build the authorization code flow and trigger user authorization request. It then manages and persists user <code>Credential</code> by saving it in the file path <code>./src/main/resources/.credentials/carvicim-gmail</code>. For more details, look at the the code snippet below.</p>
@@ -2460,7 +2635,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/EmailCommand_SeqDiagram.PNG" alt="EmailCommand SeqDiagram" width="550">
 </div>
-<div class="title">Figure 29. Email sequence diagram</div>
+<div class="title">Figure 30. Email sequence diagram</div>
 </div>
 <div class="paragraph">
 <p>To explain the sequence of events in greater detail, when the user enters the <code>email j/JOB_NUMBER</code> command, a <code>UniqueEmployeeList</code> of <code>JOB_NUMBER</code> job is obtained from the <code>Job</code> object. Using a <code>for</code> loop, an email is sent to each employee in the <code>UniqueEmployeeList</code>.</p>
@@ -2678,7 +2853,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 30. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 31. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -4154,7 +4329,7 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">accept and reject imported changes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">have control when over bulk imports</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">have control over bulk imports</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
@@ -4225,1034 +4400,401 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user who likes customization</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">change the command words of the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set alternate command words in the application</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">improve ease of use</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">export completed jobs to other formats</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">print out all the completed job entries and view it with a better program</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">print out all the completed job entries and view it with a better program</p>
+<p class="tableblock"><em>{More to be added}</em></p>
+<p class="tableblock">[appendix]
+== Use Cases</p>
+<p class="tableblock">(For all use cases below, the <strong>System</strong> is the <code>CarviciM</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+<p class="tableblock">[discrete]
+=== Use case: Add employee</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User requests to add an employee in the list.
+2.  CarviciM adds the employee and updates the list.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">* 2a. The employee details are not valid.
++
+[none]
+<strong> 2a1. CarviciM shows an error message.
++
+Use case resumes at step 1.</p>
+<p class="tableblock">[discrete]
+=== Use case: Delete employee</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User requests to list employees.
+2.  CarviciM shows a list of employees.
+3.  User requests to delete a specific employee in the list.
+4.  CarviciM deletes the employee and updates the list.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 2a. The list is empty.
++
+Use case ends.</p>
+<p class="tableblock">* 3a. The given index is invalid.
++
+[none]
+</strong> 3a1. CarviciM shows an error message.
++
+Use case resumes at step 2.</p>
+<p class="tableblock">[none]
+* 3b. The given employee is assigned to an ongoing job.
++
+[none]
+<strong> 3b1. CarviciM shows an error message.
++
+Use case resumes at step 3.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Find an employee by name</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User requests to find an employee by name.
+2.  CarviciM shows a list of employees whose name contain the provided name.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 2a. The list is empty.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Sort employee list</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User request to sort employee list.
+2.  CarviciM sorts employee list alphabetically according to their names.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Add job entry</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User requests to list the employees.
+2.  CarviciM shows a list of employees.
+3.  User requests to add a job entry.
+4.  CarviciM adds the job entry.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 2a. The list of employees is empty.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 3a. Format of details is invalid.
++
+[none]
+</strong> 3a1. CarviciM shows an error message.
++
+Use case resumes at step 3.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 3b. The given employee index is invalid.
++
+[none]
+<strong> 3b1. CarviciM shows an error message.
++
+Use case resumes at step 3.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Add remarks to an ongoing job entry</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User selects a job entry.
+2.  CarviciM shows logged remarks in the job.
+3.  User requests to log a remark.
+4.  CarviciM reflects the added remark at end of log.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 2a. The remarks list is empty.
++
+[none]
+</strong> 2a1. CarviciM shows an empty list.
++
+Use case resumes at step 3.</p>
+<p class="tableblock">* 3a. The given remark is empty.
++
+Use case resumes at step 3.</p>
+<p class="tableblock">[discrete]
+=== Use case: Close job entry</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User requests to list the job entries.
+2.  CarviciM shows a list of job entries.
+3.  User requests to close a specific job entry in the list.
+4.  CarviciM close the job entry.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 2a. The list of jobs is empty.
++
+Use case ends.</p>
+<p class="tableblock">* 3a. The given job id is invalid.
++
+[none]
+<strong> 3a1. CarviciM shows an error message.
++
+Use case resumes at step 2.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Import job entries</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User specifies the path to a file to import.
+2.  CarviciM shows the user the new job entries.
+3.  User approves the new job entries.
+4.  CarviciM imports the approved entries.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 1a. The file specified in the path is invalid or does not have read permission.
+[none]
+</strong> 1a1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 1b. The file specified in the path has formatting errors.
+[none]
+<strong> 1b1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 2a. The file contains conflict job entries with the application data.
+[none]
+</strong> 2a1. CarviciM shows the users the conflicts.
+<strong> 2a2. The user reviews the conflicts and chooses which copy to keep.
++
+Use case resumes at step 2.</p>
+<p class="tableblock">[none]
+* 3a. User rejects some job entries.
+[none]
+</strong> CarviciM discards rejected job entries while importing the remaining new job entries.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Export feedback for imported job entries</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User imports job entries from a file.
+2.    CarviciM imports the accepted new jobs.
+3.    User adds comments to reviewed new job entries.
+4.    User specifies path to export the comments.
+5.    CarviciM exports the comments of the reviewed new job entries.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 5a. CarviciM does not have write permission to file path.
+[none]
+<strong> 5a1. CarviciM shows an error message.
++
+Use case resumes at step 5.</p>
+<p class="tableblock">[discrete]
+=== Use case: Archiving of job entries</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User specifies the date range for archiving.
+2.  CarviciM extracts the closed job entries within the selected range and saves them to a new xml file.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 1a. The given date format is invalid.
+[none]
+</strong> 1a1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 1b. The given date range is invalid.
+[none]
+<strong> 1b1. CarviciM shows an error message.</p>
+<p class="tableblock">+
+Use case ends.</p>
+<p class="tableblock">[none]
+* 1c. No job entries found within selected date range.
+[none]
+</strong> 1c1. CarviciM shows an error message.</p>
+<p class="tableblock">+
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Analysing of job entries</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User requests to analyse the job entries.
+2.  CarviciM analyses the job entries within the current month and provides a summary of the job entries.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Tab auto-complete commands</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User types incomplete argument in command.
+2.  User presses tab key.
+3.  CarviciM completes the command.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 2a. Argument has more than one possible auto-complete.
++
+Use case resumes at step 1.</p>
+<p class="tableblock">[discrete]
+=== Use case: Customize the colour label of job status</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User specifies color label of a job status.
+2.  CarviciM updates the label colors displayed.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 1a. The label provided is not valid.
++
+[none]
+<strong> 1a1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 1b. The color provided is not valid.
++
+[none]
+</strong> 1b1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Set custom command word</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User specifies the old and new command word with set command.
+2.  CarviciM updates the command words.
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 1a. The old command word is not used.
+[none]
+<strong> 1a1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 1b. The new command word is already used for a different command.
+[none]
+</strong> 1b1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 1c. The new command word is a default command word for another command.
+[none]
+<strong> 1c1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[discrete]
+=== Use case: Set theme of application</p>
+<p class="tableblock"><strong>MSS</strong></p>
+<p class="tableblock">1.  User request to change theme.
+2.  CarviciM changes the theme
++
+Use case ends.</p>
+<p class="tableblock"><strong>Extensions</strong></p>
+<p class="tableblock">[none]
+* 1a. The list of theme is empty.
+[none]
+</strong> 1a1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock">[none]
+* 1b. The given theme index is invalid.
+[none]
+** 1b1. CarviciM shows an error message.
++
+Use case ends.</p>
+<p class="tableblock"><em>{More to be added}</em></p>
+<p class="tableblock">[appendix]
+== Non Functional Requirements</p>
+<p class="tableblock">*  Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.
+*  Should be able to hold up to 1000 employees without a noticeable sluggishness in performance for typical usage.
+*  Should be able to hold up to 10000 jobs without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should work on both 32-bit and 64-bit environments.
+*  Should have short and comprehensible English commands.
+*  Should be able to retain information in event of crash or force shutdown.
+*  Should respond to user command within 2 seconds.
+*  Should be usable by a novice who has never used an electronic job management app before.
+*  User interface should be intuitive enough for users who are not IT-savvy.
+*  View should fit the screen of any computer with minimum screen size of 1280 by 720 pixels.</p>
+<p class="tableblock"><em>{More to be added}</em></p>
+<p class="tableblock">[appendix]
+== Glossary</p>
+<p class="tableblock"><a id="mainstream-os"></a> Mainstream OS::
+Windows, Linux, Unix, OS-X</p>
+<p class="tableblock"><a id="api"></a>API::
+Application Programming Interface: a set of functions and procedures that allow the creation of applications which access the features or data of an operating system, application, or other service.</p>
+<p class="tableblock"><a id="alias"></a>Alias::
+An alternate name</p>
+<p class="tableblock"><a id="beta-testing"></a>Beta testing::
+Final stage of development testing, carried out by a party unconnected with the development process., usually users of the final product.</p>
+<p class="tableblock"><a id="dog-fooding"></a>Dog-fooding::
+Testing of a product before it is made available to customers</p>
+<p class="tableblock"><a id="javafx"></a>JavaFx::
+JavaFX is a software platform for creating and delivering desktop applications, as well as rich Internet applications that can run across a wide variety of devices.</p>
+<p class="tableblock"><a id="jdk"></a>JDK::
+Java Development Kit: an implementation of either one of the Java Platform, Standard Edition, Java Platform, Enterprise Edition, or Java Platform, Micro Edition platforms released by Oracle Corporation in the form of a binary product aimed at Java developers on Solaris, Linux, macOS or Windows. The JDK includes a private JVM and a few other resources to finish the development of a Java Application.</p>
+<p class="tableblock"><a id="pr"></a>PR::
+Pull Request</p>
+<p class="tableblock"><a id="slap"></a>SLAP::
+Single Layer of Abstraction Principle: extraction of methods, fields and constants to keep details at the same level in a method.</p>
+<p class="tableblock">[appendix]
+== Instructions for Manual Testing</p>
+<p class="tableblock">Given below are instructions to test the app manually.</p>
+<p class="tableblock">[NOTE]
+These instructions only provide a starting point for testers to work on; testers are expected to do more <em>exploratory</em> testing.</p>
+<p class="tableblock">=== Launch and Shutdown</p>
+<p class="tableblock">. Initial launch</p>
+<p class="tableblock">.. Download the jar file and copy into an empty folder
+.. Double-click the jar file<br>
+   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.</p>
+<p class="tableblock">. Saving window preferences</p>
+<p class="tableblock">.. Resize the window to an optimum size. Move the window to a different location. Close the window.
+.. Re-launch the app by double-clicking the jar file.<br>
+   Expected: The most recent window size and location is retained.</p>
+<p class="tableblock">=== Deleting a employee</p>
+<p class="tableblock">. Deleting an employee&#8217;s record while all employees are listed</p>
+<p class="tableblock">.. Prerequisites: List all employees using the <code>liste</code> command. Multiple employees in the list.
+.. Test case: <code>deletee 1</code><br>
+   Expected: First contact is deleted from the list. Details of the deleted contact is shown in the status message. Timestamp in the status bar is updated.
+.. Test case: <code>deletee 0</code><br>
+   Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: <code>deletee</code>, <code>deletee x</code> (where x is larger than the list size) <em>{give more}</em><br>
+   Expected: Similar to previous.</p>
+<p class="tableblock">=== Closing a job</p>
+<p class="tableblock">. Closing a job while all jobs are listed</p>
+<p class="tableblock">.. Prerequisites: List all ongoing jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.
+.. Test case: <code>closej j/1</code><br>
+   Expected: Job with job number 1 has its status change from "ongoing" to "closed". Details of the closed job shown in the status message. Job list shows updated job. Timestamp in the status bar is updated.
+.. Test case: <code>closej j/0</code><br>
+   Expected: No job is closed. Error details shown in the status message. Status bar remains the same.</p>
+<p class="tableblock">=== Adding remark to a job</p>
+<p class="tableblock">. Adding a remark to an ongoing job, while all ongoing jobs are listed</p>
+<p class="tableblock">.. Prerequisites: List all jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.
+.. Test case: <code>remark j/1 r/Urgent</code><br>
+   Expected: Remark "Urgent" added to job number 1. Details of remark added to job shown in the status message. Timestamp in the status bar is updated.
+.. Test case: <code>remark j/0 r/Urgent</code><br>
+   Expected: Remark not added to the specified job. Error details shown in the status message. Status bar remains the same.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="use-cases"><a class="link" href="#use-cases">Appendix D: Use Cases</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>(For all use cases below, the <strong>System</strong> is the <code>CarviciM</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
-</div>
-<h3 id="use-case-add-employee" class="discrete">Use case: Add employee</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to add an employee in the list.</p>
-</li>
-<li>
-<p>CarviciM adds the employee and updates the list.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>2a. The employee details are not valid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case resumes at step 1.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-delete-employee" class="discrete">Use case: Delete employee</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to list employees.</p>
-</li>
-<li>
-<p>CarviciM shows a list of employees.</p>
-</li>
-<li>
-<p>User requests to delete a specific employee in the list.</p>
-</li>
-<li>
-<p>CarviciM deletes the employee and updates the list.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The list is empty.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-<li>
-<p>3a. The given index is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case resumes at step 2.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b. The given employee is assigned to an ongoing job.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case resumes at step 3.</p>
-</div>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-find-an-employee-by-name" class="discrete">Use case: Find an employee by name</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to find an employee by name.</p>
-</li>
-<li>
-<p>CarviciM shows a list of employees whose name contain the provided name.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The list is empty.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-sort-employee-list" class="discrete">Use case: Sort employee list</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User request to sort employee list.</p>
-</li>
-<li>
-<p>CarviciM sorts employee list alphabetically according to their names.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<h3 id="use-case-add-job-entry" class="discrete">Use case: Add job entry</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to list the employees.</p>
-</li>
-<li>
-<p>CarviciM shows a list of employees.</p>
-</li>
-<li>
-<p>User requests to add a job entry.</p>
-</li>
-<li>
-<p>CarviciM adds the job entry.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The list of employees is empty.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a. Format of details is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case resumes at step 3.</p>
-</div>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b. The given employee index is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case resumes at step 3.</p>
-</div>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-add-remarks-to-an-ongoing-job-entry" class="discrete">Use case: Add remarks to an ongoing job entry</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User selects a job entry.</p>
-</li>
-<li>
-<p>CarviciM shows logged remarks in the job.</p>
-</li>
-<li>
-<p>User requests to log a remark.</p>
-</li>
-<li>
-<p>CarviciM reflects the added remark at end of log.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The remarks list is empty.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a1. CarviciM shows an empty list.</p>
-<div class="paragraph">
-<p>Use case resumes at step 3.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>3a. The given remark is empty.</p>
-<div class="paragraph">
-<p>Use case resumes at step 3.</p>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-close-job-entry" class="discrete">Use case: Close job entry</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to list the job entries.</p>
-</li>
-<li>
-<p>CarviciM shows a list of job entries.</p>
-</li>
-<li>
-<p>User requests to close a specific job entry in the list.</p>
-</li>
-<li>
-<p>CarviciM close the job entry.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The list of jobs is empty.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-<li>
-<p>3a. The given job id is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case resumes at step 2.</p>
-</div>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-import-job-entries" class="discrete">Use case: Import job entries</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User specifies the path to a file to import.</p>
-</li>
-<li>
-<p>CarviciM shows the user the new job entries.</p>
-</li>
-<li>
-<p>User approves the new job entries.</p>
-</li>
-<li>
-<p>CarviciM imports the approved entries.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. The file specified in the path is invalid or does not have read permission.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b. The file specified in the path has formatting errors.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The file contains conflict job entries with the application data.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a1. CarviciM shows the users the conflicts.</p>
-</li>
-<li>
-<p>2a2. The user reviews the conflicts and chooses which copy to keep.</p>
-<div class="paragraph">
-<p>Use case resumes at step 2.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a. User rejects some job entries.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>CarviciM discards rejected job entries while importing the remaining new job entries.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-export-feedback-for-imported-job-entries" class="discrete">Use case: Export feedback for imported job entries</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User imports job entries from a file.</p>
-</li>
-<li>
-<p>CarviciM imports the accepted new jobs.</p>
-</li>
-<li>
-<p>User adds comments to reviewed new job entries.</p>
-</li>
-<li>
-<p>User specifies path to export the comments.</p>
-</li>
-<li>
-<p>CarviciM exports the comments of the reviewed new job entries.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>5a. CarviciM does not have write permission to file path.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>5a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case resumes at step 5.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-archiving-of-job-entries" class="discrete">Use case: Archiving of job entries</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User specifies the date range for archiving.</p>
-</li>
-<li>
-<p>CarviciM extracts the closed job entries within the selected range and saves them to a new xml file.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. The given date format is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b. The given date range is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b1. CarviciM shows an error message.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1c. No job entries found within selected date range.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1c1. CarviciM shows an error message.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-analysing-of-job-entries" class="discrete">Use case: Analysing of job entries</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to analyse the job entries.</p>
-</li>
-<li>
-<p>CarviciM analyses the job entries within the current month and provides a summary of the job entries.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<h3 id="use-case-tab-auto-complete-commands" class="discrete">Use case: Tab auto-complete commands</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User types incomplete argument in command.</p>
-</li>
-<li>
-<p>User presses tab key.</p>
-</li>
-<li>
-<p>CarviciM completes the command.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. Argument has more than one possible auto-complete.</p>
-<div class="paragraph">
-<p>Use case resumes at step 1.</p>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-customize-the-colour-label-of-job-status" class="discrete">Use case: Customize the colour label of job status</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User specifies color label of a job status.</p>
-</li>
-<li>
-<p>CarviciM updates the label colors displayed.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. The label provided is not valid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b. The color provided is not valid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-set-custom-command-word" class="discrete">Use case: Set custom command word</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User specifies the old and new command word with set command.</p>
-</li>
-<li>
-<p>CarviciM updates the command words.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. The old command word is not used.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b. The new command word is already used for a different command.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1c. The new command word is a default command word for another command.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1c1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-set-theme-of-application" class="discrete">Use case: Set theme of application</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User request to change theme.</p>
-</li>
-<li>
-<p>CarviciM changes the theme</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a. The list of theme is empty.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b. The given theme index is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1b1. CarviciM shows an error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="non-functional-requirements"><a class="link" href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.</p>
-</li>
-<li>
-<p>Should be able to hold up to 1000 employees without a noticeable sluggishness in performance for typical usage.</p>
-</li>
-<li>
-<p>Should be able to hold up to 10000 jobs without a noticeable sluggishness in performance for typical usage.</p>
-</li>
-<li>
-<p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
-</li>
-<li>
-<p>Should work on both 32-bit and 64-bit environments.</p>
-</li>
-<li>
-<p>Should have short and comprehensible English commands.</p>
-</li>
-<li>
-<p>Should be able to retain information in event of crash or force shutdown.</p>
-</li>
-<li>
-<p>Should respond to user command within 2 seconds.</p>
-</li>
-<li>
-<p>Should be usable by a novice who has never used an electronic job management app before.</p>
-</li>
-<li>
-<p>User interface should be intuitive enough for users who are not IT-savvy.</p>
-</li>
-<li>
-<p>View should fit the screen of any computer with minimum screen size of 1280 by 720 pixels.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="glossary"><a class="link" href="#glossary">Appendix F: Glossary</a></h2>
-<div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1"><a id="mainstream-os"></a> Mainstream OS</dt>
-<dd>
-<p>Windows, Linux, Unix, OS-X</p>
-</dd>
-<dt class="hdlist1"><a id="api"></a>API</dt>
-<dd>
-<p>Application Programming Interface: a set of functions and procedures that allow the creation of applications which access the features or data of an operating system, application, or other service.</p>
-</dd>
-<dt class="hdlist1"><a id="alias"></a>Alias</dt>
-<dd>
-<p>An alternate name</p>
-</dd>
-<dt class="hdlist1"><a id="beta-testing"></a>Beta testing</dt>
-<dd>
-<p>Final stage of development testing, carried out by a party unconnected with the development process., usually users of the final product.</p>
-</dd>
-<dt class="hdlist1"><a id="dog-fooding"></a>Dog-fooding</dt>
-<dd>
-<p>Testing of a product before it is made available to customers</p>
-</dd>
-<dt class="hdlist1"><a id="javafx"></a>JavaFx</dt>
-<dd>
-<p>JavaFX is a software platform for creating and delivering desktop applications, as well as rich Internet applications that can run across a wide variety of devices.</p>
-</dd>
-<dt class="hdlist1"><a id="jdk"></a>JDK</dt>
-<dd>
-<p>Java Development Kit: an implementation of either one of the Java Platform, Standard Edition, Java Platform, Enterprise Edition, or Java Platform, Micro Edition platforms released by Oracle Corporation in the form of a binary product aimed at Java developers on Solaris, Linux, macOS or Windows. The JDK includes a private JVM and a few other resources to finish the development of a Java Application.</p>
-</dd>
-<dt class="hdlist1"><a id="pr"></a>PR</dt>
-<dd>
-<p>Pull Request</p>
-</dd>
-<dt class="hdlist1"><a id="slap"></a>SLAP</dt>
-<dd>
-<p>Single Layer of Abstraction Principle: extraction of methods, fields and constants to keep details at the same level in a method.</p>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Given below are instructions to test the app manually.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-These instructions only provide a starting point for testers to work on; testers are expected to do more <em>exploratory</em> testing.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="launch-and-shutdown"><a class="link" href="#launch-and-shutdown">G.1. Launch and Shutdown</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Initial launch</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Download the jar file and copy into an empty folder</p>
-</li>
-<li>
-<p>Double-click the jar file<br>
-Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Saving window preferences</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Resize the window to an optimum size. Move the window to a different location. Close the window.</p>
-</li>
-<li>
-<p>Re-launch the app by double-clicking the jar file.<br>
-Expected: The most recent window size and location is retained.</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="deleting-a-employee"><a class="link" href="#deleting-a-employee">G.2. Deleting a employee</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Deleting an employee&#8217;s record while all employees are listed</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Prerequisites: List all employees using the <code>liste</code> command. Multiple employees in the list.</p>
-</li>
-<li>
-<p>Test case: <code>deletee 1</code><br>
-Expected: First contact is deleted from the list. Details of the deleted contact is shown in the status message. Timestamp in the status bar is updated.</p>
-</li>
-<li>
-<p>Test case: <code>deletee 0</code><br>
-Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.</p>
-</li>
-<li>
-<p>Other incorrect delete commands to try: <code>deletee</code>, <code>deletee x</code> (where x is larger than the list size) <em>{give more}</em><br>
-Expected: Similar to previous.</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="closing-a-job"><a class="link" href="#closing-a-job">G.3. Closing a job</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Closing a job while all jobs are listed</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Prerequisites: List all ongoing jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.</p>
-</li>
-<li>
-<p>Test case: <code>closej j/1</code><br>
-Expected: Job with job number 1 has its status change from "ongoing" to "closed". Details of the closed job shown in the status message. Job list shows updated job. Timestamp in the status bar is updated.</p>
-</li>
-<li>
-<p>Test case: <code>closej j/0</code><br>
-Expected: No job is closed. Error details shown in the status message. Status bar remains the same.</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="adding-remark-to-a-job"><a class="link" href="#adding-remark-to-a-job">G.4. Adding remark to a job</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Adding a remark to an ongoing job, while all ongoing jobs are listed</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Prerequisites: List all jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.</p>
-</li>
-<li>
-<p>Test case: <code>remark j/1 r/Urgent</code><br>
-Expected: Remark "Urgent" added to job number 1. Details of remark added to job shown in the status message. Timestamp in the status bar is updated.</p>
-</li>
-<li>
-<p>Test case: <code>remark j/0 r/Urgent</code><br>
-Expected: Remark not added to the specified job. Error details shown in the status message. Status bar remains the same.</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:21:39 UTC
+Last updated 2018-04-15 14:24:13 UTC
 </div>
 </div>
 </body>
