@@ -568,13 +568,13 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 <div class="paragraph">
 <p>Here is what happens when the UI makes an <code>execute()</code> call to Logic:
-.  <code>Logic</code> uses the <code>AddressBookParser</code> class to parse the user command.
-.  This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.
+.  <code>Logic</code> uses the <code>CarvicimParser</code> class to parse the user command.
+.  This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>
 .  The command execution can affect the <code>Model</code> (e.g. adding a employee) and/or raise events.
 .  The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code> (figure 6).</p>
 </div>
 <div class="paragraph">
-<p>For a more specific example of the steps above, given below (figure 8) is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> <a href="#api">API</a> call.</p>
+<p>For a more specific example of the steps above, given below (figure 8) is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("deletee 1")</code> <a href="#api">API</a> call.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -661,7 +661,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">4.1.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>To implement the job management feature, new classes has been added to the <code>Model</code> component. <code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> as shown below.</p>
+<p>To implement the job management feature, new classes are added to the <code>Model</code> component. <code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber</code>, <code>VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> as shown below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1785,6 +1785,32 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 <h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">4.9.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The <code>ArchiveCommand</code> is facilitated by a <code>AddJobCommandParser</code>, which is responsible for parsing the input starting <code>Date</code> and ending <code>Date</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>ArchiveCommandParser</code> code snippet that parses the starting and ending <code>Date</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> ArchiveCommand parse(<span class="predefined-type">String</span> args) <span class="directive">throws</span> <span class="exception">ParseException</span> {
+    ArgumentMultimap argMultimap =
+            ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_END_DATE);
+
+    <span class="keyword">if</span> (!arePrefixesPresent(argMultimap, PREFIX_START_DATE, PREFIX_END_DATE)
+            || !argMultimap.getPreamble().isEmpty()) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(<span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, ArchiveCommand.MESSAGE_USAGE));
+    }
+
+    <span class="keyword">try</span> {
+        <span class="predefined-type">Date</span> startDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_START_DATE)).get();
+        <span class="predefined-type">Date</span> endDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_END_DATE)).get();
+
+        DateRange dateRange = <span class="keyword">new</span> DateRange(startDate, endDate);
+        <span class="keyword">return</span> <span class="keyword">new</span> ArchiveCommand(dateRange);
+    } <span class="keyword">catch</span> (IllegalValueException ive) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(ive.getMessage(), ive);
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>The <code>ArchiveCommand</code> is implemented this way to ensure that the specified starting date is earlier than the ending date:</p>
@@ -5226,7 +5252,7 @@ Expected: Remark not added to the specified job. Error details shown in the stat
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 11:05:49 UTC
+Last updated 2018-04-15 12:01:37 UTC
 </div>
 </div>
 </body>

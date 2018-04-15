@@ -297,6 +297,32 @@ Format: <code>sort</code></p>
 <p>The <code>ArchiveCommand</code> is facilitated by a <code>AddJobCommandParser</code>, which is responsible for parsing the input starting <code>Date</code> and ending <code>Date</code>.</p>
 </div>
 <div class="paragraph">
+<p><code>ArchiveCommandParser</code> code snippet that parses the starting and ending <code>Date</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> ArchiveCommand parse(<span class="predefined-type">String</span> args) <span class="directive">throws</span> <span class="exception">ParseException</span> {
+    ArgumentMultimap argMultimap =
+            ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_END_DATE);
+
+    <span class="keyword">if</span> (!arePrefixesPresent(argMultimap, PREFIX_START_DATE, PREFIX_END_DATE)
+            || !argMultimap.getPreamble().isEmpty()) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(<span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, ArchiveCommand.MESSAGE_USAGE));
+    }
+
+    <span class="keyword">try</span> {
+        <span class="predefined-type">Date</span> startDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_START_DATE)).get();
+        <span class="predefined-type">Date</span> endDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_END_DATE)).get();
+
+        DateRange dateRange = <span class="keyword">new</span> DateRange(startDate, endDate);
+        <span class="keyword">return</span> <span class="keyword">new</span> ArchiveCommand(dateRange);
+    } <span class="keyword">catch</span> (IllegalValueException ive) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(ive.getMessage(), ive);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>The <code>ArchiveCommand</code> is implemented this way to ensure that the specified starting date is earlier than the ending date:</p>
 </div>
 <div class="listingblock">
@@ -637,7 +663,7 @@ the number of jobs assigned to each employee.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 11:05:49 UTC
+Last updated 2018-04-15 12:01:37 UTC
 </div>
 </div>
 </body>
