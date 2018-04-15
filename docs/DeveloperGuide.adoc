@@ -1863,7 +1863,7 @@ A convenient App for car servicing managers to organize servicing jobs and assig
 * Archiving and analysing job entries. (Major)
 +
 [none]
-** User can archive that may be needed for future reference. Job entries can also be analyse to keep track of the the employees' performance.
+** User can archive that may be needed for future reference. Job entries can also be analyse to keep track of the the employees' workload.
 
 
 [appendix]
@@ -1892,8 +1892,6 @@ Priorities::
 
 |`* * *` |user |view all employees |decide which employee to assign a job
 
-|`* *` |user |sort by employees' name |sort employee list alphabetically
-
 |`* * *` |user |add a new job entry |manage job entries
 
 |`* * *` |user |close an ongoing job entry |indicate that a job is completed
@@ -1901,12 +1899,6 @@ Priorities::
 |`* * *` |user |find a job entry by its assigned job id |locate details of a job without having to go through the list of ongoing jobs
 
 |`* * *` |user |add remarks to ongoing job entry |take note of details that are specific to the job
-
-|`* *` |user |find job entries by the assigned employee's name |locate details of all jobs that are handled by an employee without having to go through the list of jobs
-
-|`* *` |user |find job entries by client's name |locate details of all jobs belonging to a client without having to go through the list of jobs
-
-|`* *` |user |find job entries by car number |locate details of all jobs related to a car number without having to go through the list of jobs
 
 |`* * *` |user |import job entries |add multiple job entries at once
 
@@ -1918,17 +1910,26 @@ Priorities::
 
 |`* *` |user |export changes |provide feedback to employees regarding the changes
 
-|`*` |user |export completed jobs to other formats |print out all the completed job entries and view it with a better program
+|`* *` |user |find job entries by the assigned employee's name |locate details of all jobs that are handled by an employee without having to go through the list of jobs
 
-|`**` |user |archive job entries |extract job entries within the selected range for archiving
+|`* *` |user |find job entries by client's name |locate details of all jobs belonging to a client without having to go through the list of jobs
 
-|`**` |user |analyse job entries |keep track of employees' workload
+|`* *` |user |find job entries by car number |locate details of all jobs related to a car number without having to go through the list of jobs
+
+|`* *` |user |archive job entries |extract job entries within the selected range for archiving
+
+|`* *` |user |analyse job entries |keep track of employees' workload
+
+|`* *` |user |sort by employees' name |sort employee list alphabetically
 
 |`* *` |user |change the colour label of job status |easily differentiate between the job statuses
 
 |`* *` |user who likes customization |change the theme of the application |customize the theme to my preference
 
 |`* *` |user who likes customization |change the command words of the application |improve ease of use
+
+|`*` |user |export completed jobs to other formats |print out all the completed job entries and view it with a better program
+
 |=======================================================================
 
 _{More to be added}_
