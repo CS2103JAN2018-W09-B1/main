@@ -95,12 +95,11 @@
 <li><a href="#use-cases">Appendix D: Use Cases</a></li>
 <li><a href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></li>
 <li><a href="#glossary">Appendix F: Glossary</a></li>
-<li><a href="#product-survey">Appendix G: Product Survey</a></li>
-<li><a href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a>
+<li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
-<li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-employee">H.2. Deleting a employee</a></li>
-<li><a href="#saving-data">H.3. Saving data</a></li>
+<li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
+<li><a href="#deleting-a-employee">G.2. Deleting a employee</a></li>
+<li><a href="#saving-data">G.3. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -4001,12 +4000,6 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock">decide which employee to assign a job</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sort by employees' name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sort employee list alphabetically</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">add a new job entry</p></td>
@@ -4016,31 +4009,13 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">close an ongoing job entry</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">remove completed job and add it to jobs history</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">indicate that a job is completed</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">find a job entry by its assigned job id</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">locate details of a job without having to go through the list of ongoing jobs</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">find job entries by the assigned employee&#8217;s name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of all jobs that are handled by an employee without having to go through the lists of jobs</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">find job entries by client&#8217;s name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of all jobs belonging to a client without having to go through the lists of jobs</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">find job entries by car number</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of all jobs related to a car number without having to go through the lists of jobs</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
@@ -4053,6 +4028,60 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">import job entries</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">add multiple job entries at once</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sort by employees' name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sort employee list alphabetically</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find job entries by the assigned employee&#8217;s name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of all jobs that are handled by an employee without having to go through the list of jobs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find job entries by client&#8217;s name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of all jobs belonging to a client without having to go through the list of jobs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find job entries by car number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of all jobs related to a car number without having to go through the list of jobs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">archive job entries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">extract job entries within the selected range for archiving</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">analyse job entries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keep track of employees' workload</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">change the colour label of job status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">easily differentiate between the job statuses</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who likes customization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">change the theme of the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">customize the theme to my preference</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who likes customization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">change the command words of the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">improve ease of use</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
@@ -4083,36 +4112,6 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">export completed jobs to other formats</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">print out all the completed job entries and view it with a better program</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">archive job entries</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">extract job entries within the selected range for archiving</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">analyse job entries</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">keep track of employees' workload</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">change the colour label of job status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">easily differentiate between the job statuses</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user who likes customization</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">change the theme of the application</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">customize the theme to my preference</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user who likes customization</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">change the command words of the application</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">improve ease of use</p></td>
 </tr>
 </tbody>
 </table>
@@ -4206,6 +4205,26 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <p>3a1. CarviciM shows an error message.</p>
 <div class="paragraph">
 <p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b. The given employee is assigned to an ongoing job.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
 </div>
 </li>
 </ul>
@@ -4921,7 +4940,7 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <p>User interface should be intuitive enough for users who are not IT-savvy.</p>
 </li>
 <li>
-<p>View should fit the screen of any computer with minimum screen size of 1366 by 768 pixels.</p>
+<p>View should fit the screen of any computer with minimum screen size of 1280 by 720 pixels.</p>
 </li>
 </ul>
 </div>
@@ -4976,44 +4995,7 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="product-survey"><a class="link" href="#product-survey">Appendix G: Product Survey</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Product Name</strong></p>
-</div>
-<div class="paragraph">
-<p>Author: &#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p>Pros:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Cons:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a></h2>
+<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Given below are instructions to test the app manually.</p>
@@ -5031,7 +5013,7 @@ These instructions only provide a starting point for testers to work on; testers
 </table>
 </div>
 <div class="sect2">
-<h3 id="launch-and-shutdown"><a class="link" href="#launch-and-shutdown">H.1. Launch and Shutdown</a></h3>
+<h3 id="launch-and-shutdown"><a class="link" href="#launch-and-shutdown">G.1. Launch and Shutdown</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -5069,7 +5051,7 @@ Expected: The most recent window size and location is retained.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-employee"><a class="link" href="#deleting-a-employee">H.2. Deleting a employee</a></h3>
+<h3 id="deleting-a-employee"><a class="link" href="#deleting-a-employee">G.2. Deleting a employee</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -5077,18 +5059,18 @@ Expected: The most recent window size and location is retained.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: List all employees using the <code>list</code> command. Multiple employees in the list.</p>
+<p>Prerequisites: List all employees using the <code>liste</code> command. Multiple employees in the list.</p>
 </li>
 <li>
-<p>Test case: <code>delete 1</code><br>
+<p>Test case: <code>deletee 1</code><br>
 Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.</p>
 </li>
 <li>
-<p>Test case: <code>delete 0</code><br>
+<p>Test case: <code>deletee 0</code><br>
 Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.</p>
 </li>
 <li>
-<p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
+<p>Other incorrect delete commands to try: <code>deletee</code>, <code>deletee x</code> (where x is larger than the list size) <em>{give more}</em><br>
 Expected: Similar to previous.</p>
 </li>
 </ol>
@@ -5101,7 +5083,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">H.3. Saving data</a></h3>
+<h3 id="saving-data"><a class="link" href="#saving-data">G.3. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -5125,7 +5107,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-14 21:40:03 UTC
+Last updated 2018-04-15 06:04:15 UTC
 </div>
 </div>
 </body>
