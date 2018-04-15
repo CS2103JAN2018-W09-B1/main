@@ -208,6 +208,10 @@ Please ensure that there are no other applications using the home folder, it can
 <dd>
 <p>A region on the GUI where you can view the list of jobs.</p>
 </dd>
+<dt class="hdlist1">Job List Indicator</dt>
+<dd>
+<p>A region above the job list panel that indicates if you are viewing unreviewed jobs or saved jobs.</p>
+</dd>
 <dt class="hdlist1">Employee List Panel</dt>
 <dd>
 <p>A region on the GUI where you can view the list of employees.</p>
@@ -377,7 +381,7 @@ Format: <code>closej j/JOB_NUMBER</code></p>
 <div class="paragraph">
 <p><code>closej j/2</code><br>
 This command closes the ongoing job of number 2 in CarviciM.<br>
-You will see "Closed Job: 2" in the result display as shown in the image below.</p>
+You will see "Closed Job&#8230;&#8203;" in the result display as shown in the image below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -419,7 +423,7 @@ Format: <code>remark j/JOB_NUMBER r/YOUR_REMARK</code></p>
 <div class="paragraph">
 <p><code>remark j/2 r/An urgent work that should be completed asap</code><br>
 This command will add the remark "An urgent work that should be completed asap" to a job entry of a job number "2".<br>
-You will see the message "Remark added to job number 2: An urgent work that should be completed asap" shown in the result display (shown in the image below).</p>
+You will see the message "Remark added to job number &#8230;&#8203;" reflected in the result display (shown in the image below).</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1142,10 +1146,71 @@ Auto-generated emails containing the job details of the job at index 1 of the jo
 <div class="sect2">
 <h3 id="importing-jobs-from-an-excel-file"><a class="link" href="#importing-jobs-from-an-excel-file">5.21. Importing jobs from an excel file</a></h3>
 <div class="sect3">
-<h4 id="import-command"><a class="link" href="#import-command">5.21.1. Importing a new excel file: <code>import</code></a></h4>
+<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code">5.21.1. Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
 <div class="paragraph">
-<p>To load your excel file by filename or filepath that contains new job entries, use this command as follows:<br>
+<p>To import all jobs into CarviciM directly, use this command as follows:
+Format: <code>importAll FILEPATH</code></p>
+</div>
+<div class="paragraph">
+<p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
+additionally it accepts all job entries. <code>importAll</code> is equivalent to an
+<a href="#import-command"><code>import</code></a> and <a href="#acceptAll-command"><code>acceptAll</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>importAll excel-file.xlsx</code><br>
+Imports example excel file excel-file.xlsx shown in <a href="#import-command"><code>import</code></a>, accepts all job entries and saves the reviewed job entries as an external excel file.
+You should see:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/importAll-example.png" alt="importAll example" width="1200">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="import-command"><a class="link" href="#import-command">5.21.2. Importing a new excel file: <code>import</code></a></h4>
+<div class="paragraph">
+<p>To discretely import job entries, you must first import a file, then <a href="#accept-reject"><code>accept</code> and <code>reject</code></a>
+job entries.</p>
+</div>
+<div class="paragraph">
+<p>To start import a file, use this command as follows:<br>
 Format: <code>import FILE_PATH</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If your imported file does not reflect correctly, there is an old save file from the <a href="#save-command">autosave feature</a>. To rectify the
+problem:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Close CarviciM.</p>
+</li>
+<li>
+<p>Look for a file in the same folder with the same filename, with <code>-comments.xlsx</code> or
+<code>-comments.xls</code> behind.</p>
+</li>
+<li>
+<p>Delete the file.</p>
+</li>
+<li>
+<p>Start CarviciM and try again.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1164,7 +1229,7 @@ Format: <code>import FILE_PATH</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>The first row specifies the type of detail in the column.</p>
+<p>The first row specifies the type of detail in the column. This can be seen in the table below:</p>
 </li>
 </ul>
 </div>
@@ -1182,27 +1247,82 @@ Format: <code>import FILE_PATH</code></p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-The excel file must not be password-protected
+<div class="ulist">
+<ul>
+<li>
+<p>The excel file must not be password-protected</p>
+</li>
+<li>
+<p>It is preferable to only import files within this application&#8217;s folder, as other programs
+outside the folder might affect CarviciM&#8217;s performance</p>
+</li>
+</ul>
+</div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Example:</p>
+<p>Here is an example of an excel sheet that can be imported:</p>
 </div>
-<div class="paragraph">
-<p><code>import excel.xlsx</code><br>
-Imports file excel.xlsx.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code">5.21.2. Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
-<div class="paragraph">
-<p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
-additionally it accepts all job entries and saves the reviews of the jobs. <code>importAll</code> is
-equivalent to an <a href="#import-command"><code>import</code></a>, <a href="#acceptAll-command"><code>acceptAll</code></a> and
-<a href="#save-command"><code>save</code></a>.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 59%;">
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.091%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">client name</th>
+<th class="tableblock halign-left valign-top">client phone</th>
+<th class="tableblock halign-left valign-top">client email</th>
+<th class="tableblock halign-left valign-top">vehicle number</th>
+<th class="tableblock halign-left valign-top">employee name</th>
+<th class="tableblock halign-left valign-top">employee phone</th>
+<th class="tableblock halign-left valign-top">employee email</th>
+<th class="tableblock halign-left valign-top">status</th>
+<th class="tableblock halign-left valign-top">remarks</th>
+<th class="tableblock halign-left valign-top">empty column</th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">John Doe</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">91234567</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:jd@gmail.com">jd@gmail.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SXX1234X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">87654321</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:jim@gmail.com">jim@gmail.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your remark</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ongoing</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -1210,7 +1330,7 @@ equivalent to an <a href="#import-command"><code>import</code></a>, <a href="#ac
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You can use this command to import all job entries from an excel file to save time.
+The columns can be interchanged, with <code>empty column</code> at the last column.
 </td>
 </tr>
 </table>
@@ -1219,53 +1339,54 @@ You can use this command to import all job entries from an excel file to save ti
 <p>Example:</p>
 </div>
 <div class="paragraph">
-<p><code>importAll excel.xlsx</code><br>
-Imports file excel.xlsx, accepts all job entries and saves the reviewed job entries as an external excel file.</p>
+<p><code>import excel-file.xlsx</code><br>
+Imports the example file excel-file.xlsx shown above. You should see:</p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/import-example.png" alt="import example" width="1200">
 </div>
-<div class="sect3">
-<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code-2"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code-2">5.21.3. Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
-<div class="paragraph">
-<p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
-additionally it accepts all job entries and saves the reviews of the jobs. <code>importAll</code> is
-equivalent to an <a href="#import-command"><code>import</code></a>, <a href="#acceptAll-command"><code>acceptAll</code></a> and
-<a href="#save-command"><code>save</code></a>.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can use this command to import all job entries from an excel file to save time.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="paragraph">
-<p><code>importAll excel.xlsx</code><br>
-Imports file excel.xlsx, accepts all job entries and saves the reviewed job entries as an external excel file.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">5.21.4. Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h4>
+<h4 id="switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code"><a class="link" href="#switching-views-between-unreviewed-jobs-and-jobs-in-carvicim-code-switch-code">5.21.3. Switching views between unreviewed jobs and jobs in CarviciM: <code>switch</code></a></h4>
 <div class="paragraph">
 <p>You can use this command to switch between the list of unreviewed jobs and jobs in CarviciM.<br>
 Format: <code>switch</code></p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can see the current job list in the job list indicator.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
-<h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">5.21.5. Accepting and rejecting changes</a></h4>
+<h4 id="accept-reject"><a class="link" href="#accept-reject">5.21.4. Accepting and rejecting changes</a></h4>
 <div class="paragraph">
-<p>You can use 4 commands when reviewing changes:
-* <code>accept NUMBER</code>
-* <code>reject NUMBER</code>
-* <code>acceptAll</code>
-* <code>rejectAll</code></p>
+<p>You can use 4 commands when reviewing changes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>accept NUMBER</code></p>
+</li>
+<li>
+<p><code>reject NUMBER</code></p>
+</li>
+<li>
+<p><code>acceptAll</code></p>
+</li>
+<li>
+<p><code>rejectAll</code></p>
+</li>
+</ul>
 </div>
 <div class="sect4">
 <h5 id="accepting-1-job-code-accept-code"><a class="link" href="#accepting-1-job-code-accept-code">Accepting 1 job: <code>accept</code></a></h5>
@@ -1325,7 +1446,7 @@ Rejects all remaining job entries and clears the imported list.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="writing-comments-to-your-reviews"><a class="link" href="#writing-comments-to-your-reviews">5.21.6. Writing comments to your reviews</a></h4>
+<h4 id="writing-comments-to-your-reviews"><a class="link" href="#writing-comments-to-your-reviews">5.21.5. Writing comments to your reviews</a></h4>
 <div class="paragraph">
 <p>While accepting or rejecting changes, you can enter your comments behind the command.</p>
 </div>
@@ -1381,10 +1502,24 @@ Rejects all remaining imported jobs and attaches "Please check the customer deta
 </div>
 </div>
 <div class="sect3">
-<h4 id="save-command"><a class="link" href="#save-command">5.21.7. Sharing your feedback with your employees:</a></h4>
+<h4 id="save-command"><a class="link" href="#save-command">5.21.6. Sharing your feedback with your employees:</a></h4>
 <div class="paragraph">
-<p>CarviciM autosaves your comments to an excel file with -comments.xls or -comments.xlsx appended,
+<p>To send your feedback to the job list providers, look for the save file generated after importing and reviewing your jobs.
+CarviciM autosaves your comments to an excel file with <code>-comments.xls</code> or <code>-comments.xlsx</code> appended,
 in the same directory.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+When copying <code>-comments.xls</code> or <code>-comments.xlsx</code> files, try to keep the original copy in the folder. It helps to prevent
+reimporting the same jobs from the a file with the same name twice.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1410,13 +1545,48 @@ Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 <p>The NEW_COMMAND_WORD must be 1 word, with no spacing.</p>
 </li>
 <li>
-<p>Any default words or words currently set by users are not allowed.</p>
+<p>Any default words or custom words already in use are not allowed.</p>
 </li>
 </ul>
 </div>
 </td>
 </tr>
 </table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>To remove the custom word associated with a command, type the custom word as OLD_COMMAND_WORD and
+COMMAND_WORD of the command as <code>newWord</code></p>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="paragraph">
+<p><code>set adde a</code></p>
+</div>
+<div class="paragraph">
+<p>To remove <code>a</code>, type:</p>
+</div>
+<div class="paragraph">
+<p><code>set a adde</code></p>
+</div>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You don&#8217;t have to worry if you forgot your custom words! They will displayed in the result display
+whenever you make a mistake!</p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -1428,15 +1598,16 @@ Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 <div class="paragraph">
 <p><code>set adde a</code><br>
 Sets <code>adde</code> command word to <code>a</code> using default.<br>
-You will see "adde has been replaced with a!" in the result display.</p>
+You will see "a has been set as an alternative for adde!" in the result display.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
 <div class="paragraph">
 <p><code>set deletee d</code><br>
-Sets <code>deletee</code> command word to <code>d</code> using default.<br>
-You will see "deletee has been replaced with d!" in the result display.</p>
+<code>set d delete</code><br>
+Sets <code>d</code> to <code>delete</code> using default.<br>
+You will see "d has been replaced with delete!" in the result display.</p>
 </div>
 </li>
 </ul>
@@ -1841,11 +2012,6 @@ There is no need to save manually.</p>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Save Comments On Job Imports</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>save</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock"><strong><em>Other Features</em></strong></p></td>
 </tr>
 <tr>
@@ -1900,7 +2066,7 @@ There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:23:00 UTC
+Last updated 2018-04-15 14:46:06 UTC
 </div>
 </div>
 </body>
