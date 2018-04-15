@@ -674,7 +674,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>To implement the job management feature, new classes are added to the <code>Model</code> component. <code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> as shown below.</p>
+<p>To implement the job management feature, new classes has been added to the <code>Model</code> component. <code>Job</code> is part of the <code>Model</code> component which is made up of <code>Person</code>, <code>JobNumber, `VehicleNumber</code>, <code>Status</code>, <code>Date</code>, <code>UniqueEmployeeList</code> and <code>RemarkList</code> as shown below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -684,6 +684,9 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 <div class="paragraph">
 <p><code>Person</code> represents the client of a job. <code>JobNumber</code> represents the number of a job and is responsible for generating a running number for each job. <code>Status</code> represents the status of a job which holds value of either <code>ongoing</code> or <code>closed</code> that is used for categorizing jobs. <code>Date</code> represents the date of creation for the job. <code>RemarkList</code> holds all <code>Remark</code> belonging to the job. <code>UniqueEmployeeList</code> of the job represents the employees assigned.</p>
+</div>
+<div class="paragraph">
+<p>New classes has also been added in the Storage component, <code>XmlAdaptedJob</code> and <code>XmlAdaptedRemark</code>, to support the saving of job entries into the data file.</p>
 </div>
 <div class="paragraph">
 <p>The job adding mechanism is facilitated by a <code>AddJobCommand</code> which is an <code>UndoableCommand</code>. <code>AddJobCommandParser</code> is responsible for parsing the input arguments. It utilizes <code>ParserUtil</code> for the validation of <code>NAME</code>, <code>PHONE</code>, <code>EMAIL</code>, <code>VEHICLE_NUMBER</code> and <code>ASSIGNED_EMPLOYEE_INDEX</code> and creates <code>AddJobCommand</code> object which prepares the <code>Job</code> object.</p>
@@ -1111,7 +1114,7 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 </div>
 </div>
 <div class="paragraph">
-<p><code>executeUndoableCommand</code> method code snippet in <code>RemarkCommand</code>, which updates the job list with the job copy created and posts an <code>JobDisplayPanelUpdateRequestEvent</code>:</p>
+<p><code>executeUndoableCommand</code> method code snippet in <code>RemarkCommand</code>, which updates the job list with the job copy created:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1123,7 +1126,6 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
         } <span class="keyword">catch</span> (JobNotFoundException jnfe) {
             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">AssertionError</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">The target job cannot be missing</span><span class="delimiter">&quot;</span></span>);
         }
-        EventsCenter.getInstance().post(<span class="keyword">new</span> JobDisplayPanelUpdateRequestEvent(updatedJob));
         <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_REMARK_SUCCESS, remark));
     }</code></pre>
 </div>
@@ -5194,7 +5196,7 @@ Expected: Remark not added to the specified job. Error details shown in the stat
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 07:47:20 UTC
+Last updated 2018-04-15 09:04:57 UTC
 </div>
 </div>
 </body>
