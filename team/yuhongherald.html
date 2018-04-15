@@ -194,48 +194,13 @@ Format: <code>set OLD_COMMAND_WORD NEW_COMMAND_WORD</code></p>
 <p>The NEW_COMMAND_WORD must be 1 word, with no spacing.</p>
 </li>
 <li>
-<p>Any default words or custom words already in use are not allowed.</p>
+<p>Any default words or words currently set by users are not allowed.</p>
 </li>
 </ul>
 </div>
 </td>
 </tr>
 </table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>To remove the custom word associated with a command, type the custom word as OLD_COMMAND_WORD and
-COMMAND_WORD of the command as <code>newWord</code></p>
-<div class="paragraph">
-<p>e.g.</p>
-</div>
-<div class="paragraph">
-<p><code>set adde a</code></p>
-</div>
-<div class="paragraph">
-<p>To remove <code>a</code>, type:</p>
-</div>
-<div class="paragraph">
-<p><code>set a adde</code></p>
-</div>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You don&#8217;t have to worry if you forgot your custom words! They will displayed in the result display
-whenever you make a mistake!</p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -247,16 +212,15 @@ whenever you make a mistake!</p>
 <div class="paragraph">
 <p><code>set adde a</code><br>
 Sets <code>adde</code> command word to <code>a</code> using default.<br>
-You will see "a has been set as an alternative for adde!" in the result display.</p>
+You will see "adde has been replaced with a!" in the result display.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
 <div class="paragraph">
 <p><code>set deletee d</code><br>
-<code>set d delete</code><br>
-Sets <code>d</code> to <code>delete</code> using default.<br>
-You will see "d has been replaced with delete!" in the result display.</p>
+Sets <code>deletee</code> command word to <code>d</code> using default.<br>
+You will see "deletee has been replaced with d!" in the result display.</p>
 </div>
 </li>
 </ul>
@@ -265,71 +229,10 @@ You will see "d has been replaced with delete!" in the result display.</p>
 <div class="sect2">
 <h3 id="importing-jobs-from-an-excel-file"><a class="link" href="#importing-jobs-from-an-excel-file">Importing jobs from an excel file</a></h3>
 <div class="sect3">
-<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code">Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
-<div class="paragraph">
-<p>To import all jobs into CarviciM directly, use this command as follows:
-Format: <code>importAll FILEPATH</code></p>
-</div>
-<div class="paragraph">
-<p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
-additionally it accepts all job entries. <code>importAll</code> is equivalent to an
-<a href="#import-command"><code>import</code></a> and <a href="#acceptAll-command"><code>acceptAll</code></a>.</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="paragraph">
-<p><code>importAll excel-file.xlsx</code><br>
-Imports example excel file excel-file.xlsx shown in <a href="#import-command"><code>import</code></a>, accepts all job entries and saves the reviewed job entries as an external excel file.
-You should see:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/importAll-example.png" alt="importAll example" width="1200">
-</div>
-</div>
-</div>
-<div class="sect3">
 <h4 id="import-command"><a class="link" href="#import-command">Importing a new excel file: <code>import</code></a></h4>
 <div class="paragraph">
-<p>To discretely import job entries, you must first import a file, then <a href="#accept-reject"><code>accept</code> and <code>reject</code></a>
-job entries.</p>
-</div>
-<div class="paragraph">
-<p>To start import a file, use this command as follows:<br>
+<p>To load your excel file by filename or filepath that contains new job entries, use this command as follows:<br>
 Format: <code>import FILE_PATH</code></p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If your imported file does not reflect correctly, there is an old save file from the <a href="#save-command">autosave feature</a>. To rectify the
-problem:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Close CarviciM.</p>
-</li>
-<li>
-<p>Look for a file in the same folder with the same filename, with <code>-comments.xlsx</code> or
-<code>-comments.xls</code> behind.</p>
-</li>
-<li>
-<p>Delete the file.</p>
-</li>
-<li>
-<p>Start CarviciM and try again.</p>
-</li>
-</ol>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -348,7 +251,7 @@ problem:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The first row specifies the type of detail in the column. This can be seen in the table below:</p>
+<p>The first row specifies the type of detail in the column.</p>
 </li>
 </ul>
 </div>
@@ -366,90 +269,7 @@ problem:</p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>The excel file must not be password-protected</p>
-</li>
-<li>
-<p>It is preferable to only import files within this application&#8217;s folder, as other programs
-outside the folder might affect CarviciM&#8217;s performance</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Here is an example of an excel sheet that can be imported:</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 59%;">
-<colgroup>
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.0909%;">
-<col style="width: 9.091%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">client name</th>
-<th class="tableblock halign-left valign-top">client phone</th>
-<th class="tableblock halign-left valign-top">client email</th>
-<th class="tableblock halign-left valign-top">vehicle number</th>
-<th class="tableblock halign-left valign-top">employee name</th>
-<th class="tableblock halign-left valign-top">employee phone</th>
-<th class="tableblock halign-left valign-top">employee email</th>
-<th class="tableblock halign-left valign-top">status</th>
-<th class="tableblock halign-left valign-top">remarks</th>
-<th class="tableblock halign-left valign-top">empty column</th>
-<th class="tableblock halign-left valign-top"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">John Doe</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">91234567</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:jd@gmail.com">jd@gmail.com</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SXX1234X</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jim</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">87654321</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:jim@gmail.com">jim@gmail.com</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your remark</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ongoing</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The columns can be interchanged, with <code>empty column</code> at the last column.
+The excel file must not be password-protected
 </td>
 </tr>
 </table>
@@ -458,13 +278,64 @@ The columns can be interchanged, with <code>empty column</code> at the last colu
 <p>Example:</p>
 </div>
 <div class="paragraph">
-<p><code>import excel-file.xlsx</code><br>
-Imports the example file excel-file.xlsx shown above. You should see:</p>
+<p><code>import excel.xlsx</code><br>
+Imports file excel.xlsx.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/import-example.png" alt="import example" width="1200">
 </div>
+<div class="sect3">
+<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code">Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
+<div class="paragraph">
+<p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
+additionally it accepts all job entries and saves the reviews of the jobs. <code>importAll</code> is
+equivalent to an <a href="#import-command"><code>import</code></a>, <a href="#acceptAll-command"><code>acceptAll</code></a> and
+<a href="#save-command"><code>save</code></a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use this command to import all job entries from an excel file to save time.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>importAll excel.xlsx</code><br>
+Imports file excel.xlsx, accepts all job entries and saves the reviewed job entries as an external excel file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code-2"><a class="link" href="#importing-and-accepting-all-job-entries-in-an-excel-file-code-importall-code-2">Importing and accepting all job entries in an excel file: <code>importAll</code></a></h4>
+<div class="paragraph">
+<p>Similar to <a href="#import-command"><code>import</code></a> command, <code>importAll</code> also loads an excel file,
+additionally it accepts all job entries and saves the reviews of the jobs. <code>importAll</code> is
+equivalent to an <a href="#import-command"><code>import</code></a>, <a href="#acceptAll-command"><code>acceptAll</code></a> and
+<a href="#save-command"><code>save</code></a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use this command to import all job entries from an excel file to save time.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>importAll excel.xlsx</code><br>
+Imports file excel.xlsx, accepts all job entries and saves the reviewed job entries as an external excel file.</p>
 </div>
 </div>
 <div class="sect3">
@@ -473,39 +344,15 @@ Imports the example file excel-file.xlsx shown above. You should see:</p>
 <p>You can use this command to switch between the list of unreviewed jobs and jobs in CarviciM.<br>
 Format: <code>switch</code></p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You can see the current job list in the job list indicator.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect3">
-<h4 id="accept-reject"><a class="link" href="#accept-reject">Accepting and rejecting changes</a></h4>
+<h4 id="accepting-and-rejecting-changes"><a class="link" href="#accepting-and-rejecting-changes">Accepting and rejecting changes</a></h4>
 <div class="paragraph">
-<p>You can use 4 commands when reviewing changes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>accept NUMBER</code></p>
-</li>
-<li>
-<p><code>reject NUMBER</code></p>
-</li>
-<li>
-<p><code>acceptAll</code></p>
-</li>
-<li>
-<p><code>rejectAll</code></p>
-</li>
-</ul>
+<p>You can use 4 commands when reviewing changes:
+* <code>accept NUMBER</code>
+* <code>reject NUMBER</code>
+* <code>acceptAll</code>
+* <code>rejectAll</code></p>
 </div>
 <div class="sect4">
 <h5 id="accepting-1-job-code-accept-code"><a class="link" href="#accepting-1-job-code-accept-code">Accepting 1 job: <code>accept</code></a></h5>
@@ -623,22 +470,8 @@ Rejects all remaining imported jobs and attaches "Please check the customer deta
 <div class="sect3">
 <h4 id="save-command"><a class="link" href="#save-command">Sharing your feedback with your employees:</a></h4>
 <div class="paragraph">
-<p>To send your feedback to the job list providers, look for the save file generated after importing and reviewing your jobs.
-CarviciM autosaves your comments to an excel file with <code>-comments.xls</code> or <code>-comments.xlsx</code> appended,
+<p>CarviciM autosaves your comments to an excel file with -comments.xls or -comments.xlsx appended,
 in the same directory.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-When copying <code>-comments.xls</code> or <code>-comments.xlsx</code> files, try to keep the original copy in the folder. It helps to prevent
-reimporting the same jobs from the a file with the same name twice.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -656,116 +489,17 @@ reimporting the same jobs from the a file with the same name twice.
 </table>
 </div>
 <div class="sect2">
-<h3 id="supporting-setting-of-command-word-alias-feature"><a class="link" href="#supporting-setting-of-command-word-alias-feature">Supporting setting of command word alias feature</a></h3>
+<h3 id="set-command-feature"><a class="link" href="#set-command-feature">Set command feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
-<img src="../images/SetCommandClassDiagram.png" alt="SetCommandClassDiagram" width="400">
+<img src="../images/SetCommandObjectDiagram.png" alt="SetCommandObjectDiagram" width="800">
 </div>
-<div class="title">Figure 1. Class Diagram with CommandWords</div>
-</div>
-<div class="paragraph">
-<p>The user can set a command word alias using the command <code>set</code>, specifying the old command
-word and new command word. This is how <code>set</code> command handles user requests using <code>currentWord</code>
-and <code>newWord</code> respectively.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult executeUndoableCommand() <span class="directive">throws</span> CommandException {
-        requireNonNull(model);
-        <span class="keyword">try</span> {
-            model.getCommandWords().setCommandWord(currentWord, newWord);
-        } <span class="keyword">catch</span> (CommandWordException e) {
-            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(e.getMessage());
-        }
-        <span class="keyword">if</span> (CommandWords.isDefaultCommandWord(currentWord)) {
-            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(getMessageDefaultSuccess());
-        } <span class="keyword">else</span> <span class="keyword">if</span> (CommandWords.isDefaultCommandWord(newWord)) {
-            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(getMessageRemoveAliasSuccess());
-        }
-        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(getMessageAliasSuccess());
-    }</code></pre>
-</div>
+<div class="title">Figure 1. Object Diagram of CommandWords at runtime</div>
 </div>
 <div class="paragraph">
-<p>The command splits into 3 cases:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>When <code>currentWord</code> is a command word and <code>newWord</code> is an alias, <code>newWord</code> will be set as alias
-for command specified by <code>currentWord</code></p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">CommandWords.isDefaultCommandWord(currentWord)</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>When <code>newWord</code> is a command word and <code>currentWord</code> is an alias, <code>currentWord</code> will be removed
-and the alias for command specified by <code>newWord</code> will be reset</p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">CommandWords.isDefaultCommandWord(newWord)</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>If <code>currentWord</code> and <code>newWord</code> are both new alias, the old alias will be replaced by the new alias.</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The command will fail if one of the following occurs</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>currentWord</code> and <code>newWord</code> is the same</p>
-</li>
-<li>
-<p><code>newWord</code> overwrites another alias or command word</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> isCommandWordsValid(<span class="predefined-type">String</span> currentWord, <span class="predefined-type">String</span> newWord) <span class="directive">throws</span> CommandWordException {
-        <span class="keyword">if</span> (currentWord.equals(newWord)) {
-            <span class="keyword">throw</span> <span class="keyword">new</span> CommandWordException(getMessageNoChange());
-        }
-        <span class="keyword">if</span> (isDefaultCommandWord(newWord)
-                &amp;&amp; !commands.get(newWord).equals(currentWord)) {
-            <span class="keyword">throw</span> <span class="keyword">new</span> CommandWordException(getMessageOverwriteDefault(newWord));
-        }
-        <span class="keyword">if</span> (commands.containsValue(newWord)) {
-            <span class="keyword">throw</span> <span class="keyword">new</span> CommandWordException(getMessageUsed(newWord));
-        }
-    }</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>currentWord</code> is not an existing alias or command word. This is checked by iterating through commands.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p><code>set</code> command makes use of class <code>CommandWords</code> to manage the custom command words.
-<code>SetCommand</code> keeps 2 lists of command words:</p>
+<p><code>SetCommand</code> keeps 2 lists of command words:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -773,31 +507,24 @@ and the alias for command specified by <code>newWord</code> will be reset</p>
 <p>The default command words stored as a class level reference <code>COMMANDS</code></p>
 </li>
 <li>
-<p>The command word aliases are stored as a field <code>commands</code> in the object</p>
+<p>The custom user command words stored as a field <code>commands</code> in the object
+Both are managed by the class <code>CommandWords</code>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Both are managed by the class <code>CommandWords</code>.</p>
+<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>,
+as it is required to parse commands in <code>AddressBookParser</code>.</p>
 </div>
 <div class="paragraph">
-<p>CarvicimParser makes a reference to <code>CommandWords</code> to facilitate retrieval of alias command words.
-However, <code>CommandWords</code> resides in <code>Model</code> (Figure 12). This is to facilitate the saving of data.</p>
+<p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
 </div>
 <div class="paragraph">
-<p>CommandWords also has a method <code>checkIntegrity()</code>, which ensures that object command words are 1 to 1 with class command words.
-This allows forward compatibility when new command words are introduced, and old ones removed,
-and protects against data corruption to some extent.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/SetCommandSequenceDiagram.png" alt="SetCommandSequenceDiagram" width="800">
-</div>
-<div class="title">Figure 2. Class Diagram with CommandWords</div>
-</div>
-<div class="paragraph">
-<p>At runtime, CarvicimParser checks if the command word provided by the user matches any of the alias before proceeding
-parsing a command, as shown in Figure 13.</p>
+<p>CarviciMParser makes a reference to CommandWords.
+However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component (figure 12).
+This is to facilitate the saving of data. CommandWords also has a method <code>checkIntegrity()</code>,
+which ensures that object command words are 1 to 1 with class command words.
+This allows forward compatibility, and protects against data corruption to some extent.</p>
 </div>
 </div>
 <div class="sect3">
@@ -811,24 +538,23 @@ parsing a command, as shown in Figure 13.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Single Responsibility Principle is maintained as custom command words in <code>CommandWords</code> is a user preference.
-CommandWords is also Serializable, which makes it compatible with <code>JsonUserPrefsStorage</code>.</p>
+<p>Pros: Single Responsibility Principle is maintained as custom command words in <code>CommandWords</code> is a user preference.</p>
 </li>
 <li>
-<p>Cons: <code>CommandWords</code> is now coupled with <code>UserPrefs</code></p>
+<p>Cons: More coupling is required for the AddressBook to retrieve the custom command words.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Place <code>CommandWords</code> into a separate Storage class</p>
+<p><em>Alternative:</em> Place <code>CommandWords</code> in <code>AddressBook</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Reduced coupling.</p>
+<p>Pros: Direct access to custom words in commands.</p>
 </li>
 <li>
-<p>Cons: More files will be created in the application directory, making it more cluttered and cumbersome to backup.</p>
+<p>Cons: Single Responsibility Principle will be violated.</p>
 </li>
 </ul>
 </div>
@@ -841,27 +567,27 @@ CommandWords is also Serializable, which makes it compatible with <code>JsonUser
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Create getters and setters and provide a copy of <code>CommandWords</code> when more detail is needed.</p>
+<p><strong>Current choice:</strong> Provide direct access to <code>CommandWords</code> when more details are needed and keep minimal <a href="#api">API</a> on <code>ModelManager</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to enforce rules on the changing of the alias in <code>CommandWords</code>.</p>
+<p>Pros: Easy to implement, and is neat.</p>
 </li>
 <li>
-<p>Cons: Need to modify getters and setters to change the implementation of <code>CommandWords</code>.</p>
+<p>Cons: Accidental modification can lead to bugs.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Create <code>CommandWords</code> like an augmented <code>HashMap</code></p>
+<p><em>Alternative:</em> <code>ModelManager</code> and member variables gets access and provides <a href="#api">API</a> to access <code>CommandWords</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Minimal new <a href="#api">APIs</a> are required, and flexibility is given to classes accessing <code>CommandWords</code>.</p>
+<p>Pros: Write protection.</p>
 </li>
 <li>
-<p>Cons: Difficult to enforce rules, breaking the rules of mapped words can lead to bugs.</p>
+<p>Cons: <code>CommandWords</code> is frequently accessed, so many more <a href="#api">APIs</a> are required.</p>
 </li>
 </ul>
 </div>
@@ -881,21 +607,20 @@ CommandWords is also Serializable, which makes it compatible with <code>JsonUser
 <p>Pros: Easier to maintain the Open-Closed Principle, also follows the Single Responsibility Principle.</p>
 </li>
 <li>
-<p>Cons: Command words have to be explicitly declared under class reference to support alias</p>
+<p>Cons: Increased coupling.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Store the default list in <code>Command</code>.</p>
+<p><em>Alternative:</em> Store the default list in <code>Commands</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: <code>Command</code> is the super class of all commands, a method to enforce declaration of the command word
-can be done easily.</p>
+<p>Pros: Reduced coupling.</p>
 </li>
 <li>
-<p>Cons: <code>Command</code> is an abstract class, it is not appropriate to reference class variables.</p>
+<p>Cons: <code>Commands</code> is an abstract class, it is not appropriate to reference class variables.</p>
 </li>
 </ul>
 </div>
@@ -906,19 +631,14 @@ can be done easily.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="import-feature"><a class="link" href="#import-feature">Import feature</a></h3>
+<h3 id="import-save-feature"><a class="link" href="#import-save-feature">Import/Save feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">Current Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="../images/SessionComponentClassDiagram.png" alt="SessionComponentClassDiagram" width="800">
 </div>
-<div class="title">Figure 3. Class Diagram of <code>session</code> component</div>
-</div>
-<div class="paragraph">
-<p><code>ImportSession</code> resides in the <code>Session</code> component in the <code>Storage</code> component as shown above. The
-<code>Session</code> component is responsible for processing excel files, as well as keeping the state of the excel
-files during runtime, in the form of <code>SessionData</code>.</p>
+<div class="title">Figure 2. Object Diagram of <code>session</code> component</div>
 </div>
 <div class="paragraph">
 <p><code>ImportSession</code> uses a Singleton design pattern. It is responsible for initializing and closing the session.
@@ -943,22 +663,24 @@ with a timestamp added to the back of the filename.</p>
 </div>
 <div class="paragraph">
 <p><code>ImportSession</code> is designed to be stateless on its own, with all data stored in <code>SessionData</code>. This helps to
-support <code>UndoableCommand</code>.
-The flow of using <code>ImportSession</code> is as follows:</p>
+support <code>UndoableCommand</code>. Currently, <code>SessionData</code> is not persistent in the event of a crash.</p>
+</div>
+<div class="paragraph">
+<p>The flow of using <code>ImportSession</code> is as follows:</p>
 </div>
 <div class="sect4">
 <h5 id="loading-a-file-into-code-importsession-code"><a class="link" href="#loading-a-file-into-code-importsession-code">Loading a file into <code>ImportSession</code></a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Figure 15 below shows the process of initializing ImportSession. On the <code>import</code> command,
+<p>Figure 14 below shows the process of initializing ImportSession. On the <code>import</code> command,
 <code>getInstance</code> is used to retrieve the <code>importSession</code> instance, before it calls
 <code>initialize(fileName)</code>. A new <code>SheetParser</code> is created to populate <code>sessionData</code> with excel sheet data
 as shown in Figure 11, which comes as:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>SheetWithHeaderField</code>: Augmented <code>Sheet</code> that provides API to indicate approval status and
+<p><code>SheetWithHeaderField</code>: augmented <code>Sheet</code> that provides API to indicate approval status and
 write comments.</p>
 </li>
 <li>
@@ -968,7 +690,7 @@ write comments.</p>
 <div class="content">
 <img src="../images/sessionInitializationSequenceDiagram.png" alt="sessionInitializationSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 4. Sequence Diagram of <code>ImportSession</code> initialization</div>
+<div class="title">Figure 3. Sequence Diagram of <code>ImportSession</code> initialization</div>
 </div>
 </li>
 </ol>
@@ -982,7 +704,7 @@ write comments.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Figure 16 below shows the process of reviewing job entries in an import session. On the <code>review</code>
+<p>Figure 15 below shows the process of reviewing job entries in an import session. On the <code>review</code>
 command, <code>sessionData</code> updates the relevant <code>jobEntry</code> and retrieves the sheet and row number,
 which is used to update <code>sheetWithHeaderFields</code>. Upon reviewing a job, CarviciM will add the job and
 any employees not present in the application.</p>
@@ -990,7 +712,7 @@ any employees not present in the application.</p>
 <div class="content">
 <img src="../images/sessionReviewSequenceDiagram.png" alt="sessionReviewSequenceDiagram" width="800">
 </div>
-<div class="title">Figure 5. Sequence Digram of <code>ImportSession</code> during the reviewing of a job</div>
+<div class="title">Figure 4. Sequence Digram of <code>ImportSession</code> during the reviewing of a job</div>
 </div>
 </li>
 </ul>
@@ -999,7 +721,7 @@ any employees not present in the application.</p>
 <div class="sect4">
 <h5 id="saving-feedback-from-an-code-importsession-code"><a class="link" href="#saving-feedback-from-an-code-importsession-code">Saving feedback from an <code>ImportSession</code></a></h5>
 <div class="paragraph">
-<p><code>SessionData</code> autosaves the comments to an excel file with the same file name and <code>-comments.xls</code> or <code>-comments.xlsx</code> appended,
+<p><code>SessionData</code> autosaves the comments to an excel file with -comments.xls or -comments.xlsx appended,
 in the same directory.</p>
 </div>
 </div>
@@ -1011,20 +733,18 @@ in the same directory.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Save a copy of the previous instance of <code>sessionData</code> using <code>createCopy()</code> whenever an
-<code>UndoableCommand</code> is executed, then load the previous instance on undo. Data in the copy will be written to
-a <code>.temp</code> file, with a timestamp prepended to its name to make it unique. Most of the <code>.temp</code> files will be
-wiped on application exit.</p>
+<p><strong>Current choice:</strong> Add the previous instance of <code>sessionData</code> when setting data for <code>Command</code>, with a
+<code>SaveFileStack</code> as shown in Figure 11. Load this <code>sessionData</code> on <code>undo</code> or <code>redo</code> command.</p>
 <div class="ulist">
 <ul>
 <li>
 <p>Pros: <code>sessionData</code> stores data for <code>importSession</code>, making it appropriate to be used as data in <code>undo</code>
-and <code>redo</code>. Modification is only limited to <code>UndoableCommand</code>. Code for <code>undo</code> can be reused for any commands that
-affect <code>sessionData</code> in the future, respecting Open Closed Principle.</p>
+and <code>redo</code>. Modification is only limited to <code>UndoableCommand</code>. Single Responsibility Principle is maintained,
+as the storage of save file locations is limited to <code>SaveFileStack</code>.</p>
 </li>
 <li>
-<p>Cons: IOException still has to be handled in <code>sessionData</code> on undo. <code>undo</code> and <code>redo</code> can fail now because of IOException and they have to be modified. <code>.temp</code> files
-can also cause home folder to bloat in size during runtime after many commands are entered.</p>
+<p>Cons: <code>sessionData</code> will have to store the boolean <code>initialized</code> in <code>sessionData</code> so that it will
+stay up-to-date with the <code>UndoRedoStack</code>.</p>
 </li>
 </ul>
 </div>
@@ -1034,12 +754,11 @@ can also cause home folder to bloat in size during runtime after many commands a
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: <code>ImportSession</code> can effectively handle <code>undo</code> and <code>redo</code> on its own without additional dependencies.
-Open Closed Principle is respected, there is no need to modify <code>UndoableCommand</code>.</p>
+<p>Pros: Open Closed Principle is respected, there is no need to modify <code>UndoableCommand</code>.</p>
 </li>
 <li>
-<p>Cons: Difficult to coordinate with <code>UndoRedoStack</code> as jobs and employees in <code>model</code> are also affected. IOExceptions
-thrown also need to be handled, requiring <code>UndoableCommand</code> to be modified for handling of Exceptions.</p>
+<p>Cons: Commands that modify <code>sessionData</code> have to be written differently from other commands to support
+<code>undo</code> and <code>redo</code>. The delimiter rule is also violated as <code>importSession</code> is unnecessarily involved.</p>
 </li>
 </ul>
 </div>
@@ -1048,7 +767,7 @@ thrown also need to be handled, requiring <code>UndoableCommand</code> to be mod
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-supporting-mass-add-method-addjobsandnewemployees"><a class="link" href="#aspect-supporting-mass-add-method-addjobsandnewemployees">Aspect: Supporting mass add method addJobsAndNewEmployees</a></h5>
+<h5 id="aspect-supporting-mass-add-methods-addjobs-addmissingemployees"><a class="link" href="#aspect-supporting-mass-add-methods-addjobs-addmissingemployees">Aspect: Supporting mass add methods addJobs/addMissingEmployees</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1066,15 +785,15 @@ behavior of <code>Model</code>.</p>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Add the methods to an abstract <code>ReviewCommand</code> and inherit the methods for <code>AcceptAll</code>/<code>RejectAll</code> commands.</p>
+<p><em>Alternative:</em> Add the methods to <code>ImportSession</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: The behavior of these methods can be tailored specifically to <code>AcceptAll</code>/<code>RejectAll</code> commands.</p>
+<p>Pros: The behavior of these methods can be tailored specifically to <code>ImportSession</code>.</p>
 </li>
 <li>
-<p>Cons: Modifying the implementation of <code>Model</code> may affect the behavior of <code>ReviewCommand</code> without knowing, leading to
-potential regressions.</p>
+<p>Cons: Unnecessary coupling between <code>Model</code> and <code>ImportSession</code> when <code>Command</code> is already coupled to <code>Model</code>.
+The Single Responsibility Principle is also violated.</p>
 </li>
 </ul>
 </div>
@@ -1083,104 +802,32 @@ potential regressions.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-reading-of-first-row-headers-from-excel-files"><a class="link" href="#aspect-reading-of-first-row-headers-from-excel-files">Aspect: Reading of first row headers from excel files</a></h5>
+<h5 id="aspect-persistent-data"><a class="link" href="#aspect-persistent-data">Aspect: Persistent Data</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current choice:</strong> Allow compulsory and optional fields, with variable number of columns and variable order.</p>
+<p><strong>Current choice:</strong> Keep all data from <code>ImportSession</code> on <code>sessionData</code> and use it to initialize on startup.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Flexible on format of imported excel files. Also allows future expansion of single column fields.</p>
+<p>Pros: <code>ImportSession</code> gets to stay as a <code>Singleton</code>, preventing confusion.</p>
 </li>
 <li>
-<p>Cons: User may not appreciate the flexibility if he or she can enforce the format of the excel files received.
-Flexibility provided is not enough for unknown headers.</p>
+<p>Cons: There will be increased coupling between <code>Session</code> and <code>Storage</code>.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Alternative:</em> Fix the format of the headers.</p>
+<p><em>Alternative:</em> Combine <code>ImportSession</code> and <code>SessionData</code> into 1 single class and store
+it directly.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Confusion can be reduced, importing errors can also be minimized.</p>
+<p>Pros: <code>ImportSession</code> can be directly initialized on startup and coupling is reduced.</p>
 </li>
 <li>
-<p>Cons: Users cannot further customize job entries on import with optional fields, optional field data will be lost.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="aspect-reading-of-job-entries-from-excel-files"><a class="link" href="#aspect-reading-of-job-entries-from-excel-files">Aspect: Reading of job entries from excel files</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Current choice:</strong> Find the first complete job entry. Subsequently, whenever the next job entry is read, if there
-are empty fields, take those fields from the previous job entry. Missing fields will be added to remarks and comments.
-Repeat until there are no job entries in the file.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Allows excel sheet providers to save time on filling reused data between adjacent job entries.</p>
-</li>
-<li>
-<p>Cons: Unintentional blanks may result in job entries with wrong data being imported, requiring the user to look
-through the remarks of the imported job entries.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><em>Alternative:</em> Only import complete job entries</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Incomplete job entries will not be errorneously imported into CarviciM.</p>
-</li>
-<li>
-<p>Cons: User will not be able to review incomplete job entries in the CarviciM as only complete jobs are imported.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="aspect-uniqueness-of-job-entries"><a class="link" href="#aspect-uniqueness-of-job-entries">Aspect: Uniqueness of job entries</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Current choice:</strong> Use <code>jobNumber</code> in the application on import. To prevent reimporting the same excel
-file twice, a file with the same name and a <code>-comments.xls</code> or <code>-comments.xlsx</code> appended, and every subsequent import reads from this file if</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Job entry number is controlled by CarviciM and can stay unique. Job entries from excel files can
-also stay unique if there are no duplicates within or across excel files.</p>
-</li>
-<li>
-<p>Cons: User might import the same file if the <code>-comments.xls</code> or <code>-comments.xlsx gets misplaced, and become confused.
-The `jobNumber</code> associated with the same imported job might also change on every different import.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><em>Alternative:</em> Use a hash function to decide the <code>jobNumber</code> of a job. When there is a collision, add a suffix to make the <code>jobNumber</code> unique.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: <code>jobNumber</code> stays the same on import, independent of when it is imported.</p>
-</li>
-<li>
-<p>Cons: <code>JobNumber</code> has to be modified to support this implementation.</p>
+<p>Cons: Confusion may occur due to allowing more than one <code>ImportSession</code>.</p>
 </li>
 </ul>
 </div>
@@ -1195,7 +842,7 @@ The `jobNumber</code> associated with the same imported job might also change on
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:24:13 UTC
+Last updated 2018-04-15 14:23:00 UTC
 </div>
 </div>
 </body>
