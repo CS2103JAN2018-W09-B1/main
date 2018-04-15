@@ -230,7 +230,7 @@ Here is what happens when the UI makes an `execute()` call to Logic:
 
 For a more specific example of the steps above, given below (figure 8) is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` <<api, API>> call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions Inside the Logic Component for the `deletee 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
