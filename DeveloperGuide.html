@@ -50,14 +50,16 @@
 <li><a href="#set-command-feature">3.4. Set command feature</a></li>
 <li><a href="#import-save-feature">3.5. Import/Save feature</a></li>
 <li><a href="#theme-setting-feature">3.6. Theme setting feature</a></li>
-<li><a href="#sort-feature">3.7. Sort feature</a></li>
-<li><a href="#archive-feature">3.8. Archive feature</a></li>
-<li><a href="#analyse-feature">3.9. Analyse feature</a></li>
-<li><a href="#undo-redo-feature">3.10. Undo/Redo feature</a></li>
-<li><a href="#send-email-to-employees-about-job">3.11. Send Email to Employees about Job</a></li>
-<li><a href="#proposed-data-encryption">3.12. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.13. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.14. Configuration</a></li>
+<li><a href="#find-by-tag-feature">3.7. Find by tag feature</a></li>
+<li><a href="#sort-feature">3.8. Sort feature</a></li>
+<li><a href="#archive-feature">3.9. Archive feature</a></li>
+<li><a href="#analyse-feature">3.10. Analyse feature</a></li>
+<li><a href="#undo-redo-feature">3.11. Undo/Redo feature</a></li>
+<li><a href="#login-to-gmail">3.12. Login to Gmail</a></li>
+<li><a href="#send-emails-to-employees-about-job">3.13. Send Emails to Employees about Job</a></li>
+<li><a href="#proposed-data-encryption">3.14. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.15. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.16. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1644,9 +1646,72 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="sort-feature"><a class="link" href="#sort-feature">3.7. Sort feature</a></h3>
+<h3 id="find-by-tag-feature"><a class="link" href="#find-by-tag-feature">3.7. Find by tag feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-7"><a class="link" href="#current-implementation-7">3.7.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>When the user enters <code>findt</code> followed by some keywords, for each existing employee, the employee&#8217;s tags will be concatenated to form a String, with a space in between each tag. The <code>stream</code> method of <code>List</code> class will then be used to check if any of the keywords entered by the user matches any word in the concatenated string. The code for this algorithm is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> test(Employee employee) {
+    <span class="predefined-type">Set</span>&lt;Tag&gt; employeeTags = employee.getTags();
+    <span class="predefined-type">String</span> tagsConcatenated = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>;
+    <span class="keyword">for</span> (Tag tag: employeeTags) {
+        tagsConcatenated = tagsConcatenated + tag.getTagName() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>;
+    }
+    <span class="directive">final</span> <span class="predefined-type">String</span> allTagNames = tagsConcatenated;
+
+    <span class="keyword">return</span> keywords.stream()
+            .anyMatch(keyword -&gt; StringUtil.containsWordIgnoreCase(allTagNames, keyword));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This algorithm is then repeated for all existing employees.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">3.7.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-number-of-keyword-matches"><a class="link" href="#aspect-number-of-keyword-matches">Aspect: Number of keyword matches</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Only at least 1 keyword match is needed for the employee to appear on the filtered list.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Useful for users who wish to see employees who only have at least 1 keyword as their tag in the filtered list.</p>
+</li>
+<li>
+<p>Cons: May not be useful for users who wish to search for employees that have all the keywords as their tags.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> All keywords have to match for the employee to appear on the filtered list.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Useful for users who wish to search for employees that have all the keywords as their tags.</p>
+</li>
+<li>
+<p>Cons: May not be useful for users who wish to see employees who only have at least 1 keyword as their tag in the filtered list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sort-feature"><a class="link" href="#sort-feature">3.8. Sort feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">3.8.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The sort mechanism is facilitated by a <code>Comparator</code>. It supports the comparison of employee’s name and arranges the employee list alphabetically.</p>
 </div>
@@ -1677,7 +1742,7 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">3.7.2. Design Considerations</a></h4>
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">3.8.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-sortcommand-code-executes-br"><a class="link" href="#aspect-how-code-sortcommand-code-executes-br">Aspect: How <code>SortCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1714,9 +1779,9 @@ If there is no <code>INDEX</code> present, <code>theme</code> command will retur
 </div>
 </div>
 <div class="sect2">
-<h3 id="archive-feature"><a class="link" href="#archive-feature">3.8. Archive feature</a></h3>
+<h3 id="archive-feature"><a class="link" href="#archive-feature">3.9. Archive feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-8"><a class="link" href="#current-implementation-8">3.8.1. Current Implementation</a></h4>
+<h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">3.9.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The <code>ArchiveCommand</code> is facilitated by a <code>AddJobCommandParser</code>, which is responsible for parsing the input starting <code>Date</code> and ending <code>Date</code>.</p>
 </div>
@@ -1811,7 +1876,7 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">3.8.2. Design Considerations</a></h4>
+<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">3.9.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-archivecommand-code-executes-br"><a class="link" href="#aspect-how-code-archivecommand-code-executes-br">Aspect: How <code>ArchiveCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1881,9 +1946,9 @@ The <code>StorageManager</code> manages both the storage of Carvicim and archive
 </div>
 </div>
 <div class="sect2">
-<h3 id="analyse-feature"><a class="link" href="#analyse-feature">3.9. Analyse feature</a></h3>
+<h3 id="analyse-feature"><a class="link" href="#analyse-feature">3.10. Analyse feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-9"><a class="link" href="#current-implementation-9">3.9.1. Current Implementation</a></h4>
+<h4 id="current-implementation-10"><a class="link" href="#current-implementation-10">3.10.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The <code>AnalyseCommand</code> is facilitated by a <code>HashMap</code>, which is responsible for keeping track of
 the number of jobs assigned to each employee.</p>
@@ -1950,7 +2015,7 @@ the number of jobs assigned to each employee.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">3.9.2. Design Considerations</a></h4>
+<h4 id="design-considerations-10"><a class="link" href="#design-considerations-10">3.10.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-code-analysecommand-code-executes-br"><a class="link" href="#aspect-how-code-analysecommand-code-executes-br">Aspect: How <code>AnalyseCommand</code> executes<br></a></h5>
 <div class="ulist">
@@ -1987,9 +2052,9 @@ the number of jobs assigned to each employee.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.10. Undo/Redo feature</a></h3>
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.11. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-10"><a class="link" href="#current-implementation-10">3.10.1. Current Implementation</a></h4>
+<h4 id="current-implementation-11"><a class="link" href="#current-implementation-11">3.11.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -2177,7 +2242,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-10"><a class="link" href="#design-considerations-10">3.10.2. Design Considerations</a></h4>
+<h4 id="design-considerations-11"><a class="link" href="#design-considerations-11">3.11.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -2287,7 +2352,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.</p>
+<p>Pros: Easy to understand for new Computer Science undergraduates to understand, who are likely to be * the new incoming developers of our project.</p>
 </li>
 <li>
 <p>Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both <code>HistoryManager</code> and <code>UndoRedoStack</code>.</p>
@@ -2314,81 +2379,67 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="send-email-to-employees-about-job"><a class="link" href="#send-email-to-employees-about-job">3.11. Send Email to Employees about Job</a></h3>
+<h3 id="login-to-gmail"><a class="link" href="#login-to-gmail">3.12. Login to Gmail</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-11"><a class="link" href="#current-implementation-11">3.11.1. Current Implementation</a></h4>
+<h4 id="current-implementation-12"><a class="link" href="#current-implementation-12">3.12.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>This feature is implemented using Gmail <a href="#api">API</a>.</p>
+<p>This feature is implemented using <a href="https://developers.google.com/gmail/api/">Gmail API</a>.</p>
 </div>
 <div class="paragraph">
-<p>The following dependencies are used:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>com.google.api-client:google-api-client:1.23.0</p>
-</li>
-<li>
-<p>com.google.oauth-client:google-oauth-client-jetty:1.23.0</p>
-</li>
-<li>
-<p>com.google.apis:google-api-services-gmail:v1-rev82-1.23.0</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="authorization"><a class="link" href="#authorization">Authorization</a></h5>
-<div class="paragraph">
-<p>Suppose that the user typed the first email command.</p>
+<p>When the user enters the <code>login</code> command, a new GmailAuthenticator object will be created which builds an authorized Gmail client service, as seen in the diagram below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/EmailAuthorization.png" alt="EmailAuthorization" width="650">
+<img src="images/LoginCommand_SeqDiagram.png" alt="LoginCommand SeqDiagram" width="550">
 </div>
-<div class="title">Figure 28. Email authorization sequence diagram</div>
+<div class="title">Figure 28. Login sequence diagram</div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>GoogleAuthorizationCodeFlow</code> is used to build the authorization code flow and trigger user authorization request. It then manages and persists user <code>Credential</code>.</p>
-</li>
-<li>
-<p><code>Credential</code> is then saved into a <code>File</code> so that the user need not repeatedly key in his or her authorization information before sending each email.</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>In the <code>authorize</code> method, a <code>GoogleAuthorizationCodeFlow</code> object is created to build the authorization code flow and trigger user authorization request. It then manages and persists user <code>Credential</code> by saving it in the file path <code>./src/main/resources/.credentials/carvicim-gmail</code>. For more details, look at the the code snippet below.</p>
 </div>
+<div class="paragraph">
+<p>The <code>authorize</code> method:</p>
 </div>
-<div class="sect4">
-<h5 id="sending-an-email"><a class="link" href="#sending-an-email">Sending an email</a></h5>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>An empty <code>Properties</code> list is created, which is used to create an email <code>Session</code></p>
-</li>
-<li>
-<p>A <code>MimeMessage</code>, a class in the <code>javax.mail.internet</code> package is created using that <code>Session</code>.</p>
-</li>
-<li>
-<p>Attributes <code>from</code>, <code>recipient</code>, <code>subject</code> and <code>text</code> of the <code>MimeMessage</code> are set. The <code>Text</code> set contains information extracted from the particular <code>Job</code>.</p>
-</li>
-<li>
-<p><code>MimeMessage</code> is encoded using base64url.</p>
-</li>
-<li>
-<p>A <code>Message</code> object is instantiated.</p>
-</li>
-<li>
-<p>The value of the <code>raw</code> property of the <code>Message</code> is set to the encoded <code>MimeMessage</code>.</p>
-</li>
-<li>
-<p>Make a call to <code>messages.send</code> to send the email.</p>
-</li>
-</ol>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> Credential authorize() <span class="directive">throws</span> <span class="exception">IOException</span> {
+    <span class="predefined-type">InputStream</span> in = GmailAuthenticator.class.getResourceAsStream(<span class="string"><span class="delimiter">&quot;</span><span class="content">/client_secret.json</span><span class="delimiter">&quot;</span></span>);
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, <span class="keyword">new</span> <span class="predefined-type">InputStreamReader</span>(in));
+
+    GoogleAuthorizationCodeFlow flow =
+            <span class="keyword">new</span> GoogleAuthorizationCodeFlow.Builder(
+                    httpTransport, JSON_FACTORY, clientSecrets, <span class="predefined-type">Arrays</span>.asList(scope))
+                    .setDataStoreFactory(dataStoreFactory)
+                    .setAccessType(<span class="string"><span class="delimiter">&quot;</span><span class="content">offline</span><span class="delimiter">&quot;</span></span>)
+                    .build();
+    Credential credential = <span class="keyword">new</span> AuthorizationCodeInstalledApp(
+            flow, <span class="keyword">new</span> LocalServerReceiver()).authorize(<span class="string"><span class="delimiter">&quot;</span><span class="content">user</span><span class="delimiter">&quot;</span></span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Credentials saved to </span><span class="delimiter">&quot;</span></span> + DATA_STORE_DIR.getAbsolutePath());
+    <span class="keyword">return</span> credential;
+}</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="send-emails-to-employees-about-job"><a class="link" href="#send-emails-to-employees-about-job">3.13. Send Emails to Employees about Job</a></h3>
+<div class="paragraph">
+<p>This feature is implemented using <a href="https://developers.google.com/gmail/api/">Gmail API</a>.</p>
+</div>
+<div class="paragraph">
+<p>A general overview of how this feature is implemented is shown in the sequence diagram below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EmailCommand_SeqDiagram.png" alt="EmailCommand SeqDiagram" width="550">
+</div>
+<div class="title">Figure 29. Email sequence diagram</div>
+</div>
+<div class="paragraph">
+<p>To explain the sequence of events in greater detail, when the user enters the <code>email j/JOB_NUMBER</code> command, a <code>UniqueEmployeeList</code> of <code>JOB_NUMBER</code> job is obtained from the <code>Job</code> object. Using a <code>for</code> loop, an email is sent to each employee in the <code>UniqueEmployeeList</code>. To craft an email, an empty <code>Properties</code> list is created, which is used to create an email <code>Session</code>. A <code>MimeMessage</code>, a class in the <code>javax.mail.internet</code> package is created using that <code>Session</code>. The body of the <code>MimeMessage</code> contains details extracted from the particular <code>Job</code>, and is then encoded using <a href="https://en.wikipedia.org/wiki/Base64">base64url</a> and repackaged into a <code>Message</code> by setting the value of the <code>raw</code> property of the <code>Message</code> to the encoded <code>MimeMessage</code>. Finally, this <code>Message</code> is sent by making a call to <code>messages.send</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-11"><a class="link" href="#design-considerations-11">3.11.2. Design Considerations</a></h4>
+<h4 id="design-considerations-12"><a class="link" href="#design-considerations-12">3.13.1. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-email-content"><a class="link" href="#aspect-email-content">Aspect: Email content</a></h5>
 <div class="ulist">
@@ -2431,10 +2482,10 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: More convenient for user as the user only needs to key in his or her authorization information once</p>
+<p>Pros: More convenient for the user as the user only needs to key in his or her authorization information once</p>
 </li>
 <li>
-<p>Cons: Unsafe</p>
+<p>Cons: Unsafe if the computer used is a shared one as another person can send out emails from the logged in user&#8217;s account.</p>
 </li>
 </ul>
 </div>
@@ -2444,10 +2495,10 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Safe</p>
+<p>Pros: Safer as another person cannot simply send out emails from the logged in user&#8217;s account, even on a shared computer.</p>
 </li>
 <li>
-<p>Cons: Inconvenient for user as user needs to always key in authorization information before sending each email</p>
+<p>Cons: Inconvenient for user as user needs to always key in authorization information before sending emails for each job.</p>
 </li>
 </ul>
 </div>
@@ -2458,20 +2509,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.12. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.14. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.13. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.15. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.14, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.16, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -2502,7 +2553,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.14. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.16. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2581,7 +2632,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 29. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 30. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -5107,7 +5158,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 06:04:15 UTC
+Last updated 2018-04-15 07:13:10 UTC
 </div>
 </div>
 </body>
