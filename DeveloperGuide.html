@@ -101,7 +101,8 @@
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
 <li><a href="#deleting-a-employee">G.2. Deleting a employee</a></li>
-<li><a href="#saving-data">G.3. Saving data</a></li>
+<li><a href="#closing-a-job">G.3. Closing a job</a></li>
+<li><a href="#adding-remark-to-a-job">G.4. Adding remark to a job</a></li>
 </ul>
 </li>
 </ul>
@@ -5097,9 +5098,6 @@ Expected: The most recent window size and location is retained.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="deleting-a-employee"><a class="link" href="#deleting-a-employee">G.2. Deleting a employee</a></h3>
@@ -5129,28 +5127,55 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">G.3. Saving data</a></h3>
+<h3 id="closing-a-job"><a class="link" href="#closing-a-job">G.3. Closing a job</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Dealing with missing/corrupted data files</p>
+<p>Closing a job while all jobs are listed</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><em>{explain how to simulate a missing/corrupted file and the expected behavior}</em></p>
+<p>Prerequisites: List all ongoing jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.</p>
+</li>
+<li>
+<p>Test case: <code>closej j/1</code><br>
+Expected: Job with job number 1 has its status change from "ongoing" to "closed". Details of the closed job shown in the status message. Job list shows updated job. Timestamp in the status bar is updated.</p>
+</li>
+<li>
+<p>Test case: <code>closej j/0</code><br>
+Expected: No job is closed. Error details shown in the status message. Status bar remains the same.</p>
 </li>
 </ol>
 </div>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="adding-remark-to-a-job"><a class="link" href="#adding-remark-to-a-job">G.4. Adding remark to a job</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adding a remark to an ongoing job, while all ongoing jobs are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.</p>
+</li>
+<li>
+<p>Test case: <code>remark j/1 r/Urgent</code><br>
+Expected: Remark "Urgent" added to job number 1. Details of remark added to job shown in the status message. Timestamp in the status bar is updated.</p>
+</li>
+<li>
+<p>Test case: <code>remark j/0 r/Urgent</code><br>
+Expected: Remark not added to the specified job. Error details shown in the status message. Status bar remains the same.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -5158,7 +5183,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 07:13:10 UTC
+Last updated 2018-04-15 07:42:10 UTC
 </div>
 </div>
 </body>
