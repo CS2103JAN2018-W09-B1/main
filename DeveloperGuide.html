@@ -95,6 +95,17 @@
 </li>
 <li><a href="#product-scope">Appendix B: Product Scope</a></li>
 <li><a href="#user-stories">Appendix C: User Stories</a></li>
+<li><a href="#use-cases">Appendix D: Use Cases</a></li>
+<li><a href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></li>
+<li><a href="#glossary">Appendix F: Glossary</a></li>
+<li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
+<ul class="sectlevel2">
+<li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
+<li><a href="#deleting-a-employee">G.2. Deleting a employee</a></li>
+<li><a href="#closing-a-job">G.3. Closing a job</a></li>
+<li><a href="#adding-remark-to-a-job">G.4. Adding remark to a job</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -4411,394 +4422,1027 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">export completed jobs to other formats</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">print out all the completed job entries and view it with a better program</p>
-<p class="tableblock"><em>{More to be added}</em></p>
-<p class="tableblock">[appendix]
-== Use Cases</p>
-<p class="tableblock">(For all use cases below, the <strong>System</strong> is the <code>CarviciM</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
-<p class="tableblock">[discrete]
-=== Use case: Add employee</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User requests to add an employee in the list.
-2.  CarviciM adds the employee and updates the list.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">* 2a. The employee details are not valid.
-+
-[none]
-<strong> 2a1. CarviciM shows an error message.
-+
-Use case resumes at step 1.</p>
-<p class="tableblock">[discrete]
-=== Use case: Delete employee</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User requests to list employees.
-2.  CarviciM shows a list of employees.
-3.  User requests to delete a specific employee in the list.
-4.  CarviciM deletes the employee and updates the list.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 2a. The list is empty.
-+
-Use case ends.</p>
-<p class="tableblock">* 3a. The given index is invalid.
-+
-[none]
-</strong> 3a1. CarviciM shows an error message.
-+
-Use case resumes at step 2.</p>
-<p class="tableblock">[none]
-* 3b. The given employee is assigned to an ongoing job.
-+
-[none]
-<strong> 3b1. CarviciM shows an error message.
-+
-Use case resumes at step 3.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Find an employee by name</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User requests to find an employee by name.
-2.  CarviciM shows a list of employees whose name contain the provided name.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 2a. The list is empty.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Sort employee list</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User request to sort employee list.
-2.  CarviciM sorts employee list alphabetically according to their names.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Add job entry</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User requests to list the employees.
-2.  CarviciM shows a list of employees.
-3.  User requests to add a job entry.
-4.  CarviciM adds the job entry.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 2a. The list of employees is empty.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 3a. Format of details is invalid.
-+
-[none]
-</strong> 3a1. CarviciM shows an error message.
-+
-Use case resumes at step 3.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 3b. The given employee index is invalid.
-+
-[none]
-<strong> 3b1. CarviciM shows an error message.
-+
-Use case resumes at step 3.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Add remarks to an ongoing job entry</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User selects a job entry.
-2.  CarviciM shows logged remarks in the job.
-3.  User requests to log a remark.
-4.  CarviciM reflects the added remark at end of log.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 2a. The remarks list is empty.
-+
-[none]
-</strong> 2a1. CarviciM shows an empty list.
-+
-Use case resumes at step 3.</p>
-<p class="tableblock">* 3a. The given remark is empty.
-+
-Use case resumes at step 3.</p>
-<p class="tableblock">[discrete]
-=== Use case: Close job entry</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User requests to list the job entries.
-2.  CarviciM shows a list of job entries.
-3.  User requests to close a specific job entry in the list.
-4.  CarviciM close the job entry.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 2a. The list of jobs is empty.
-+
-Use case ends.</p>
-<p class="tableblock">* 3a. The given job id is invalid.
-+
-[none]
-<strong> 3a1. CarviciM shows an error message.
-+
-Use case resumes at step 2.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Import job entries</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User specifies the path to a file to import.
-2.  CarviciM shows the user the new job entries.
-3.  User approves the new job entries.
-4.  CarviciM imports the approved entries.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 1a. The file specified in the path is invalid or does not have read permission.
-[none]
-</strong> 1a1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 1b. The file specified in the path has formatting errors.
-[none]
-<strong> 1b1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 2a. The file contains conflict job entries with the application data.
-[none]
-</strong> 2a1. CarviciM shows the users the conflicts.
-<strong> 2a2. The user reviews the conflicts and chooses which copy to keep.
-+
-Use case resumes at step 2.</p>
-<p class="tableblock">[none]
-* 3a. User rejects some job entries.
-[none]
-</strong> CarviciM discards rejected job entries while importing the remaining new job entries.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Export feedback for imported job entries</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User imports job entries from a file.
-2.    CarviciM imports the accepted new jobs.
-3.    User adds comments to reviewed new job entries.
-4.    User specifies path to export the comments.
-5.    CarviciM exports the comments of the reviewed new job entries.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 5a. CarviciM does not have write permission to file path.
-[none]
-<strong> 5a1. CarviciM shows an error message.
-+
-Use case resumes at step 5.</p>
-<p class="tableblock">[discrete]
-=== Use case: Archiving of job entries</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User specifies the date range for archiving.
-2.  CarviciM extracts the closed job entries within the selected range and saves them to a new xml file.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 1a. The given date format is invalid.
-[none]
-</strong> 1a1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 1b. The given date range is invalid.
-[none]
-<strong> 1b1. CarviciM shows an error message.</p>
-<p class="tableblock">+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 1c. No job entries found within selected date range.
-[none]
-</strong> 1c1. CarviciM shows an error message.</p>
-<p class="tableblock">+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Analysing of job entries</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User requests to analyse the job entries.
-2.  CarviciM analyses the job entries within the current month and provides a summary of the job entries.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Tab auto-complete commands</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User types incomplete argument in command.
-2.  User presses tab key.
-3.  CarviciM completes the command.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 2a. Argument has more than one possible auto-complete.
-+
-Use case resumes at step 1.</p>
-<p class="tableblock">[discrete]
-=== Use case: Customize the colour label of job status</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User specifies color label of a job status.
-2.  CarviciM updates the label colors displayed.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 1a. The label provided is not valid.
-+
-[none]
-<strong> 1a1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 1b. The color provided is not valid.
-+
-[none]
-</strong> 1b1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Set custom command word</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User specifies the old and new command word with set command.
-2.  CarviciM updates the command words.
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 1a. The old command word is not used.
-[none]
-<strong> 1a1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 1b. The new command word is already used for a different command.
-[none]
-</strong> 1b1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 1c. The new command word is a default command word for another command.
-[none]
-<strong> 1c1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[discrete]
-=== Use case: Set theme of application</p>
-<p class="tableblock"><strong>MSS</strong></p>
-<p class="tableblock">1.  User request to change theme.
-2.  CarviciM changes the theme
-+
-Use case ends.</p>
-<p class="tableblock"><strong>Extensions</strong></p>
-<p class="tableblock">[none]
-* 1a. The list of theme is empty.
-[none]
-</strong> 1a1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock">[none]
-* 1b. The given theme index is invalid.
-[none]
-** 1b1. CarviciM shows an error message.
-+
-Use case ends.</p>
-<p class="tableblock"><em>{More to be added}</em></p>
-<p class="tableblock">[appendix]
-== Non Functional Requirements</p>
-<p class="tableblock">*  Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.
-*  Should be able to hold up to 1000 employees without a noticeable sluggishness in performance for typical usage.
-*  Should be able to hold up to 10000 jobs without a noticeable sluggishness in performance for typical usage.
-*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-*  Should work on both 32-bit and 64-bit environments.
-*  Should have short and comprehensible English commands.
-*  Should be able to retain information in event of crash or force shutdown.
-*  Should respond to user command within 2 seconds.
-*  Should be usable by a novice who has never used an electronic job management app before.
-*  User interface should be intuitive enough for users who are not IT-savvy.
-*  View should fit the screen of any computer with minimum screen size of 1280 by 720 pixels.</p>
-<p class="tableblock"><em>{More to be added}</em></p>
-<p class="tableblock">[appendix]
-== Glossary</p>
-<p class="tableblock"><a id="mainstream-os"></a> Mainstream OS::
-Windows, Linux, Unix, OS-X</p>
-<p class="tableblock"><a id="api"></a>API::
-Application Programming Interface: a set of functions and procedures that allow the creation of applications which access the features or data of an operating system, application, or other service.</p>
-<p class="tableblock"><a id="alias"></a>Alias::
-An alternate name</p>
-<p class="tableblock"><a id="beta-testing"></a>Beta testing::
-Final stage of development testing, carried out by a party unconnected with the development process., usually users of the final product.</p>
-<p class="tableblock"><a id="dog-fooding"></a>Dog-fooding::
-Testing of a product before it is made available to customers</p>
-<p class="tableblock"><a id="javafx"></a>JavaFx::
-JavaFX is a software platform for creating and delivering desktop applications, as well as rich Internet applications that can run across a wide variety of devices.</p>
-<p class="tableblock"><a id="jdk"></a>JDK::
-Java Development Kit: an implementation of either one of the Java Platform, Standard Edition, Java Platform, Enterprise Edition, or Java Platform, Micro Edition platforms released by Oracle Corporation in the form of a binary product aimed at Java developers on Solaris, Linux, macOS or Windows. The JDK includes a private JVM and a few other resources to finish the development of a Java Application.</p>
-<p class="tableblock"><a id="pr"></a>PR::
-Pull Request</p>
-<p class="tableblock"><a id="slap"></a>SLAP::
-Single Layer of Abstraction Principle: extraction of methods, fields and constants to keep details at the same level in a method.</p>
-<p class="tableblock">[appendix]
-== Instructions for Manual Testing</p>
-<p class="tableblock">Given below are instructions to test the app manually.</p>
-<p class="tableblock">[NOTE]
-These instructions only provide a starting point for testers to work on; testers are expected to do more <em>exploratory</em> testing.</p>
-<p class="tableblock">=== Launch and Shutdown</p>
-<p class="tableblock">. Initial launch</p>
-<p class="tableblock">.. Download the jar file and copy into an empty folder
-.. Double-click the jar file<br>
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.</p>
-<p class="tableblock">. Saving window preferences</p>
-<p class="tableblock">.. Resize the window to an optimum size. Move the window to a different location. Close the window.
-.. Re-launch the app by double-clicking the jar file.<br>
-   Expected: The most recent window size and location is retained.</p>
-<p class="tableblock">=== Deleting a employee</p>
-<p class="tableblock">. Deleting an employee&#8217;s record while all employees are listed</p>
-<p class="tableblock">.. Prerequisites: List all employees using the <code>liste</code> command. Multiple employees in the list.
-.. Test case: <code>deletee 1</code><br>
-   Expected: First contact is deleted from the list. Details of the deleted contact is shown in the status message. Timestamp in the status bar is updated.
-.. Test case: <code>deletee 0</code><br>
-   Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: <code>deletee</code>, <code>deletee x</code> (where x is larger than the list size) <em>{give more}</em><br>
-   Expected: Similar to previous.</p>
-<p class="tableblock">=== Closing a job</p>
-<p class="tableblock">. Closing a job while all jobs are listed</p>
-<p class="tableblock">.. Prerequisites: List all ongoing jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.
-.. Test case: <code>closej j/1</code><br>
-   Expected: Job with job number 1 has its status change from "ongoing" to "closed". Details of the closed job shown in the status message. Job list shows updated job. Timestamp in the status bar is updated.
-.. Test case: <code>closej j/0</code><br>
-   Expected: No job is closed. Error details shown in the status message. Status bar remains the same.</p>
-<p class="tableblock">=== Adding remark to a job</p>
-<p class="tableblock">. Adding a remark to an ongoing job, while all ongoing jobs are listed</p>
-<p class="tableblock">.. Prerequisites: List all jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.
-.. Test case: <code>remark j/1 r/Urgent</code><br>
-   Expected: Remark "Urgent" added to job number 1. Details of remark added to job shown in the status message. Timestamp in the status bar is updated.
-.. Test case: <code>remark j/0 r/Urgent</code><br>
-   Expected: Remark not added to the specified job. Error details shown in the status message. Status bar remains the same.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">print out all the completed job entries and view it with a better program</p></td>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p><em>{More to be added}</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="use-cases"><a class="link" href="#use-cases">Appendix D: Use Cases</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>(For all use cases below, the <strong>System</strong> is the <code>CarviciM</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+</div>
+<h3 id="use-case-add-employee" class="discrete">Use case: Add employee</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to add an employee in the list.</p>
+</li>
+<li>
+<p>CarviciM adds the employee and updates the list.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>2a. The employee details are not valid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 1.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-delete-employee" class="discrete">Use case: Delete employee</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list employees.</p>
+</li>
+<li>
+<p>CarviciM shows a list of employees.</p>
+</li>
+<li>
+<p>User requests to delete a specific employee in the list.</p>
+</li>
+<li>
+<p>CarviciM deletes the employee and updates the list.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b. The given employee is assigned to an ongoing job.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-find-an-employee-by-name" class="discrete">Use case: Find an employee by name</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to find an employee by name.</p>
+</li>
+<li>
+<p>CarviciM shows a list of employees whose name contain the provided name.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-sort-employee-list" class="discrete">Use case: Sort employee list</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User request to sort employee list.</p>
+</li>
+<li>
+<p>CarviciM sorts employee list alphabetically according to their names.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="use-case-add-job-entry" class="discrete">Use case: Add job entry</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list the employees.</p>
+</li>
+<li>
+<p>CarviciM shows a list of employees.</p>
+</li>
+<li>
+<p>User requests to add a job entry.</p>
+</li>
+<li>
+<p>CarviciM adds the job entry.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list of employees is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. Format of details is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b. The given employee index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-add-remarks-to-an-ongoing-job-entry" class="discrete">Use case: Add remarks to an ongoing job entry</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User selects a job entry.</p>
+</li>
+<li>
+<p>CarviciM shows logged remarks in the job.</p>
+</li>
+<li>
+<p>User requests to log a remark.</p>
+</li>
+<li>
+<p>CarviciM reflects the added remark at end of log.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The remarks list is empty.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. CarviciM shows an empty list.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The given remark is empty.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-close-job-entry" class="discrete">Use case: Close job entry</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list the job entries.</p>
+</li>
+<li>
+<p>CarviciM shows a list of job entries.</p>
+</li>
+<li>
+<p>User requests to close a specific job entry in the list.</p>
+</li>
+<li>
+<p>CarviciM close the job entry.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list of jobs is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given job id is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-import-job-entries" class="discrete">Use case: Import job entries</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User specifies the path to a file to import.</p>
+</li>
+<li>
+<p>CarviciM shows the user the new job entries.</p>
+</li>
+<li>
+<p>User approves the new job entries.</p>
+</li>
+<li>
+<p>CarviciM imports the approved entries.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The file specified in the path is invalid or does not have read permission.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The file specified in the path has formatting errors.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The file contains conflict job entries with the application data.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. CarviciM shows the users the conflicts.</p>
+</li>
+<li>
+<p>2a2. The user reviews the conflicts and chooses which copy to keep.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. User rejects some job entries.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>CarviciM discards rejected job entries while importing the remaining new job entries.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-export-feedback-for-imported-job-entries" class="discrete">Use case: Export feedback for imported job entries</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User imports job entries from a file.</p>
+</li>
+<li>
+<p>CarviciM imports the accepted new jobs.</p>
+</li>
+<li>
+<p>User adds comments to reviewed new job entries.</p>
+</li>
+<li>
+<p>User specifies path to export the comments.</p>
+</li>
+<li>
+<p>CarviciM exports the comments of the reviewed new job entries.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>5a. CarviciM does not have write permission to file path.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>5a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 5.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-archiving-of-job-entries" class="discrete">Use case: Archiving of job entries</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User specifies the date range for archiving.</p>
+</li>
+<li>
+<p>CarviciM extracts the closed job entries within the selected range and saves them to a new xml file.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The given date format is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The given date range is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c. No job entries found within selected date range.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c1. CarviciM shows an error message.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-analysing-of-job-entries" class="discrete">Use case: Analysing of job entries</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to analyse the job entries.</p>
+</li>
+<li>
+<p>CarviciM analyses the job entries within the current month and provides a summary of the job entries.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="use-case-tab-auto-complete-commands" class="discrete">Use case: Tab auto-complete commands</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User types incomplete argument in command.</p>
+</li>
+<li>
+<p>User presses tab key.</p>
+</li>
+<li>
+<p>CarviciM completes the command.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. Argument has more than one possible auto-complete.</p>
+<div class="paragraph">
+<p>Use case resumes at step 1.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-customize-the-colour-label-of-job-status" class="discrete">Use case: Customize the colour label of job status</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User specifies color label of a job status.</p>
+</li>
+<li>
+<p>CarviciM updates the label colors displayed.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The label provided is not valid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The color provided is not valid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-set-custom-command-word" class="discrete">Use case: Set custom command word</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User specifies the old and new command word with set command.</p>
+</li>
+<li>
+<p>CarviciM updates the command words.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The old command word is not used.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The new command word is already used for a different command.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c. The new command word is a default command word for another command.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-set-theme-of-application" class="discrete">Use case: Set theme of application</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User request to change theme.</p>
+</li>
+<li>
+<p>CarviciM changes the theme</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The list of theme is empty.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. The given theme index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. CarviciM shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>{More to be added}</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="non-functional-requirements"><a class="link" href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.</p>
+</li>
+<li>
+<p>Should be able to hold up to 1000 employees without a noticeable sluggishness in performance for typical usage.</p>
+</li>
+<li>
+<p>Should be able to hold up to 10000 jobs without a noticeable sluggishness in performance for typical usage.</p>
+</li>
+<li>
+<p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
+</li>
+<li>
+<p>Should work on both 32-bit and 64-bit environments.</p>
+</li>
+<li>
+<p>Should have short and comprehensible English commands.</p>
+</li>
+<li>
+<p>Should be able to retain information in event of crash or force shutdown.</p>
+</li>
+<li>
+<p>Should respond to user command within 2 seconds.</p>
+</li>
+<li>
+<p>Should be usable by a novice who has never used an electronic job management app before.</p>
+</li>
+<li>
+<p>User interface should be intuitive enough for users who are not IT-savvy.</p>
+</li>
+<li>
+<p>View should fit the screen of any computer with minimum screen size of 1280 by 720 pixels.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>{More to be added}</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="glossary"><a class="link" href="#glossary">Appendix F: Glossary</a></h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a id="mainstream-os"></a> Mainstream OS</dt>
+<dd>
+<p>Windows, Linux, Unix, OS-X</p>
+</dd>
+<dt class="hdlist1"><a id="api"></a>API</dt>
+<dd>
+<p>Application Programming Interface: a set of functions and procedures that allow the creation of applications which access the features or data of an operating system, application, or other service.</p>
+</dd>
+<dt class="hdlist1"><a id="alias"></a>Alias</dt>
+<dd>
+<p>An alternate name</p>
+</dd>
+<dt class="hdlist1"><a id="beta-testing"></a>Beta testing</dt>
+<dd>
+<p>Final stage of development testing, carried out by a party unconnected with the development process., usually users of the final product.</p>
+</dd>
+<dt class="hdlist1"><a id="dog-fooding"></a>Dog-fooding</dt>
+<dd>
+<p>Testing of a product before it is made available to customers</p>
+</dd>
+<dt class="hdlist1"><a id="javafx"></a>JavaFx</dt>
+<dd>
+<p>JavaFX is a software platform for creating and delivering desktop applications, as well as rich Internet applications that can run across a wide variety of devices.</p>
+</dd>
+<dt class="hdlist1"><a id="jdk"></a>JDK</dt>
+<dd>
+<p>Java Development Kit: an implementation of either one of the Java Platform, Standard Edition, Java Platform, Enterprise Edition, or Java Platform, Micro Edition platforms released by Oracle Corporation in the form of a binary product aimed at Java developers on Solaris, Linux, macOS or Windows. The JDK includes a private JVM and a few other resources to finish the development of a Java Application.</p>
+</dd>
+<dt class="hdlist1"><a id="pr"></a>PR</dt>
+<dd>
+<p>Pull Request</p>
+</dd>
+<dt class="hdlist1"><a id="slap"></a>SLAP</dt>
+<dd>
+<p>Single Layer of Abstraction Principle: extraction of methods, fields and constants to keep details at the same level in a method.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given below are instructions to test the app manually.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These instructions only provide a starting point for testers to work on; testers are expected to do more <em>exploratory</em> testing.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="launch-and-shutdown"><a class="link" href="#launch-and-shutdown">G.1. Launch and Shutdown</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Initial launch</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Download the jar file and copy into an empty folder</p>
+</li>
+<li>
+<p>Double-click the jar file<br>
+Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Saving window preferences</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Resize the window to an optimum size. Move the window to a different location. Close the window.</p>
+</li>
+<li>
+<p>Re-launch the app by double-clicking the jar file.<br>
+Expected: The most recent window size and location is retained.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-employee"><a class="link" href="#deleting-a-employee">G.2. Deleting a employee</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deleting an employee&#8217;s record while all employees are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all employees using the <code>liste</code> command. Multiple employees in the list.</p>
+</li>
+<li>
+<p>Test case: <code>deletee 1</code><br>
+Expected: First contact is deleted from the list. Details of the deleted contact is shown in the status message. Timestamp in the status bar is updated.</p>
+</li>
+<li>
+<p>Test case: <code>deletee 0</code><br>
+Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.</p>
+</li>
+<li>
+<p>Other incorrect delete commands to try: <code>deletee</code>, <code>deletee x</code> (where x is larger than the list size) <em>{give more}</em><br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="closing-a-job"><a class="link" href="#closing-a-job">G.3. Closing a job</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Closing a job while all jobs are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all ongoing jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.</p>
+</li>
+<li>
+<p>Test case: <code>closej j/1</code><br>
+Expected: Job with job number 1 has its status change from "ongoing" to "closed". Details of the closed job shown in the status message. Job list shows updated job. Timestamp in the status bar is updated.</p>
+</li>
+<li>
+<p>Test case: <code>closej j/0</code><br>
+Expected: No job is closed. Error details shown in the status message. Status bar remains the same.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-remark-to-a-job"><a class="link" href="#adding-remark-to-a-job">G.4. Adding remark to a job</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adding a remark to an ongoing job, while all ongoing jobs are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all jobs using the <code>listoj</code> command. Multiple ongoing jobs in the list.</p>
+</li>
+<li>
+<p>Test case: <code>remark j/1 r/Urgent</code><br>
+Expected: Remark "Urgent" added to job number 1. Details of remark added to job shown in the status message. Timestamp in the status bar is updated.</p>
+</li>
+<li>
+<p>Test case: <code>remark j/0 r/Urgent</code><br>
+Expected: Remark not added to the specified job. Error details shown in the status message. Status bar remains the same.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:43:14 UTC
+Last updated 2018-04-15 16:05:36 UTC
 </div>
 </div>
 </body>
