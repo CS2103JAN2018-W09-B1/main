@@ -81,30 +81,26 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Managed releases <code>v1.3</code> - <code>v1.5rc</code> (3 releases) on GitHub</p>
+<p>Managed release <code>v1.5rc</code> on GitHub</p>
 </li>
 <li>
-<p>Used GitHub Issues tracker to keep track of issues that arise throughout the development process</p>
+<p>Used GitHub issues tracker to keep track of issues that arise throughout the development process</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>Enhancements to existing features:
-<strong>*</strong></p>
 </li>
 <li>
 <p>Documentation:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Updated User Guide with the features implemented: <a href="https://github.com">#14</a></p>
+<p>Updated User Guide with the features implemented (see below, under Contributions to the User Guide).</p>
 </li>
 <li>
-<p>Updated Developer Guide with the features implemented</p>
+<p>Updated Developer Guide with the features implemented (see below, under Contributions to the Developer Guide).</p>
 </li>
 <li>
-<p>Made changes to both User and Developer Guide to make them more reader-friendly, such as formatting and improving the language,</p>
+<p>Made changes to other parts of both User and Developer Guide to make them more reader-friendly, such as formatting and improving the language used.</p>
 </li>
 </ul>
 </div>
@@ -124,9 +120,6 @@
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><em>{you can add/remove categories in the list above}</em></p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -143,10 +136,27 @@
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">Undoing previous command : <code>undo</code></a></h3>
+<h3 id="login-to-gmail-code-login-code"><a class="link" href="#login-to-gmail-code-login-code">Login to Gmail : <code>login</code></a></h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Nobody&#8217;s perfect. To reverse an undoable command that was executed by mistake, use this command to restore CarviciM to the state before the execution of that command:<br>
-Format: <code>undo</code></p>
+<p>Before using this command, ensure that you are connected to the internet.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You will need to login to Gmail before you can use the <code>email</code> feature to send out emails to your employees (see Section 5.20 below). To login to Gmail, use the <code>login</code> command as follows:<br>
+Format: <code>login</code></p>
+</div>
+<div class="paragraph">
+<p>You will be redirected to the Gmail login page on your default internet browser, where you can then proceed to login.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -156,7 +166,122 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify CarviciM&#8217;s content (<code>addj</code>, <code>closej</code>, <code>adde</code>, <code>deletee</code> <code>remarkj</code>, and <code>sort</code>).</p>
+<p>When you are redirected to the Gmail login page, CarviciM may (although unlikely to happen) appear as if it is not responding. If so, don&#8217;t panic! Once you have successfully logged in to Gmail, CarviciM will be up and running again, from exactly where you left off.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When prompted to give your permission to allow CarviciM to access your Gmail account, click on <code>ALLOW</code>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Please do NOT click on <code>CANCEL</code>. Be assured that CarviciM will only use your account to send out emails to your employees.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For your convenience, your authorization information will be stored on your computer&#8217;s file system, even after closing and reopening CarviciM. You will, therefore, only need to <code>login</code> once.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="email-assigned-employees-belonging-to-a-job-code-email-code"><a class="link" href="#email-assigned-employees-belonging-to-a-job-code-email-code">Email assigned employees belonging to a job : <code>email</code></a></h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Before using this command, ensure that you are connected to the internet.</p>
+</li>
+<li>
+<p>You will need to <code>login</code> first before you can send out emails. If you have yet to <code>login</code>, the <code>email</code> command will first redirect you to the Gmail login page on your default internet browser before sending the emails. Please see Section 5.18 above on how to <code>login</code>.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To send auto-generated emails containing the job details from your Gmail account to all assigned employees of the job, use this command as follows:<br>
+Format: <code>email j/JOB_NUMBER</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>JOB_NUMBER</code> <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Take a look at the image below for a sample of the contents of the emails that will be sent when you use this command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Email_example.PNG" alt="Email example" width="550">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.20.1 : Sample of auto-generated email content</em></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p><code>email j/1</code><br>
+Auto-generated emails containing the job details of the job at index 1 of the job list panel will be sent from your Gmail account to all employees assigned to the job.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="locating-employee-entries-by-tags-code-findt-code"><a class="link" href="#locating-employee-entries-by-tags-code-findt-code">Locating employee entries by tags: <code>findt</code></a></h3>
+<div class="paragraph">
+<p>To search for employee entries by tags, use this command as follows:<br>
+Format: <code>findt KEYWORD [MORE_KEYWORDS]</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The search is case insensitive. e.g <code>Technician</code> will match <code>technician</code>.</p>
+</li>
+<li>
+<p>Only full words will be matched e.g. <code>mech</code> will not match <code>mechanic</code>.</p>
+</li>
+<li>
+<p>Employee entries matching at least one tag will be returned (i.e. <code>OR</code> search). e.g. <code>technician mechanic</code> will provide you with a list of employees who are either technicians, mechanics or both.</p>
+</li>
+</ul>
 </div>
 </td>
 </tr>
@@ -170,88 +295,15 @@ Format: <code>undo</code></p>
 <li>
 <p>Example 1:<br></p>
 <div class="paragraph">
-<p><code>deletee 1</code><br>
-Deletes the first employee in CarviciM.+You will see that the first employee is no longer displayed in the employee list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>liste</code><br>
-Shows all employees in CarviciM.<br>
-You will not see the deleted employee of index 1 in employee list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>undo</code> (reverses the <code>delete 1</code> command)<br>
-You will see the deleted employee present in the employee list panel again.</p>
+<p><code>findt technician</code><br>
+You will see all employee entries with the tag <code>technican</code> (not case-sensitive), shown in the employee list panel.</p>
 </div>
 </li>
 <li>
 <p>Example 2:<br></p>
 <div class="paragraph">
-<p><code>closej j/1</code><br>
-You will see that job number 1 is removed from the job list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br>
-You will see that job number 1 is added back into the job list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>undo</code><br>
-The <code>undo</code> command fails as there are no undoable commands.</p>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">Redoing the previously undone command : <code>redo</code></a></h3>
-<div class="paragraph">
-<p>To reverse an unwanted undo command that was executed, use this command as follows:<br>
-Format: <code>redo</code></p>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Example 1:<br></p>
-<div class="paragraph">
-<p><code>deletee 1</code><br>
-You will see that the first employee entry is removed from the employee list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br>
-You will see that the deleted employee entry is added back into the employee list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
-You will see that the same employee entry is removed from the employee list panel again.</p>
-</div>
-</li>
-<li>
-<p>Example 2:<br></p>
-<div class="paragraph">
-<p><code>closej j/1</code><br>
-You will see that the job number 1 has its status changed to "closed" in the job list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>deletee 1</code><br>
-You will see that the first employee entry is removed from the employee list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>undo</code> (reverses the <code>deletee 1</code> command)<br>
-You will see that the deleted employee entry is added back into the employee list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>undo</code> (reverses the <code>closej j/1</code> command)<br>
-You will see that the closed job number 1 has it status changed to "ongoing" in the job list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>redo</code> (reapplies the <code>closej j/1</code> command)<br>
-You will see that the job number 1 has its status changed back to "closed" again, in the job list panel.<br></p>
-</div>
-<div class="paragraph">
-<p><code>redo</code> (reapplies the <code>deletee 1</code> command)<br>
-You will see that the same employee entry is removed from the employee list panel.</p>
+<p><code>findt technician mechanic</code><br>
+You will see all employee entries with the tags <code>technican</code> and/or <code>mechanic</code>(not case-sensitive), shown in the employees list panel.</p>
 </div>
 </li>
 </ul>
@@ -421,12 +473,75 @@ You will see that the same employee entry is removed from the employee list pane
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="find-by-tag-feature"><a class="link" href="#find-by-tag-feature">Find by tag feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">Current Implementation</a></h4>
+<div class="paragraph">
+<p>When the user enters <code>findt</code> followed by some keywords, for each existing employee, the employee&#8217;s tags will be concatenated to form a String, with a space in between each tag. The <code>stream</code> method of <code>List</code> class will then be used to check if any of the keywords entered by the user matches any word in the concatenated string. The code for this algorithm is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> test(Employee employee) {
+    <span class="predefined-type">Set</span>&lt;Tag&gt; employeeTags = employee.getTags();
+    <span class="predefined-type">String</span> tagsConcatenated = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>;
+    <span class="keyword">for</span> (Tag tag: employeeTags) {
+        tagsConcatenated = tagsConcatenated + tag.getTagName() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>;
+    }
+    <span class="directive">final</span> <span class="predefined-type">String</span> allTagNames = tagsConcatenated;
+
+    <span class="keyword">return</span> keywords.stream()
+            .anyMatch(keyword -&gt; StringUtil.containsWordIgnoreCase(allTagNames, keyword));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This algorithm is then repeated for all existing employees to get the filtered list.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-number-of-keyword-matches"><a class="link" href="#aspect-number-of-keyword-matches">Aspect: Number of keyword matches</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current choice:</strong> Only at least 1 keyword match is needed for the employee to appear on the filtered list.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Useful for users who wish to see employees who only have at least 1 keyword as their tag in the filtered list.</p>
+</li>
+<li>
+<p>Cons: May not be useful for users who wish to search for employees that have all the keywords as their tags.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Alternative:</em> All keywords have to match for the employee to appear on the filtered list.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Useful for users who wish to search for employees that have all the keywords as their tags.</p>
+</li>
+<li>
+<p>Cons: May not be useful for users who wish to see employees who only have at least 1 keyword as their tag in the filtered list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:46:06 UTC
+Last updated 2018-04-15 15:06:43 UTC
 </div>
 </div>
 </body>
