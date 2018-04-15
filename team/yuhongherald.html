@@ -6,36 +6,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
 <title>Yu Hong Herald - Project Portfolio</title>
-<link rel="stylesheet" href="./gh-pages.css">
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="./coderay-asciidoctor.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
 </head>
 <body class="article">
 <div id="header">
+<h1>Yu Hong Herald - Project Portfolio</h1>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="yu-hong-herald-project-portfolio"><a class="link" href="#yu-hong-herald-project-portfolio">Yu Hong Herald - Project Portfolio</a></h2>
+<h2 id="project-carvicim"><a class="link" href="#project-carvicim">Project: CarviciM</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="project-carvicim"><a class="link" href="#project-carvicim">Project: CarviciM</a></h3>
-<div class="sect3">
-<h4 id="overview"><a class="link" href="#overview">Overview</a></h4>
+<h3 id="overview"><a class="link" href="#overview">Overview</a></h3>
 <div class="imageblock" style="text-align: left">
 <div class="content">
 <img src="../images/CarviciM_logo.PNG" alt="CarviciM logo" width="150">
 </div>
 </div>
 <div class="paragraph">
-<p>CarviciM is a car servicing management application built on the
+<p><a href="https://github.com/CS2103JAN2018-W09-B1/main">CarviciM</a> is a car servicing management application built on the
 <a href="https://github.com/nus-cs2103-AY1718S2/addressbook-level4">AddressBook - Level 4</a> project,
 which is used for teaching Software Engineering principles.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 It is written in Java, and has about 10 kLoC.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h4>
+<div class="sect2">
+<h3 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h3>
 <div class="ulist">
 <ul>
 <li>
@@ -56,7 +55,7 @@ fields will inherit their empty fields from the previous entry. Column headers c
 and does not enforce strict order.</p>
 </li>
 <li>
-<p>Credits: Apache POI and Commons library are used to support exccel file handling.</p>
+<p>Credits: Apache POI and POI-ooxml library are used to support excel file handling.</p>
 </li>
 </ul>
 </div>
@@ -90,7 +89,7 @@ alternative to the original.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Resized the UI Panels and applization window so that they fit nicely</p>
+<p>Resized the UI Panels and application window so that they fit nicely</p>
 </li>
 </ul>
 </div>
@@ -160,8 +159,8 @@ alternative to the original.</p>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h4>
+<div class="sect2">
+<h3 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 100%;">
@@ -172,7 +171,6 @@ alternative to the original.</p>
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="changing-a-command-word-code-set-code"><a class="link" href="#changing-a-command-word-code-set-code">Changing a command word : <code>set</code></a></h3>
@@ -501,21 +499,32 @@ in the same directory.</p>
 <div class="title">Figure 1. Object Diagram of CommandWords at runtime</div>
 </div>
 <div class="paragraph">
-<p><code>SetCommand</code> keeps 2 lists of command words:
-* the default command words
-<strong> stored as a class level reference <code>COMMANDS</code>
-* the custom user command words
-</strong> stored as a field <code>commands</code> in the object
+<p><code>SetCommand</code> keeps 2 lists of command words:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The default command words stored as a class level reference <code>COMMANDS</code></p>
+</li>
+<li>
+<p>The custom user command words stored as a field <code>commands</code> in the object
 Both are managed by the class <code>CommandWords</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>, as it is required to parse commands in <code>AddressBookParser</code>.</p>
+<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>,
+as it is required to parse commands in <code>AddressBookParser</code>.</p>
 </div>
 <div class="paragraph">
 <p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
 </div>
 <div class="paragraph">
-<p>AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component (figure 12). This is to facilitate the saving of data. CommandWords also has a method checkIntegrity, which ensures that object command words are 1 to 1 with class command words. This allows forward compatibility, as well as protects against data corruption to some extent.</p>
+<p>CarviciMParser makes a reference to CommandWords.
+However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component (figure 12).
+This is to facilitate the saving of data. CommandWords also has a method <code>checkIntegrity()</code>,
+which ensures that object command words are 1 to 1 with class command words.
+This allows forward compatibility, and protects against data corruption to some extent.</p>
 </div>
 </div>
 <div class="sect3">
@@ -833,7 +842,7 @@ it directly.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 07:42:10 UTC
+Last updated 2018-04-15 07:47:20 UTC
 </div>
 </div>
 </body>

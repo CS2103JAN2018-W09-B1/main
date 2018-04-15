@@ -1180,21 +1180,32 @@ If the parameters are invalid, <code>addj</code> command will return an invalid 
 <div class="title">Figure 12. Object Diagram of CommandWords at runtime</div>
 </div>
 <div class="paragraph">
-<p><code>SetCommand</code> keeps 2 lists of command words:
-* the default command words
-<strong> stored as a class level reference <code>COMMANDS</code>
-* the custom user command words
-</strong> stored as a field <code>commands</code> in the object
+<p><code>SetCommand</code> keeps 2 lists of command words:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The default command words stored as a class level reference <code>COMMANDS</code></p>
+</li>
+<li>
+<p>The custom user command words stored as a field <code>commands</code> in the object
 Both are managed by the class <code>CommandWords</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>, as it is required to parse commands in <code>AddressBookParser</code>.</p>
+<p><code>CommandWords</code> is in the <code>Logic</code> component, under <code>Commands</code>,
+as it is required to parse commands in <code>AddressBookParser</code>.</p>
 </div>
 <div class="paragraph">
 <p><code>CommandWords</code> only deal with commands that have their default command word declared in the class level reference.</p>
 </div>
 <div class="paragraph">
-<p>AddressBookParser makes a reference to CommandWords. However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component (figure 12). This is to facilitate the saving of data. CommandWords also has a method checkIntegrity, which ensures that object command words are 1 to 1 with class command words. This allows forward compatibility, as well as protects against data corruption to some extent.</p>
+<p>CarviciMParser makes a reference to CommandWords.
+However, <code>CommandWords</code> resides in <code>UserPrefs</code> in the <code>Model</code> component (figure 12).
+This is to facilitate the saving of data. CommandWords also has a method <code>checkIntegrity()</code>,
+which ensures that object command words are 1 to 1 with class command words.
+This allows forward compatibility, and protects against data corruption to some extent.</p>
 </div>
 </div>
 <div class="sect3">
@@ -5183,7 +5194,7 @@ Expected: Remark not added to the specified job. Error details shown in the stat
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 07:42:10 UTC
+Last updated 2018-04-15 07:47:20 UTC
 </div>
 </div>
 </body>
